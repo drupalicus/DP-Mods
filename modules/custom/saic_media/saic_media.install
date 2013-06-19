@@ -1,7 +1,0 @@
-<?php
-function saic_media_install() {
-  // Create all the content types required by the module
-  cck_install_content_dir('saic_media');
-}
-
-

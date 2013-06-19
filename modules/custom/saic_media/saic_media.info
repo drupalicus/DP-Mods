@@ -1,8 +1,0 @@
-name = SAIC Media
-description = The custom SAIC media module.
-package = SAIC
-core = 6.x
-version = 1.0
-dependencies[] = content
-dependencies[] = digitaria_utility
-dependencies[] = date

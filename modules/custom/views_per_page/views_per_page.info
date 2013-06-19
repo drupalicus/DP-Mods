@@ -1,6 +1,0 @@
-; $Id: views_per_page.module,v 1.0 2009/06/25 17:22:00 acarlton $
-name = Views Per Page
-description = A module providing functions to change the amount of results displayed on a page by the views module
-package = Views
-core = 6.x
-dependencies[] = views

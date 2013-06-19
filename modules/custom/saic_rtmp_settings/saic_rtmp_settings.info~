@@ -1,4 +1,0 @@
-name = RTMP Settings
-description = Provides a configuration page for adding a list of approved RTMP servers.
-package = Qualcomm
-core = 6.x

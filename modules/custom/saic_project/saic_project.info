@@ -1,5 +1,0 @@
-; $Id$
-name = SAIC Project
-description = "Project content type and functionality."
-package = SAIC
-core = 6.x

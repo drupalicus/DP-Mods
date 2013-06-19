@@ -1,8 +1,0 @@
-name = Content Podgroup Draggable
-description = Adds drag and drop functionality to pods.
-dependencies[] = content
-dependencies[] = jquery_ui
-dependencies[] = content_podgroup
-dependencies[] = jquery_update
-package = CCK
-core = 6.x

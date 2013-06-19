@@ -1,7 +1,0 @@
-name = Content Podgroup
-description = Defines the pod fieldset.
-dependencies[] = content
-dependencies[] = fieldgroup
-dependencies[] = jquery_ui
-package = CCK
-core = 6.x

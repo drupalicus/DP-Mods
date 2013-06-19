@@ -1,8 +1,0 @@
-name = SAIC Resource Center
-description = Resource Center Module for SAIC
-package = SAIC
-core = 6.x
-version = 1.0
-dependencies[] = content
-dependencies[] = digitaria_utility
-dependencies[] = date

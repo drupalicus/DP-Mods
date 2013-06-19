@@ -1,4 +1,0 @@
-name = SAIC Video Filter
-description = Filters content to replace [video:123] with HTML to display that video.
-core = 6.x
-package = SAIC

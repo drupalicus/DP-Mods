@@ -1,6 +1,0 @@
-; $Id: ddp.info,v 1.0 2009/11/09 kthompson - digitaria Exp $
-name = DDP
-description = Provides DDP integration for Drupal.
-package = DDP
-core = 6.x
-php = 5.0

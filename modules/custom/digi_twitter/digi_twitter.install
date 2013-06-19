@@ -1,7 +1,0 @@
-<?php
-function digi_twitter_install() {
-  // Create files dir
-  mkdir($_SERVER["DOCUMENT_ROOT"].'/'.file_directory_path().'digi_twitter', 0775);
-  // Create all the content types required by the module
-  cck_install_content_dir('digi_twitter');
-}

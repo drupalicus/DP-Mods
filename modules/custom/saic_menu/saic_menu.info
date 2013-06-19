@@ -1,7 +1,0 @@
-; $Id$
-name = SAIC Menu
-description = "Menu system alterations for SAIC menus."
-package = SAIC
-version = VERSION
-core = 6.x
-dependencies[] = saic_main

@@ -1,4 +1,0 @@
-name = SAIC Video Menu
-description = This is used to controll the menu population by ajax calls.
-core = 6.x
-package = SAIC

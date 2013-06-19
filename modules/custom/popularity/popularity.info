@@ -1,5 +1,0 @@
-name = Popularity
-description = Calculates popularity for videos per Qualcomm spec.
-dependencies[] = saic_hooks
-package = Qualcomm
-core = 6.x

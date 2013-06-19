@@ -1,5 +1,0 @@
-name = SAIC People
-description = Module used to define blocks for people page, and additional logic if needed
-core = 6.x
-package = SAIC
-dependencies[] = content

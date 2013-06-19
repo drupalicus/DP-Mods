@@ -1,6 +1,0 @@
-; $Id: digitaria_utility.info,v 1.0 2009/09/22 Kevin Thompson Exp $
-name = Digitaria Utility
-description = Collection of utility functions for use in other modules.
-package = General
-core = 6.x
-version = "6.x-1.0-dev"
