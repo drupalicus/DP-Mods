@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Implementation of hook_enable().
+ */
+function creeper_enable() {
+  // Weight exceptionally light and just heavier than strongarm.
+  db_query("UPDATE {system} SET weight = -999 WHERE name = 'creeper' AND type = 'module'");
+}
+
+/**
+ * Implementation of hook_install()
+ */
+
+function creeper_install(){
+  $variables = array(
+    'creeper_aws_id_key'=> 'your key',
+    'creeper_aws_secret_key' => 'your secret',
+    'creeper_aws_account_id' => 'your aws id',
+  );
+foreach ($variables as $variable => $value) {
+    variable_set($variable,$value);
+  }
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function creeper_uninstall() {
+  $variables = array(
+    'creeper_aws_id_key',
+    'creeper_aws_secret_key',
+    'creeper_aws_account_id',
+  );
+  foreach ($variables as $variable) {
+    variable_del($variable);
+  }
+}

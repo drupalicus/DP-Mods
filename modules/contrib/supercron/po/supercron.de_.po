@@ -1,0 +1,276 @@
+# $Id: supercron.de_.po,v 1.1.2.1 2009/06/16 16:52:45 63reasons Exp $
+#
+# German translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  cron.inc,v 1.1 2009/06/05 03:03:49 63reasons
+#  supercron.module,v 1.1.2.1 2009/06/05 05:05:22 63reasons
+#  supercron.info,v 1.1 2009/06/05 03:03:49 63reasons
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Drupal Supercron V6.x-1.3\n"
+"POT-Creation-Date: 2009-06-15 21:52+0200\n"
+"PO-Revision-Date: 2009-06-15 21:55+0100\n"
+"Last-Translator: Frank Tartler <frank.tartler@googlemail.com>\n"
+"Language-Team: Frank Tartler <frank.tartler@googlemail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: cron.inc:21;28;43
+msgid "cron"
+msgstr "Cron"
+
+#: cron.inc:21
+msgid "Cron has been running for more than an hour and is most likely stuck."
+msgstr "Cron läuft seit mehr als einer Stunde und hängt sehr wahrscheinlich."
+
+#: cron.inc:28
+msgid "Attempting to re-run cron while it is already running."
+msgstr "Versuche Cron erneut auszuführen, obwohl er bereits ausgeführt wird."
+
+#: cron.inc:43
+msgid "Cron run completed."
+msgstr "Cron-Lauf vollständig."
+
+#: supercron.module:22
+#: supercron.info:0
+msgid "SuperCron"
+msgstr ""
+
+#: supercron.module:23
+msgid "Configure how Cron behaves, which cron hooks are called and in what order, capture debugging information and parallelize tasks."
+msgstr "Es kann konfiguriert werden wie sich Cron verhält, welche Cron-Hooks aufgerufen werden und in welcher Reihenfolge, Informationen zur Fehlersuche aufzeichnen, und Aufgaben parallel ausführen."
+
+#: supercron.module:29
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: supercron.module:34
+msgid "Firewall"
+msgstr ""
+
+#: supercron.module:47
+msgid "Cron output in module: "
+msgstr "Cron-Ausgabe im Modul: "
+
+#: supercron.module:55
+msgid "Cron exceptions in module: "
+msgstr "Cron-Ausnahmen im Modul:"
+
+#: supercron.module:63
+msgid "Call individual cron handlers"
+msgstr "Individuelle Cron-Handler aufrufen"
+
+#: supercron.module:119
+#, fuzzy
+msgid "sec"
+msgstr "s"
+
+#: supercron.module:126
+msgid "Here you can enable or disable parts of the cron process, change the order in which cron hooks are called, capture extraneous output or exceptions, measure performance and even make your cron tasks multithreaded."
+msgstr "Hier können Teile des Cron-Prozesses aktiviert oder deaktiviert werden, die Reihenfolge in der Cron-Hooks aufgerufen werden geändert werden, unerhebliche Ausgaben oder Ausnahmen festhalten, die Leistung gemessen werden oder die Aufgaben mehrprozessfähig gemacht werden."
+
+#: supercron.module:129
+msgid "SuperCron sports a mini firewall that offers a way to limit access to your cron start-up file and thus limits the abilities of nefarious users to overload your site for a denial-of-service attack through cron."
+msgstr "SuperCron enthält eine kleine Firewall, die einen Möglichkeit zur Begrenzung des Zugriffs auf die Cron-Aufruf-Datei bietet und so die Fähigkeiten eines ruchlosen Benutzers begrenzt, die Website mittels Cron zu überlasten und einen Denial-of-Service-Angriff durchzuführen."
+
+#: supercron.module:144
+msgid "Firewall Status"
+msgstr "Firewall-Status"
+
+#: supercron.module:150
+msgid "The firewall is currently "
+msgstr "Die Firewall ist momentan "
+
+#: supercron.module:151;230
+msgid "enabled"
+msgstr "Aktiviert"
+
+#: supercron.module:151;151
+msgid "ok"
+msgstr "OK"
+
+#: supercron.module:151;230
+msgid "disabled"
+msgstr "deaktiviert"
+
+#: supercron.module:151;151
+msgid "error"
+msgstr "Fehler"
+
+#: supercron.module:153
+msgid "Disable"
+msgstr "Deaktivieren"
+
+#: supercron.module:153
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: supercron.module:162
+msgid "Firewall Mode"
+msgstr "Firewall-Modus"
+
+#: supercron.module:168
+msgid "Firewall mode"
+msgstr "Firewall-Modus"
+
+#: supercron.module:171
+msgid "Only Accept Calls From The Specified IP Addresses"
+msgstr "Nur Anfragen von den angegebenen IP-Adressen akzeptieren"
+
+#: supercron.module:172
+msgid "Accept Calls From Any IP Address Except The Specified IP Addresses"
+msgstr "Anfragen von allen IP-Adressen außer den angegebenen akzeptieren"
+
+#: supercron.module:173
+msgid "Select the desired firewall mode."
+msgstr "Auswahl des gewünschten Firewall-Modus."
+
+#: supercron.module:185
+msgid "Insert IP"
+msgstr "IP einfügen"
+
+#: supercron.module:191;365
+msgid "IP"
+msgstr "IP"
+
+#: supercron.module:192
+msgid "Some IP address like 192.168.1.2"
+msgstr "Einige IP-Adressen wie 192.168.1.2"
+
+#: supercron.module:196
+msgid "Insert"
+msgstr "Einfügen"
+
+#: supercron.module:202
+msgid "Save"
+msgstr "Speichern"
+
+#: supercron.module:210;214
+msgid "delete"
+msgstr "löschen"
+
+#: supercron.module:234
+msgid "SuperCron firewall mode changed."
+msgstr "SuperCron-Firewall-Modus geändert."
+
+#: supercron.module:239
+msgid "The !script file should copied from the !here directory to !path; until that is done, your tasks will not execute when scheduled to."
+msgstr "Die Datei !script sollte vom Verzeichnis !here nach !path kopiert werden; solange dies nicht geschieht, werden die Tasks nicht wie geplant ausgeführt."
+
+#: supercron.module:250
+msgid "Invoke All"
+msgstr "Alle aufrufen"
+
+#: supercron.module:263;376
+msgid "Invoke"
+msgstr "Aufrufen"
+
+#: supercron.module:269;273
+msgid "Never successfully ran"
+msgstr "Nie erfolgreich gelaufen"
+
+#: supercron.module:275
+msgid "< 1 "
+msgstr ""
+
+#: supercron.module:288;376
+msgid "Output"
+msgstr "Ausgabe"
+
+#: supercron.module:310;376
+msgid "Exceptions"
+msgstr "Ausnahmen"
+
+#: supercron.module:333
+msgid "Do not perform cron tasks when the site is under heavy load."
+msgstr "Cron-Aufgaben nicht durchführen, wenn die Website unter schwerer Last ist."
+
+#: supercron.module:334
+msgid "This features depends on the Throttle module being installed and enabled."
+msgstr "Für diese Funktion muss das Throttle-Modul installiert und aktiviert sein."
+
+#: supercron.module:341
+msgid "Save changes"
+msgstr "Änderungen speichern"
+
+#: supercron.module:360
+#, fuzzy
+msgid "No ips available."
+msgstr "Keine IPs verfügbar."
+
+#: supercron.module:366
+msgid "Operations"
+msgstr "Vorgänge"
+
+#: supercron.module:376
+msgid "Name"
+msgstr "Name"
+
+#: supercron.module:376
+msgid "Last called"
+msgstr "Zuletzt aufgerufen"
+
+#: supercron.module:376
+msgid "Execution Time"
+msgstr "Ausführungszeit"
+
+#: supercron.module:376
+#, fuzzy
+msgid "Avg. Execution Time"
+msgstr "Durchschnittl. Ausführungszeit"
+
+#: supercron.module:376
+msgid "Enabled"
+msgstr "Aktiviert"
+
+#: supercron.module:376
+#, fuzzy
+msgid "Multithread"
+msgstr "Mehrprozess"
+
+#: supercron.module:376
+msgid "Weight"
+msgstr "Gewichtung"
+
+#: supercron.module:475
+msgid "Log ID"
+msgstr "Protokoll-ID"
+
+#: supercron.module:475
+msgid "Message"
+msgstr "Nachricht"
+
+#: supercron.module:475
+msgid "Location link"
+msgstr ""
+
+#: supercron.module:475
+msgid "Created"
+msgstr "Erstellt"
+
+#: supercron.module:513
+msgid "cron exception"
+msgstr "Cron-Ausnahme"
+
+#: supercron.module:513
+msgid ""
+"Module name: @module;\n"
+"Exception message: @message;"
+msgstr ""
+"Modul-Name: @module;\n"
+"Nachricht zur Ausnahme: @message;"
+
+#: supercron.info:0
+msgid "Get absolute control over Cron tasks"
+msgstr "Volständige Kontrolle über Cron-Aufgaben erhalten"
+
+#~ msgid "Firewall Enabled?"
+#~ msgstr "Firewall aktiviert?"
+

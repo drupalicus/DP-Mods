@@ -1,0 +1,151 @@
+<?php
+
+function saic_video_filter_theme(){
+  return array(
+    'saic_video_filter_embedded_video_large' => array(
+      'template' => 'embedded-video-large',
+      'arguments' => array(
+        'video' => null,
+        'show_title' => true,
+        'show_border' => true,
+        'show_more_link' => true
+      ),
+    ),
+    'saic_video_filter_embedded_video' => array(
+      'template' => 'embedded-video',
+      'arguments' => array('video' => null),
+    ),
+    'saic_video_filter_partials_service' => array(
+      'template' => 'partials-service',
+      'path' => drupal_get_path('theme', 'saic'),
+      'arguments' => array('node' => null),
+    ),
+  );
+}
+
+/**
+* Implementation of hook_menu().
+*/
+function saic_video_filter_menu(){
+  $items = array();
+  $items['partials/service/video/%'] = array(
+    'title' => 'Videos Partials Service',
+    'page callback' => 'saic_video_filter_partials_service_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+function saic_video_filter_partials_service_page(){
+  $nid = arg(3);
+  if(is_numeric($nid)){
+    $node = node_load($nid);
+    $content = theme('saic_video_filter_partials_service', $node);
+  }
+  return $content;
+}
+
+function saic_video_filter_filter($op, $delta = 0, $format = -1, $text = '') {
+
+  if ($op == 'list') {
+    return array(
+      0 => t('Substitute modal video for [video:123] tag'),
+      1 => t('Substitute embedded video for [video-large:123] tag')
+    );
+  }
+  $content = $text;
+  switch ($delta) {
+    case 0:
+      $content = saic_video_filter_modal_video_filter($op, $text);
+      break;
+    case 1:
+      $content = saic_video_filter_embed_video_filter($op, $text);
+      break;
+  }
+
+  return $content;
+}      
+
+function saic_video_filter_embed_video_filter($op, $text){
+ switch ($op) {
+    case 'description':
+      $content = t('Substitutes an inline video player for [video-large:123] tag');
+      break;
+    case 'prepare':
+      $content = $text;
+      break;
+    case 'process':
+      if (preg_match('/\[video-large:(\d+)\]/', $text, $matches)) {
+        $video_nid = $matches[1];
+        $video = node_load($video_nid);
+        if ($video && $video->type == 'video') {
+          $vars['video'] = $video;
+            
+          $show_title = true;
+          $show_border = true;
+          $show_more_link = true;
+
+          //node type specific settings
+          if(arg(0) == 'node' && is_numeric(arg(1))){
+            $node = node_load(arg(1));
+            if($node->type == 'story'){
+              $show_title = false;
+              $show_border = false;
+              $show_more_link = false;
+            }
+          }
+          $video_html = theme('saic_video_filter_embedded_video_large', $video, $show_title, $show_border, $show_more_link);
+          $content = preg_replace('/\[video-large:(\d+)\]/', $video_html, $text);
+        } else {
+          return '';
+        }
+      } else {
+        $content = $text;
+      }
+      break;
+    case 'settings':
+      $content = $form;
+      break;
+      }
+  return $content;
+}
+function saic_video_filter_modal_video_filter($op, $text){
+  switch ($op) {
+    case 'description':
+      $content = t('Substitutes an inline modal video player for [video:123] tag');
+      break;
+    case 'prepare':
+      $content = $text;
+      break;
+    case 'process':
+      if (preg_match('/\[video:(\d+)\]/', $text, $matches)) {
+        $video_nid = $matches[1];
+        $video = node_load($video_nid);
+        if ($video && $video->type == 'video') {
+          $vars['video'] = $video;
+          $video_html = theme('saic_video_filter_embedded_video', $video);
+          $content = preg_replace('/\[video:(\d+)\]/', $video_html, $text);
+        } else {
+          return '';
+        }
+      } else {
+        $content = $text;
+      }
+      break;
+    case 'settings':
+      $content = $form;
+      break;
+      }
+  return $content;
+}
+
+function saic_video_filter_filter_tips($delta, $format, $long = FALSE) {
+  switch ($delta) {
+    case 0:
+      if ($long) {
+        return t('To inline a video, enter a tag like: [video:123] where 123 is the Drupal node id');
+      }
+      break;
+  }
+}

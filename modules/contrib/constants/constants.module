@@ -1,0 +1,371 @@
+<?php
+/**
+ * Constants module
+ * by Ben Buckman (thebuckst0p)
+ *
+ * A UI for managing key-value pairs stored in the core Variables table
+ *
+ * DOES PURL BASICALLY DO THIS ALREADY?? (but it doesn't have a UI)
+ */
+
+
+// pseudo-namespace for this module's variables
+define('CONSTANTS_VARIABLE_PREFIX', 'CONSTANT:');
+
+
+/**
+ * Implementation of hook_help().
+ */
+function constants_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#constants':
+      return '<p>'. t('A UI for managing key-value pairs stored in the core Variables table') .'</p>';
+  }
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function constants_menu() {
+  $items = array();
+  $items['admin/settings/constants'] = array(
+    'title' => 'Constants',
+    'description' => 'Manage key-value pairs stored in the Variables table.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('constants_admin_form'),
+    'access arguments' => array('administer constants'),
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function constants_perm() {
+  return array('administer constants');
+}
+
+
+/**
+ * Implementation of hook_theme()
+ */
+function constants_theme() {
+  return array(
+    'constants_table' => array(
+      'arguments' => array('form' => NULL),
+    )
+  );
+}
+
+
+/**
+ * Constants admin form
+ */
+function constants_admin_form() {
+  $form = array();
+
+  $form['intro'] = array(
+    '#value' => '<p>' . t('Constants are simple key-value pairs. They are stored in Drupal\'s core `variables` table '
+                           . 'with a \'CONSTANT:\' namespace to differentiate them from other variables. <br/>'
+                           . '(Constants aren\'t really constant at all, but are ideal for replacing values that might otherwise '
+                           . 'be hard-coded as PHP !constants.) '
+                           . 'For example, node id\'s are often hard-coded for theming purposes but can change from site to site, '
+                           . 'so this allows for easy management of those values. This UI can also be used for any other scenario where a whole '
+                           . 'admin UI isn\'t needed to manage a few variables.',
+                            array('!constants' => l('constants', 'http://us2.php.net/manual/en/language.constants.php') )
+                            )
+                           . '</p>',
+  );
+  
+  $vars = _constants_get_variables();
+  
+  $form['existing'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+    //'#title' => t('Constants'),
+  );
+
+  // intro (before table)
+  $form['existing']['intro'] = array(
+    '#value' => '<p>' 
+        . t('Be careful changing the variable names, as they may be relied upon elsewhere in the code.') . '<br/>'
+        . t('Varible names should consist only of alphanumeric characters and underscores.') . '<br/>'
+        . t('To delete a variable, click its Delete checkbox.')
+        . '</p>',
+  );
+  
+  
+  // table of existing variables
+  $form['existing']['constants'] = array(
+    '#theme' => 'constants_table',
+    '#header' => array( t('Name (change with care!)'), t('Value'), '', t('Delete') ),
+    '#tree' => TRUE,
+  );
+  
+    foreach ($vars as $var) {   // each has 'name', 'value'
+      $name = _constants_variable_unname($var['name']);
+      $value = $var['value'];
+
+      $form['existing']['constants'][$name]['name'] = array(
+        '#type' => 'textfield',
+        '#default_value' => $name,
+        '#size' => 30,
+      );
+
+      $form['existing']['constants'][$name]['value'] = array(
+        '#type' => 'textfield',
+        '#default_value' => $value,
+        '#size' => 50,
+      );
+
+      // save the previous name to check if it changed
+      $form['existing']['constants'][$name]['prev_name'] = array(
+        '#type' => 'hidden',
+        '#value' => $name,
+      );
+      
+      // delete
+      $form['existing']['constants'][$name]['delete'] = array(
+        '#type' => 'checkbox',
+        '#default_value' => FALSE,
+      );
+    }
+
+
+  // NEW variable
+  
+  $form['new_variable'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+    '#title' => t('New Constant'),
+  );
+
+  $form['new_variable']['table_new'] = array(
+    '#theme' => 'constants_table',
+    '#header' => array( t('Name'), t('Value') ),
+    '#tree' => TRUE,
+  );
+  
+  $form['new_variable']['table_new']['new_constant']['name'] = array(
+    '#type' => 'textfield',
+    '#default_value' => '',
+    '#size' => 30,
+  );
+
+  $form['new_variable']['table_new']['new_constant']['value'] = array(
+    '#type' => 'textfield',
+    '#default_value' => '',
+    '#size' => 50,
+  );
+  
+
+  
+  // $rows = array();
+  // $form['raw'] = array(
+  //   '#value' => '<pre>'. print_r($vars, true) . '</pre>',
+  // );
+  
+  $form['existing']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save Variables'),
+  );
+
+  $form['new_variable']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save Variables'),
+  );
+  
+  return $form;
+}
+
+
+/**
+ * validate the submitted variables form
+ */
+function constants_admin_form_validate($form, &$form_state) {
+  
+  $values = &$form_state['values'];
+  $names = array();   // track to prevent duplicates
+  
+  foreach($values['constants'] as $key => $fields) {
+    // make sure all vars have a name
+    if (empty($fields['name'])) {
+      form_set_error("constants][${key}][name", t('All constants must have a name. To delete a constant, click its Delete checkbox.'));
+    }
+    // make sure name is valid (only alphanum & underscores)
+    elseif (! _constants_validate_name($fields['name'])) {
+      form_set_error("constants][${key}][name", t('Constant names can only contain alphanumeric characters and underscores.'));
+    }
+
+    // prevent duplicate names
+    if (! empty($fields['name'])) {
+      if (array_search($fields['name'], $names)!==FALSE) {
+        form_set_error("constants][${key}][name", t('There is already a constant called @name.', array('@name' => $fields['name'])));
+      }
+      else {
+        $names[] = $fields['name'];
+      }
+    }
+    
+  } // constants
+  
+  // new var w/ value but no name?
+  if (!empty($values['table_new']['new_constant']['value']) && empty($values['table_new']['new_constant']['name'])) {
+    form_set_error("table_new][new_constant][name", t('All constants must have a name.'));
+  }
+  
+  // new constant
+  $new_constant = &$values['table_new']['new_constant'];
+  if (! empty($new_constant['name'])) {
+    // make sure name is valid (only alphanum & underscores)
+    if (! _constants_validate_name($new_constant['name'])) {
+      form_set_error("table_new][new_constant][name", t('Constant names can only contain alphanumeric characters and underscores.'));
+    }
+    
+    // prevent duplicate names
+    if (array_search($new_constant['name'], $names)!==FALSE) {
+      form_set_error("table_new][new_constant][name", t('There is already a constant called @name.', array('@name' => $new_constant['name'])));
+    }
+    else {
+      $names[] = $new_constant['name'];
+    }
+    
+  } // new
+  
+}
+
+
+/**
+ * process the submitted variables form
+ */
+function constants_admin_form_submit($form, &$form_state) {
+  
+  $values = &$form_state['values'];
+  
+  foreach($values['constants'] as $key => $fields) {
+
+    // delete variables where name is changed (will be recreated with new name)
+    if ($fields['name'] !== $fields['prev_name']) {
+      constants_delete_variable($fields['name']);
+    }
+
+    // delete variables where delete checkbox is selected
+    if ($fields['delete'] == 1) {
+      constants_delete_variable($fields['name']);
+      drupal_set_message(t("Deleted constant ") . '<em>' . $fields['name'] . '</em>', 'status');
+    }
+    // [re]save all remaining variables
+    else {
+      constants_save_variable($fields['name'], $fields['value']);
+    }
+    
+  }
+  
+  // new variable?
+  if (! empty($values['table_new']['new_constant']['name'])) {
+    constants_save_variable($values['table_new']['new_constant']['name'], $values['table_new']['new_constant']['value']);
+  }
+      
+}
+
+/**
+ * get the constants from the variables table
+ * namespaced as CONSTANT:__
+ */
+function _constants_get_variables() {
+  $result = db_query("SELECT * from {variable} WHERE name like '" . CONSTANTS_VARIABLE_PREFIX . "%' ORDER BY name");
+  $vars = array();
+  while ($row = db_fetch_array($result)) {
+    // unserialize
+    $row['value'] = unserialize($row['value']);
+    
+    $vars[] = $row;
+  }
+  
+  return $vars;
+}
+
+
+/**
+ * [API function] get a particular constant
+ * @return value or NULL
+ */
+function constants_get_variable($name, $default=NULL) {
+  if (! empty($name)) {
+    return variable_get( _constants_variable_name($name), $default );
+  }
+  return NULL;
+}
+
+
+/**
+ * save a constant
+ */
+function constants_save_variable($name, $value) {
+  variable_set( _constants_variable_name($name), $value );
+}
+
+
+/**
+ * delete a constant
+ */
+function constants_delete_variable($name) {
+  variable_del( _constants_variable_name($name) );
+}
+
+
+/**
+ * convert a constant name to its namespaced variable name
+ */
+function _constants_variable_name($name) {
+  return CONSTANTS_VARIABLE_PREFIX . $name;
+}
+
+/**
+ * convert a namespaced variable name to its constant name
+ */
+function _constants_variable_unname($name) {
+  // verify the namespace
+  if (strpos($name, CONSTANTS_VARIABLE_PREFIX, 0) === 0) {    // prefix at beginning
+    return substr_replace($name, '', 0, strlen(CONSTANTS_VARIABLE_PREFIX));
+  }
+  return $name;   // if not in namespace, just pass along (so it works for all variables)
+}
+
+/**
+ * validate constant name:
+ * only allow alphanumeric & underscores
+ * (side effect: prevents misuse of 'CONSTANT:' keyword)
+ */
+function _constants_validate_name($name) {
+  if (preg_match('/[^a-zA-Z0-9_]/', $name)) {
+    return false;
+  }
+  return true;
+}
+
+
+/**
+ * theme function for variables table
+ * (adapted from themekey module)
+ */
+function theme_constants_table($form) {
+  $rows = array();
+  $header = isset($form['#header']) ? $form['#header'] : array();
+  $attributes = isset($form['#attributes']) ? $form['#attributes'] : array();
+
+  foreach (element_children($form) as $key => $element) {
+    $rows[$key] = array();
+    foreach (element_children($form[$element]) as $item) {
+      $rows[$key][] = drupal_render($form[$element][$item]);
+    }
+  }
+  
+    if (empty($rows)) {
+    $message = check_plain(isset($form['#empty']) ? $form['#empty'] : t('There are no items in the table.'));
+    $rows[] = array(array('data' => $message, 'colspan' => count($header), 'align' => 'center', 'class' => 'message'));
+  }
+
+  return count($rows) ? theme('table', $header, $rows, $attributes) : '';
+}

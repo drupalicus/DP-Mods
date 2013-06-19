@@ -1,0 +1,22 @@
+<?php
+/**
+ * Constants module
+ * by Ben Buckman (thebuckst0p)
+ *
+ * Install scripts
+ */
+ 
+ 
+/**
+ * run on first install
+ */
+// function constants_install() {
+// }
+
+
+
+/**
+ * run every time module is enabled
+ */
+// function constants_enable() {
+// }

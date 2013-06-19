@@ -1,0 +1,12 @@
+; $Id: hidden_widget.info,v 1.1 2010/07/05 11:53:38 gordon Exp $
+name = Hidden Widget
+description = Create a hidden CCK field in the node entry.
+package = CCK
+core = 6.x
+dependencies[] = content
+; Information added by drupal.org packaging script on 2010-07-05
+version = "6.x-1.0-alpha1"
+core = "6.x"
+project = "hidden_widget"
+datestamp = "1278332108"
+

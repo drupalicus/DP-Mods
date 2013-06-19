@@ -1,0 +1,63 @@
+<?php
+// $Id: hidden_widget.module,v 1.2 2010/07/05 12:13:45 gordon Exp $
+
+/**
+ * @file
+ * Allows CCK fields to be created which do not have any user interface.
+ */
+
+/**
+ * Implementation of hook_widget_info().
+ */
+function hidden_widget_widget_info() {
+  return array(
+    'hidden' => array(
+      'label' => t('Hidden'),
+      'field types' => array('text', 'number_integer', 'number_decimal', 'number_float', 'content_taxonomy'),
+      'multiple values' => CONTENT_HANDLE_MODULE,
+      'callbacks' => array(
+        'default value' => CONTENT_CALLBACK_DEFAULT,
+      )
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_widget().
+ */
+function hidden_widget_widget(&$form, &$form_state, $field, $items) {
+  $elements = array();
+  
+  $items+= array(0 => array());
+  
+  foreach ($items as $delta => $item) {
+    switch ($field['type']) {
+      case 'text':
+      case 'number_integer':
+      case 'number_decimal':
+      case 'number_float':
+      case 'content_taxonomy':
+        $elements[$delta]['value'] = array(
+          '#type' => 'value',
+          '#value' => isset($items[$delta]['value']) ? $items[$delta]['value'] : ($field['type'] == 'text' ? '' : 0),
+        );
+        break;
+      
+      case 'nodereference':
+        $elements[$delta]['nid'] = array(
+          '#type' => 'value',
+          '#value' => isset($items[$delta]['nid']) ? $items[$delta]['nid'] : 0,
+        );
+        break;
+      
+      case 'userreference':
+        $elements[$delta]['uid'] = array(
+          '#type' => 'value',
+          '#value' => isset($items[$delta]['uid']) ? $items[$delta]['uid'] : 0,
+        );
+        break;
+    }
+  }
+  
+  return $elements;
+}

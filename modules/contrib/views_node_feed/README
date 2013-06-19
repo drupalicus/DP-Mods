@@ -1,0 +1,21 @@
+How to use Views Node Feed:
+
+1. Install Views Node Feed at admin/build/modules
+2. Go to admin/settings/views_node_feed and create a node
+   feed to specify the format your feed will be in.
+3. Create a view that you will use to populate your feed
+   with nodes. You can sort and filter these nodes just
+   as you regularly would with views. The view should provide
+   a page.
+4. Add a "Feed" display by selecting "Feed" in the dropdown
+   at the upper left and then clicking "Add Display"
+5. Click "Style" in the basic settings column of your new feed 
+   and select "Views Node Feed" at the bottom of the page.
+   Click "Update"
+6. There should be a Settings icon next to "Style: Views Node Feed"
+   in the "Basic Settings" column.  Click that icon and select your feed. 
+   **Remember to click both "Update" and then "Save"**
+7. Go to the path you specified and view your feed!
+
+Note: views_node_feed no longer requires the /node_feed argument in order 
+to function.  The path you specified will work as specified

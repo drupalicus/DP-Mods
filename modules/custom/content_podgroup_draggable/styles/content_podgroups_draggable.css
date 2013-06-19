@@ -1,0 +1,245 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*
+ * ---------------------------------------
+ * Drag and Drop System
+ * ---------------------------------------
+ */ 
+
+.edit-mode-on .list-wrapper-title,
+.edit-mode-on .spotlight-wrapper-title {
+	background-color: #ccc;
+	color: #FF840A;
+	display: block;
+	opacity: 0.3;
+	padding: 0 10px;
+}
+
+.draggable {
+}
+
+.drag-hover {
+	background: #ddd;
+	background: url(../images/000000.gif) top left repeat-x, url(../images/000000.gif) top left repeat-y, url(../images/000000.gif) bottom right repeat-x, url(../images/000000.gif) bottom right repeat-y, #ddd;
+}
+
+.drag-hover-ancestor {
+	background: #ececec;
+	background: url(../images/dash_horizontal.gif) top left repeat-x, url(../images/dash_vertical.gif) top left repeat-y, url(../images/dash_horizontal.gif) bottom right repeat-x, url(../images/dash_vertical.gif) bottom right repeat-y, #ececec;
+}
+ 
+.drag-controls {
+	display: none;
+	height: 0;
+	overflow: visible;
+	position: relative;
+}
+
+.drag-hover > .drag-controls,
+.drag-hover-ancestor > .drag-controls {
+	display: block;
+}
+
+.drag-handle,
+.drag-edit {
+	background-position: top left;
+	background-repeat: no-repeat;
+	display: block;
+	height: 22px;
+	outline: none;
+	overflow: hidden;
+	text-indent: -9999px;
+	position: absolute;
+}
+
+.drag-handle {
+	background-image: url(../images/drag_handle.png) !important;
+	background-image: url(../images/drag_handle.gif);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	cursor: move;
+	left: 0px;
+	top: -22px;
+	width: 62px;
+}
+
+.drag-handle:hover {
+	background-position: 0 -22px;
+}
+
+.drag-edit {
+	background-image: url(../images/edit_control.png) !important;
+	background-image: url(../images/edit_control.gif);
+	right: 0px;
+	top: 0px;
+	width: 28px;
+}
+
+.draggable .tab-pane {
+	border: 1px solid #d3d3d3;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.drag-target {
+	background: url(../images/drop_target_bg.gif) top left repeat-x;
+	display: block;
+	height: 14px;
+	overflow: hidden;
+}
+
+.drag-target-active {
+	background-position: bottom left;
+}
+
+.drag-target span {
+	background: url(../images/drop_target_text.gif) top center no-repeat;
+	display: block;
+	height: 14px;
+	outline: none;
+	overflow: hidden;
+	text-indent: -9999px;
+}
+
+#drag-helper {
+	background-image: url(../images/drag_handle.png) !important;
+	background-image: url(../images/drag_handle.gif);
+	background-position: bottom left;
+	background-repeat: no-repeat;
+	display: block;
+	height: 22px;
+	overflow: hidden;
+	outline: none;
+	text-indent: -9999px;
+	width: 62px;
+}
+
+/*
+ * ---------------------------------------
+ * Edit Right Flyout
+ * ---------------------------------------
+ */
+#edit-side {
+	left: 0;
+	position: fixed;
+	top: 80px;
+  z-index:998;
+}
+
+#edit-side-top {
+	background: url(../images/edit_side.png) top left no-repeat !important;
+	background: url(../images/edit_side.gif) top left no-repeat;
+	height: 8px;
+	width: 100px;
+}
+
+#edit-side-bottom {
+	background: url(../images/edit_side.png) bottom left no-repeat !important;
+	background: url(../images/edit_side.gif) bottom left no-repeat;
+	height: 8px;
+	width: 100px;
+}
+
+#edit-side-main {
+	background: url(../images/edit_side.png) 0 -8px no-repeat !important;
+	background: url(../images/edit_side.gif) 0 -8px no-repeat;
+	max-height: 123px;
+	overflow: hidden;
+	padding-left: 7px;
+	padding-right: 13px;
+	width: 80px;
+}
+
+#edit-side-title {
+	background: url(../images/edit_side_separator.gif) bottom left no-repeat;
+	cursor: move;
+	height: 24px;
+	overflow: hidden;
+}
+
+#edit-side-title h3 {
+	background-image: url(../images/edit_side_light.gif);
+	background-position: right top;
+	background-repeat: no-repeat;
+	color: #fff;
+	font-size: 12px;
+	font-weight: bold;
+	height: 22px;
+	margin: 0;
+	line-height: 22px;
+}
+
+.edit-mode-on #edit-side-title h3 {
+	background-position: right bottom;
+}
+
+#edit-side-main a {
+	background-repeat: no-repeat;
+	display: block;
+	outline: none;
+	overflow: hidden;
+	position: absolute;
+	text-indent: -9999px;
+}
+
+#edit-side-on-off {
+	height: 35px;
+	position: relative;
+}
+
+#edit-side-off {
+	background: url(../images/edit_side_on_off.gif) top left no-repeat;
+	height: 23px;
+	left: 0;
+	top: 6px;
+	width: 39px;
+}
+
+#edit-side-on {
+	background: url(../images/edit_side_on_off.gif) top right no-repeat ;
+	height: 23px;
+	left: 43px;
+	top: 6px;
+	width: 39px;
+}
+
+.edit-mode-on #edit-side-off { background-position: bottom left; }
+.edit-mode-on #edit-side-on { background-position: bottom right; }
+
+#edit-side-save {
+	background: url(../images/edit_side_separator.gif) top left no-repeat;
+	display: none;
+	height: 64px;
+	position: relative;
+}
+
+.edit-mode-unsaved #edit-side-save {
+	display: block;
+}
+
+#edit-side-btn-save,
+#edit-side-btn-cancel {
+	background-image: url(../images/edit_side_buttons.gif);
+	height: 23px;
+	left: 0;
+	width: 80px;
+}
+
+#edit-side-btn-save {
+	background-position: top left;
+	top: 8px;
+}
+
+#edit-side-btn-save:hover {
+	background-position: top right;
+}
+
+#edit-side-btn-cancel {
+	background-position: bottom left;
+	top: 37px;
+}
+
+#edit-side-btn-cancel:hover {
+	background-position: bottom right;
+}

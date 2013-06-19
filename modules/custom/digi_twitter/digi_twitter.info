@@ -1,0 +1,13 @@
+name = Digi Twitter
+description = The custom digitaria twitter module.
+package = Custom
+core = 6.x
+version = 1.0
+dependencies[] = content
+dependencies[] = imagefield
+dependencies[] = nodereference
+dependencies[] = statistics
+dependencies[] = text
+dependencies[] = views_node_feed
+dependencies[] = imagecache
+dependencies[] = digitaria_utility

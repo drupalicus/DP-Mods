@@ -1,0 +1,6 @@
+name = CCK Time
+description = Defines a time field type.
+dependencies[] = content
+dependencies[] = date_api
+package = CCK
+core = 6.x

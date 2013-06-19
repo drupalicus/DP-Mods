@@ -1,0 +1,39 @@
+$context = new stdClass;
+$context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+$context->api_version = 3;
+$context->name = 'homepage';
+$context->description = '';
+$context->tag = '';
+$context->conditions = array(
+  'path' => array(
+    'values' => array(
+      'saic_homepage' => 'saic_homepage',
+    ),
+  ),
+);
+$context->reactions = array(
+  'block' => array(
+    'blocks' => array(
+      'saic_homepage-saic_homepage_rotator' => array(
+        'module' => 'saic_homepage',
+        'delta' => 'saic_homepage_rotator',
+        'region' => 'content',
+        'weight' => 0,
+      ),
+      'saic_homepage-saic_homepage_twitter' => array(
+        'module' => 'saic_homepage',
+        'delta' => 'saic_homepage_twitter',
+        'region' => 'content',
+        'weight' => 1,
+      ),
+      'saic_homepage-saic_homepage_callouts' => array(
+        'module' => 'saic_homepage',
+        'delta' => 'saic_homepage_callouts',
+        'region' => 'content',
+        'weight' => 2,
+      ),
+    ),
+  ),
+);
+$context->condition_mode = 0;
+

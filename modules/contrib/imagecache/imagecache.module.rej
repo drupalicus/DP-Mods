@@ -1,0 +1,23 @@
+***************
+*** 899,905 ****
+      $ours += array('width' => $image['width'], 'height' => $image['height']);
+    }
+  
+    return '<img' . drupal_attributes($ours + $attributes) . '/>';
+  }
+  
+  /**
+--- 899,911 ----
+      $ours += array('width' => $image['width'], 'height' => $image['height']);
+    }
+  
++ if (!is_array($attributes)) {
++   $attributes = array();
++   file_put_contents('/tmp/debug.txt', print_r($attributes, true));
++ }
++ 
+    return '<img' . drupal_attributes($ours + $attributes) . '/>';
++   //return '<img' . drupal_attributes($ours) . '/>';
+  }
+  
+  /**

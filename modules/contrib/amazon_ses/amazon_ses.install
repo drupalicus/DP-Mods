@@ -1,0 +1,36 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * The installation instructions for Amazon SES.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function amazon_ses_install() {
+  variable_set('amazon_ses_on', 0);
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function amazon_ses_uninstall() {
+  variable_del('amazon_ses_on');
+  variable_del('amazon_ses_filter_format');
+  variable_del('amazon_ses_from');
+  variable_del('amazon_ses_test_address');
+  variable_del('amazon_ses_test_body');
+  variable_del('amazon_ses_debugging');
+  variable_del('smtp_library');
+}
+
+/**
+ * Implementation of hook_disable().
+ */
+function amazon_ses_disable() {
+  variable_set('mail_system', array('default-system' => 'DefaultMailSystem'));
+  variable_set('amazon_ses_on', 0);
+  variable_del('smtp_library');
+}

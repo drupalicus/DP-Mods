@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Implementation of hook_menu().
+ */
+function saic_rtmp_settings_menu() {
+  $items['admin/settings/saic-rtmp-settings'] = array(
+    'title' => 'saic RTMP Settings',
+    'description' => 'Allows up to manage a list of approved RTMP servers used to server video content',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('saic_rtmp_settings_form'),
+    'access callback' => 'saic_rtmp_settings_access',
+    'access arguments' => array('administer saic rtmp settings'),
+    'type' => MENU_NORMAL_ITEM
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_access().
+ */
+function saic_rtmp_settings_access() {
+  return user_access('access rtmp settings');
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function saic_rtmp_settings_perm() {
+  return array('access rtmp settings');
+}
+
+function saic_rtmp_settings_form($form_state) {
+  $form['saic_rtmp_servers'] = array(
+    '#type' => 'textarea',
+    '#title' => t('List of approved RTMP servers'), 
+    '#default_value' =>  variable_get('saic_rtmp_servers', ''), 
+    '#description' => t('Please enter each RTMP server on its own line.  Each entry should start with rtmp:// and it should not include the trailing slash.'),
+  );
+  return system_settings_form($form);
+}
+
+function saic_rtmp_settings_nodeapi(&$node, $op, $teaser, $page) {
+  switch ($op) {
+    case 'load':
+      if ($node->type == 'video') {
+        _saic_rtmp_settings_set_video_stream_url($node);
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+function _saic_rtmp_settings_set_video_stream_url(&$node){
+  $rtmp_servers_string = variable_get('saic_rtmp_servers', '');
+  $rtmp_servers = explode("\n", $rtmp_servers_string);
+
+  foreach($node->field_video_stream_url as $id => $video) {
+    foreach($rtmp_servers as $server) {
+      $server = trim($server);
+      if (strpos(trim($video['value']), $server) !== FALSE) {
+        $node->field_video_stream_url[$id]['server'] = $server;
+        $node->field_video_stream_url[$id]['filepath'] = substr($video['value'], strlen($server));
+        return;
+      }
+    }
+  }
+}

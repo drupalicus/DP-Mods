@@ -1,0 +1,54 @@
+<?php
+// $Id: node_menu_parent.module,v 1.1.2.1 2010/08/25 23:59:14 jcarnett Exp $
+
+/**
+ * @file
+ * Allows the menu parent field default to be set to a specific menu item per content type.
+ */
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function node_menu_parent_form_alter(&$form, $form_state, $form_id) {
+  // Add the auto menu parent fieldset to the content type form
+  if ($form_id == 'node_type_form' && isset($form['#node_type'])) {
+    $setting = node_menu_parent_setting($form['#node_type']->type);
+    $form['node_menu_parent'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Default Menu Parent'),
+      '#weight' => 2,
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+    );
+    $options = menu_parent_options(menu_get_menus(), array('mlid' => 0));
+    if (!isset($options[$setting])) {
+      $setting = variable_get('menu_default_node_menu', 'primary-links') .':0';
+    }
+    $form['node_menu_parent']['nmp'] = array(
+      '#type' => 'select',
+      '#title' => t('Default parent item'),
+      '#default_value' => $setting,
+      '#options' => $options,
+      '#description' => t('The maximum depth for an item and all its children is fixed at !maxdepth. Some menu items may not be available as parents if selecting them would exceed this limit.', array('!maxdepth' => MENU_MAX_DEPTH)),
+      '#attributes' => array('class' => 'menu-title-select'),
+    );
+  }
+  // Set the default menu parent on the node edit form
+  elseif (isset($form['#node']) && !$form['#node']->nid && $form_id == $form['#node']->type .'_node_form' && isset($form['menu']['parent'])) {
+    $setting = node_menu_parent_setting($form['#node']->type);
+    if (isset($form['menu']['parent']['#options'][$setting])) {
+      $form['menu']['parent']['#default_value'] = $setting;
+    }
+  }
+  // Add a message to the core default node menu field
+  else if ($form_id == 'menu_configure' && isset($form['menu_default_node_menu'])) {
+    $form['menu_default_node_menu']['#description'] .= ' '. t('You can choose specific menu parents per content type on the <a href="@content-type-page">content type settings pages</a>.', array('@content-type-page' => url('admin/content/types')));
+  }
+}
+
+/**
+ * Get the node_menu_parent setting for the given content type.
+ */
+function node_menu_parent_setting($type) {
+  return variable_get('nmp_'. $type, variable_get('menu_default_node_menu', 'primary-links') .':0');
+}

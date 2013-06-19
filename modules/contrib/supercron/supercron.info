@@ -1,0 +1,6 @@
+; $Id: supercron.info,v 1.1 2009/06/05 03:03:49 63reasons Exp $
+name = SuperCron
+description = Get absolute control over Cron tasks
+core = 6.x
+version = 6.x-1.0
+

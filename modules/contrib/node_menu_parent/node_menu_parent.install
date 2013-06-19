@@ -1,0 +1,11 @@
+<?php
+// $Id: node_menu_parent.install,v 1.1 2010/08/13 06:19:44 jcarnett Exp $
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function node_menu_parent_uninstall() {
+  foreach (node_get_types('names') as $type => $type_name) {
+    variable_del('nmp_'. $type);
+  }
+}

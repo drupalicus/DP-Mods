@@ -1,0 +1,34 @@
+<?php
+
+//////////////////////////////// DRUPAL HOOK AND API FUNCTION /////////////////////////// 
+function creeper_init(){
+  @(include_once('sdk/sdk.class.php')) or _creeper_awsdk_not_found();
+}
+
+/**
+ * Implementation of hook_menu()
+ */
+function creeper_menu() {
+  $items = array();
+  $items['admin/settings/creeper'] = array(
+    'title' => 'AWS SDK for PHPSettings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('creeper_admin_settings'),
+    'description' => t('Configure AWS SDK for PHP settings'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'creeper.admin.inc'
+    );
+  return $items;
+}
+
+/**
+ * Provide an error message if the aws sdk library is not found.
+ */
+ 
+function _creeper_awsdk_not_found(){
+  global $awsdkcheckalready;
+  if(!$awsdkcheckalready) {
+    $awsdkcheckalready = TRUE;
+    drupal_set_message(t('The <a href="@url" target="_blank">AWS SDK PHP library</a> was not found. Please install it into %creeperdir.', array('@url' => 'http://aws.amazon.com/sdkforphp/', '%creeperdir' => drupal_get_path('module', 'creeper') . '/sdk')), 'error');
+  }
+}

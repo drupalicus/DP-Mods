@@ -1,0 +1,209 @@
+<?php
+// $Id: hiddenwidget.module,v 1.69.2.23.2.4 2009/09/11 09:03:06 markuspetrux Exp $
+
+/**
+ * @file
+ * Defines hidden widget for text and numeric fields.
+ */
+
+/**
+ * Implementation of hook_widget_info().
+ *
+ * We need custom handling of multiple values because we need
+ * to combine them into a options list rather than display
+ * multiple elements. We will use the content module's default
+ * handling for default values.
+ *
+ * Callbacks can be omitted if default handing is used.
+ * They're included here just so this module can be used
+ * as an example for custom modules that might do things
+ * differently.
+ */
+function hiddenwidget_widget_info() {
+
+  return array(
+    'hiddenwidget' => array(
+      'label' => t('Hidden field'),
+      'field types' => array('text', 'number_integer', 'number_decimal', 'number_float'),
+      'multiple values' => CONTENT_HANDLE_CORE,
+      'callbacks' => array(
+        'default value' => CONTENT_CALLBACK_DEFAULT,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_widget_settings().
+ */
+function hiddenwidget_widget_settings($op, $widget) {
+  switch ($op) {
+    case 'form':
+      $form = array();
+      $form['save_hidden_field_on_update'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Save the hidden field on node saves?'),
+        '#default_value' => TRUE,
+        '#required' => FALSE,
+      );
+      $form['prepopulate_field_with_default'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Prepopulate the field with the default value when the field is empty?'),
+        '#default_value' => FALSE,
+        '#required' => FALSE,
+      );
+      return $form;
+
+    case 'save':
+      return array('save_hidden_field_on_update', 'prepopulate_field_with_default');
+  }
+}
+
+/**
+ * Implementation of hook_widget().
+ *
+ * Attach a single form element to the form. It will be built out and
+ * validated in the callback(s) listed in hook_elements. We build it
+ * out in the callbacks rather than here in hook_widget so it can be
+ * plugged into any module that can provide it with valid
+ * $field information.
+ *
+ * Content module will set the weight, field name and delta values
+ * for each form element. This is a change from earlier CCK versions
+ * where the widget managed its own multiple values.
+ *
+ * If there are multiple values for this field, the content module will
+ * call this function as many times as needed.
+ *
+ * @param $form
+ *   the entire form array, $form['#node'] holds node information
+ * @param $form_state
+ *   the form_state, $form_state['values'][$field['field_name']]
+ *   holds the field's form values.
+ * @param $field
+ *   the field array
+ * @param $items
+ *   an array of default values for this element
+ * @param $delta
+ *   the order of this item in the array of subelements (0, 1, 2, etc)
+ *
+ * @return
+ *   the form item for a single element for this field
+ */
+function hiddenwidget_widget(&$form, &$form_state, $field, $items, $delta = NULL) {
+  $element = array(
+    '#type' => $field['widget']['type'],
+    '#default_value' => isset($items[$delta]) ? $items[$delta] : $field['widget']['default_value'][0],
+  );
+  return $element;
+}
+
+/**
+ * Implementation of hook_form_alter
+ *
+ * Implemented hook_form_alter to change the default value field on the field
+ * edit page from the hidden widget to a standard text field.
+ */
+function hiddenwidget_form_alter($form, $form_state, $form_id) {
+  if ($form_id == 'content_field_edit_form' && $form['widget']['default_value_fieldset']['default_value_widget'][$form['field_name']['#value']][0]['#type'] == 'hiddenwidget') {
+    $form['widget']['default_value_fieldset']['default_value_widget'][$form['field_name']['#value']][0]['#type'] = 'text_textfield';
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function hiddenwidget_theme() {
+  return array(
+    'hiddenwidget' => array(
+      'arguments' => array('element' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implementation of FAPI hook_elements().
+ *
+ * Any FAPI callbacks needed for individual widgets can be declared here,
+ * and the element will be passed to those callbacks for processing.
+ *
+ * Drupal will automatically theme the element using a theme with
+ * the same name as the hook_elements key.
+ */
+function hiddenwidget_elements() {
+  return array(
+    'hiddenwidget' => array(
+      '#input' => TRUE,
+      '#columns' => array('value'), '#delta' => 0,
+      '#process' => array('hiddenwidget_process'),
+      ),
+    );
+}
+
+/**
+ * Process an individual element.
+ *
+ * Build the form element. When creating a form using FAPI #process,
+ * note that $element['#value'] is already set.
+ *
+ * The $fields array is in $form['#field_info'][$element['#field_name']].
+ */
+function hiddenwidget_process($element, $edit, &$form_state, $form) {
+  $field = $form['#field_info'][$element['#field_name']];
+  $field_key  = $element['#columns'][0];
+
+  $element[$field_key] = array(
+    '#type' => 'hidden',
+    '#description' => $element['#description'],
+    '#required' => isset($element['#required']) ? $element['#required'] : $field['required'],
+    '#multiple' => isset($element['#multiple']) ? $element['#multiple'] : $field['multiple'],
+    '#default_value' => isset($element['#value'][$field_key]) ? $element['#value'][$field_key] : NULL,
+  );
+
+  // Make sure we don't wipe out element validation added elsewhere.
+  if (empty($element['#element_validate'])) {
+    $element['#element_validate'] = array();
+  }
+
+  // The following switch is taken from the cck number.module file... it adds validation for number fields
+  switch ($field['type']) {
+    case 'number_float':
+      $element['#element_validate'][] = 'number_float_validate';
+      break;
+    case 'number_integer':
+      $element['#element_validate'][] = 'number_integer_validate';
+      break;
+    case 'number_decimal':
+      $element['#element_validate'][] = 'number_decimal_validate';
+      $element['#decimal'] = isset($field['decimal']) ? $field['decimal'] : '.';
+      $element['#precision'] = isset($field['precision']) ? $field['precision'] : 10;
+      $element['#scale'] = isset($field['scale']) ? $field['scale'] : 2;
+      break;
+  }
+
+  // Make sure field info will be available to the validator which
+  // does not get the values in $form.
+
+  // TODO for some reason putting the $field array into $form_state['storage']
+  // causes the node's hook_form_alter to be invoked twice, garbling the
+  // results. Need to investigate why that is happening (a core bug?), but
+  // in the meantime avoid using $form_state['storage'] to store anything.
+  $form_state['#field_info'][$field['field_name']] = $field;
+
+  return $element;
+}
+
+/**
+ * FAPI themes for hiddenwidget.
+ *
+ * The select, checkboxes or radios are already rendered by the
+ * select, checkboxes, or radios themes and the HTML output
+ * lives in $element['#children']. Override this theme to
+ * make custom changes to the output.
+ *
+ * $element['#field_name'] contains the field name
+ * $element['#delta]  is the position of this element in the group
+ */
+function theme_hiddenwidget($element) {
+  return $element['#children'];
+}

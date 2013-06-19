@@ -1,0 +1,10 @@
+name = "Creeper" 
+description = "Module for integrating the Cloudfusion library." 
+core ="6.x"
+
+; Information added by drupal.org packaging script on 2011-02-27
+version = "6.x-1.6"
+core = "6.x"
+project = "creeper"
+datestamp = "1298810167"
+

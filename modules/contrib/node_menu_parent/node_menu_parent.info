@@ -1,0 +1,11 @@
+; $Id: node_menu_parent.info,v 1.1 2010/08/13 06:19:44 jcarnett Exp $
+name = Node Menu Parent
+description = Sets the menu parent default to a specific menu item per content type
+core = 6.x
+
+; Information added by drupal.org packaging script on 2010-08-26
+version = "6.x-1.1"
+core = "6.x"
+project = "node_menu_parent"
+datestamp = "1282781208"
+

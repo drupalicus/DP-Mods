@@ -1,0 +1,71 @@
+<?php
+
+
+function dqx_adminmenu_init() {
+  if (user_access('use dqx_adminmenu')) {
+    $module_path = drupal_get_path('module', 'dqx_adminmenu');
+    drupal_add_js(array('dqx_adminmenu' => array('destination' => drupal_get_destination())), 'setting');
+    drupal_add_js($module_path . '/js/dqx_adminmenu.js');
+    drupal_add_js($module_path . '/js/dqx_adminmenu.quickfind.js');
+    drupal_add_js($module_path . '/js/dqx_adminmenu.directional.js');
+    // drupal_add_js($module_path . '/js/dqx_adminmenu.civicrm.js');
+    drupal_add_css($module_path . '/css/dqx_adminmenu.css');
+    $json_url = url('admin/dqx-adminmenu-data-json', array('query' => array(
+      'timestamp' => variable_get('dqx_adminmenu_timestamp', 0),
+      'uid' => $GLOBALS['user']->uid,
+      'lang' => $GLOBALS['language']->language,
+    )));
+    $settings = array('json_url' => $json_url);
+    $settings = array('dqx_adminmenu' => $settings);
+    drupal_add_js($settings, 'setting');
+  }
+}
+
+
+function dqx_adminmenu_perm() {
+  return array(
+    'use dqx_adminmenu',
+  );
+}
+
+
+function dqx_adminmenu_menu() {
+  $items = array();
+  $items['admin/dqx-adminmenu-data.json'] = $items['admin/dqx-adminmenu-data-json'] = array(
+    'access callback' => TRUE,
+    'page callback' => 'dqx_adminmenu_json',
+    'type' => MENU_CALLBACK,
+    'file' => 'dqx_adminmenu.inc',
+  );
+  $items['admin/dqx-adminmenu/toggle-modules'] = array(
+    'page callback' => 'dqx_adminmenu_toggle_modules',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+    'file' => 'dqx_adminmenu.actions.inc',
+  );
+  $items['admin/dqx-adminmenu/flush-cache'] = array(
+    'page callback' => 'dqx_adminmenu_flush_cache',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+    'file' => 'dqx_adminmenu.actions.inc',
+  );
+  $items['admin/settings/dqx-adminmenu/debug'] = array(
+    'title' => 'DQX AdminMenu - Debug page',
+    'page callback' => 'dqx_adminmenu_debug_page',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+    'file' => 'dqx_adminmenu.debug.inc',
+  );
+  return $items;
+}
+
+
+function dqx_adminmenu_menu_alter(&$items) {
+  // set a timestamp for client-side cache
+  variable_set('dqx_adminmenu_timestamp', time());
+}
+
+
+
+
+

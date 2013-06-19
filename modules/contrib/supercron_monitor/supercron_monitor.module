@@ -1,0 +1,195 @@
+<?php
+include_once('supercron_monitor.subscriptions.inc');
+/**
+ * implementation of hook_menu
+ */
+function supercron_monitor_menu() {
+  $items['admin/settings/supercron/monitor'] = array(
+    'title' => t('Monitor'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('supercron_monitor_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_LOCAL_TASK,
+    'parent' => 'admin/settings/supercron',
+    'weight' => 20
+    );
+  // User pages, will be disabled by default
+  $items['user/%user/notifications/supercron'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => FALSE, 
+    'title' => 'Supercron',
+    'page callback' => 'supercron_monitor_user_subscriptions',
+    'page arguments' => array(1),
+    'weight' => 10,
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_perm()
+ */
+function supercron_monitor_perm() {
+  return array('subscribe to supercron notifications');
+}
+
+/**
+ * admin settings form for supercron monitor
+ */
+function supercron_monitor_form(&$form_state){
+  $form = array();
+
+  $modules = supercron_modules_list();
+  supercron_add_new_modules($modules);
+  supercron_monitor_add_new_modules();
+
+  $form['description'] = array(
+    '#type' => 'markup',
+    '#value' => 'Setup alerts for supercron: When a task is overdue by the number of minutes listed in the "Threshold settings" column, a notification will be sent.',
+  );
+
+  $sql = 'select s.id, s.module_name, s.timestamp, sm.last_exec_warn
+          from {supercron_enabled_mods} s
+          join {supercron_monitor} sm on sm.id = s.id
+          order by s.weight;';
+
+  $result = db_query($sql);
+  //add one row for each module using supercron
+  while ($row = db_fetch_object($result)) {
+    $form['rows'][$row->id]['data'] = array(
+      '#type' => 'value',
+      '#value' => $row->module_name,
+    );
+    $form['rows'][$row->id]['timestamp']=array(
+      '#type' => 'value',
+      '#value' => $row->timestamp==0 ? t('Never successfully ran') : strftime("%Y-%m-%d %H:%M:%S", $row->timestamp),
+    );
+    $form['rows'][$row->id]['last_exec_warn-'. $row->id]=array(
+      '#type' => 'textfield',
+      '#default_value' => $row->last_exec_warn,
+      '#size' => 10,
+      '#maxlength' => 10,
+      '#required' => false,
+    );
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save changes'),
+  );
+
+  return $form;
+}
+
+/**
+ * submit function for admin settings form
+ */
+function supercron_monitor_form_submit($form, &$form_state) {
+
+  $last_exec_warn = array();
+  
+  foreach ($form_state['values'] as $key => $data) {
+    if (strpos($key, 'last_exec_warn-') === 0) {
+      $id = drupal_substr($key, drupal_strlen('last_exec_warn-'));
+      $last_exec_warn[$id] = $form_state['values'][$key];
+    }
+  }
+  
+  foreach ($last_exec_warn as $module_id => $value) {
+    db_query("update {supercron_monitor} set last_exec_warn = %d where id = %d", $last_exec_warn[$module_id],  $module_id);
+  }
+
+}
+
+/**
+ * implementation of hook_theme
+ */
+function supercron_monitor_theme() {
+  return array(
+    'supercron_monitor_form' => array(
+      'arguments' => array('form' => NULL),
+      ),
+    );
+}
+
+/**
+ * theme function for supercron monitor form
+ */
+function theme_supercron_monitor_form($form) {
+  
+  $output = drupal_render($form['description']);  
+  $header = array('Name', 'Last called', 'Threshold settings (min)');
+  
+  foreach ($form['rows'] as $id => $row) {  
+    if (isset($row['data'])) {
+      $this_row=array();
+      $this_row[] = check_plain($row['data']['#value']);
+      $this_row[] = check_plain($row['timestamp']['#value']);
+      $this_row[] = drupal_render($row['last_exec_warn-'. $id]);
+
+      $table_rows[] = array('data' => $this_row);
+      unset($form['rows'][$id]);
+    }
+  }
+
+  $output .= theme('table', $header, $table_rows, array('id' => 'supercron-monitor-table'));
+  $output .= drupal_render($form);
+  return $output;
+}
+
+/**
+ * implementation of hook_cron
+ */
+function supercron_monitor_cron(){
+  $sql = 'select s.id, s.module_name, s.timestamp, sm.last_exec_warn
+          from {supercron_enabled_mods} s
+          join {supercron_monitor} sm on sm.id = s.id
+          order by s.weight;';
+  $result = db_query($sql);
+
+  //check each module, add see if it has not run within the specified minutes
+  while ($row = db_fetch_object($result)) {
+    if($row->last_exec_warn > 0){
+  
+      $recipient = 'mike.dorrell@digitaria.com';
+      $time_since = round((time() - $row->timestamp) / 60);
+      if($time_since > $row->last_exec_warn){
+        $message = 'Supercron for ' . $row->module_name . ' has not run for ' . $time_since . ' minutes.';
+        watchdog('supercron_mon', $message, array(WATCHDOG_ALERT));
+
+        $mail = array();
+        $mail['subject'] = t('Supercron monitor warning: ' . $row->module_name);
+        $mail['body'] = $message;
+        $mail['headers']['From'] = variable_get('site_mail', '');
+        $mail['to'] = $recipient;
+     //   $result = messaging_phpmailer_drupal_mail($mail);
+
+        $event = array(
+          'module' => 'notifications',
+          'oid' => $row->id,
+          'type' => 'supercron',
+          'action' => 'supercron',
+          'params' => array('supercron_id' => $row->id),      
+        );      
+
+        notifications_event($event);
+
+      }
+    }
+  }
+}
+
+/**
+ * if there are any new modules add them to supercron_monitor table
+ */
+function supercron_monitor_add_new_modules(){
+  $sql = 'insert into supercron_monitor(id, last_exec_warn)
+          select s.id, 0
+          from {supercron_enabled}_mods s
+          left {join supercron_monitor} sm on sm.id = s.id
+          where sm.id is null;';
+
+  db_query($sql);
+}
+
+
+?>

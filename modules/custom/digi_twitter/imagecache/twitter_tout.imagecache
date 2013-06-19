@@ -1,0 +1,18 @@
+$presets['twitter_tout'] = array (
+  'presetname' => 'twitter_tout',
+  'actions' => 
+  array (
+    0 => 
+    array (
+      'weight' => '0',
+      'module' => 'imagecache',
+      'action' => 'imagecache_scale',
+      'data' => 
+      array (
+        'width' => '205',
+        'height' => '',
+        'upscale' => 1,
+      ),
+    ),
+  ),
+);

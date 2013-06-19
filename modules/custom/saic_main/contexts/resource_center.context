@@ -1,0 +1,39 @@
+$context = new stdClass;
+$context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+$context->api_version = 3;
+$context->name = 'resource_center';
+$context->description = '';
+$context->tag = '';
+$context->conditions = array(
+  'path' => array(
+    'values' => array(
+      'news/resources' => 'news/resources',
+    ),
+  ),
+);
+$context->reactions = array(
+  'block' => array(
+    'blocks' => array(
+      'saic_main-saic_contact_us' => array(
+        'module' => 'saic_main',
+        'delta' => 'saic_contact_us',
+        'region' => 'right_content',
+        'weight' => 0,
+      ),
+      'saic_main-saic_share_page' => array(
+        'module' => 'saic_main',
+        'delta' => 'saic_share_page',
+        'region' => 'right_content',
+        'weight' => 1,
+      ),
+      'saic_resource_center-block-resource_top' => array(
+        'module' => 'saic_resource_center',
+        'delta' => 'block-resource_top',
+        'region' => 'content_top',
+        'weight' => 0,
+      ),
+    ),
+  ),
+);
+$context->condition_mode = 0;
+

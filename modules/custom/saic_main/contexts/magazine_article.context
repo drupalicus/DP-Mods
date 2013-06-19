@@ -1,0 +1,48 @@
+$context = new stdClass;
+$context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+$context->api_version = 3;
+$context->name = 'magazine_article';
+$context->description = '';
+$context->tag = '';
+$context->conditions = array(
+  'node' => array(
+    'values' => array(
+      'magazine_article' => 'magazine_article',
+    ),
+    'options' => array(
+      'node_form' => '1',
+    ),
+  ),
+);
+$context->reactions = array(
+  'block' => array(
+    'blocks' => array(
+      'saic_magazine-saic_magazine_article_header' => array(
+        'module' => 'saic_magazine',
+        'delta' => 'saic_magazine_article_header',
+        'region' => 'content_top',
+        'weight' => 0,
+      ),
+      'saic_magazine-saic_magazine_article_contents' => array(
+        'module' => 'saic_magazine',
+        'delta' => 'saic_magazine_article_contents',
+        'region' => 'right_content',
+        'weight' => 0,
+      ),
+      'saic_magazine-saic_magazine_custom_block' => array(
+        'module' => 'saic_magazine',
+        'delta' => 'saic_magazine_custom_block',
+        'region' => 'right_content',
+        'weight' => 1,
+      ),
+      'saic_main-saic_share_page' => array(
+        'module' => 'saic_main',
+        'delta' => 'saic_share_page',
+        'region' => 'right_content',
+        'weight' => 2,
+      ),
+    ),
+  ),
+);
+$context->condition_mode = 0;
+

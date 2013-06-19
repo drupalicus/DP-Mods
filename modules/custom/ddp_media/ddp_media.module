@@ -1,0 +1,646 @@
+<?php
+
+define("LAST_RUN_VAR", 'ddp_media_last_run');
+
+function convert_ms($time_in){
+   $seconds=($time_in/1000)%60;
+   $minutes=($time_in/(1000*60))%60;
+   $hours=($time_in/(1000*60*60))%24;
+
+   $time_array[0] = $seconds;
+   $time_array[1] = $minutes;
+   $time_array[2] = $hours;
+
+   return $time_array;
+}
+
+
+
+function ddp_media_cron() {ddp_media_create_nodes(); }
+
+function ddp_media_create_nodes() {
+  $last_run =  variable_get(LAST_RUN_VAR,'');
+  // Update all
+  //$last_run ='';
+  $assets = ddp_media_get_assets($last_run);
+  //dsm($assets);
+  
+  if(count($assets) > 0) {
+    foreach($assets as $asset) {
+       if($asset['type'] == 'Image') {
+          _create_image($asset);
+        }
+       else if($asset['type'] == 'Audio') {
+        _create_audio($asset);
+       }
+       else if($asset['type'] == 'Video') {
+        _create_video($asset);
+       }
+    }
+    variable_set(LAST_RUN_VAR, date('c', time()));
+  } else {
+    return false;
+  }
+}
+
+function ddp_media_get_assets($last_run = '') {
+  $params['include_deleted'] = 0;
+
+  switch(TRUE) {
+    case ($last_run != ''):
+      $params['updated_since'] = $last_run;
+      break;
+ }
+
+  $list = ddp_asset_list($params,true);
+
+  return $list;
+}
+
+function _create_video($asset) {
+  global $user;
+  $tags = explode(',', $asset['tags']);
+  $tags = implode(', ', $tags);
+  $time_duration = convert_ms($asset['duration']);
+  $node_type = 'video';
+  $taxonomies = taxonomy_get_vocabularies();
+  foreach($taxonomies as $taxonomy) {
+    if(strtolower($taxonomy->name) == 'content tags') {
+      $tax_id = $taxonomy->vid;
+      break;
+    }
+  }
+
+  // Look for existing docs by GUID
+  $query = 'SELECT nid, vid, field_ddp_video_updated_value FROM {content_type_video} WHERE field_ddp_video_guid_value = "%s" order by vid desc limit 1';
+  $result = db_fetch_array(db_query($query, (string)$asset['guid']));
+  $expired = FALSE;
+
+  if(!empty($asset['expires_at']) && strtotime($asset['expires_at']) < time()) {
+    $expired = TRUE;
+  }
+  $conv_found = false;
+
+  $http_url = $asset['cloudfront_http_url'][0];
+
+   if($asset['conversions']['conversion'] && !empty($asset['conversions']['conversion']) && is_array($asset['conversions'])){
+     foreach($asset['conversions'] as $conversion){
+       foreach($conversion as $conversion_detail){
+            if(!empty($conversion_detail['name']) && substr_count ('video_wall', $conversion_detail['name']) != false){
+               $node->field_video_stream_url = array(
+                   array(
+                     'value' =>  trim($conversion_detail['cloudfront_streaming_url']),
+                   ),
+                 );
+              $conv_found = true;
+              $streaming_url = $conversion_detail['cloudfront_streaming_url'];
+            }
+            if(!empty($conversion_detail['name']) &&  $conversion_detail['name'] == 'mp4_mobile') {
+              $http_url  = $conversion_detail['cloudfront_http_url'];
+            }
+         }
+     }
+   }
+
+
+  if(strtotime((string)$asset['updated_at']) > strtotime($result['field_ddp_video_updated_value'])) {
+    $updated = TRUE;
+  }
+
+
+  if($conv_found && $streaming_url != $result['field_video_stream_url_value']) {
+    $updated = TRUE;
+  }
+
+  $deleted = FALSE;
+  if($asset['deleted'] == 'true') {
+    $deleted = TRUE;
+  }
+
+  $private = FALSE;
+  if ($asset['public'] != 'true') {
+    $private = TRUE;
+  }
+
+  $published_at = ($asset['publishes_at'] == '' ? '' : date('c', strtotime($asset['publishes_at'])));
+
+  if($published_at)
+      $created = strtotime($asset['publishes_at']);
+  else
+      $created = time();
+
+  $file_save = false;
+  //$updated  = TRUE;
+  if(!$result && !$deleted && !$expired && !$private){
+    if($thumb_file = _ddp_file_save_thumbnail($asset['download_url'], true, 'saic_03_high')){
+      $asset['fileinfo'] = $thumb_file;
+      $file_save = true;
+    }
+    // Not found so create a new node
+    $node = array(
+      'uid' => (string)$user->uid,
+      'name' => (string)$user->name,
+      'type' => (string)$node_type,
+      'language' => '',
+      'title' => NULL,
+      'format' => NULL,
+      'status' => 0,
+      'promote' => 0,
+      'sticky' => 0,
+      'created' => $created,
+      'revision' => false,
+      'comment' => '0',
+    );
+    $node = (object)$node;
+  } elseif($result && $updated && !$deleted && !$expired && !$private) {
+    if($thumb_file = _ddp_file_save_thumbnail($asset['download_url'], true, 'saic_03_high')){
+      $asset['fileinfo'] = $thumb_file;
+      $file_save = true;
+    }
+    // Node exists. Load it.
+    $nid = (int)$result['nid'];
+    $vid = (int)$result['vid'];
+    $node = node_load($nid, $vid);
+    file_delete($node->field_ddp_image_image[0]['filepath']);
+  } elseif($result && ($deleted || $expired || $private)) {
+    // Asset was deleted, set private, or has expired -- delete the node
+    $nid = (int)$result['nid'];
+    $vid = (int)$result['vid'];
+    $node = node_load($nid, $vid);
+    file_delete($asset['fileinfo']['filepath']);
+    file_delete($node->field_ddp_image_file[0]['filepath']);
+    node_delete($nid);
+    return;
+  } else {
+    // No action, delete temporary file
+    file_delete($asset['fileinfo']['filepath']);
+    return;
+  }
+
+  module_load_include('inc', 'node', 'node.pages');
+  $published_at = ($asset['publishes_at'] == '' ? '' : date('c', strtotime($asset['publishes_at'])));
+
+  if($published_at)
+    $node->created = strtotime($asset['publishes_at']);
+  else
+    $node->created = time();
+
+  if($file_save)
+    $node->field_video_thumbnail = array($asset['fileinfo']);
+
+  $node->title = trim($asset['title']);
+  $node->uid = $user->uid;
+  $node->name = $user->name;
+  $node->op = t('Save');
+  if(!$node->status)
+    $node->status = 0;
+  $node->promote = 0;
+  $node->sticky = 0;
+
+  $node->field_video_full_description = array(
+    array(
+      'value' => trim($asset['description']),
+    ),
+  );
+  
+  $node->nodewords['metatags']['keywords'] = array('value' => $asset['tags']);
+  $node->nodewords['metatags']['description'] = array('value'=>trim ($asset['description']));;
+
+  $node->field_video_short_description= array(
+    array(
+      'value' => trim(truncate_utf8($asset['description'],100,false,true)),
+    ),
+  );
+
+ $node->field_video_length = array(
+    array(
+      'hour' => trim($time_duration[2]),
+      'minute' => trim($time_duration[1]),
+      'second' => trim($time_duration[0]),
+    ),
+  );
+
+
+  if(!$conv_found){
+    $node->field_video_stream_url = array(
+      array(
+        'value' =>  trim($asset['cloudfront_http_url']['1']),
+      ),
+    );
+  }
+
+  else if($conv_found){
+    $node->field_video_stream_url = array(
+      array(
+        'value' =>  trim($streaming_url),
+      ),
+    );
+  }
+
+  $node->field_video_http_url = array(
+    array(
+      'value' =>  trim($http_url),
+    ),
+  );
+  $node->field_ddp_video_guid = array(
+    array(
+      'value' => trim($asset['guid']),
+    ),
+  );
+  $node->field_ddp_video_ddpid = array(
+    array(
+      'value' => $asset['id'],
+    ),
+  );
+  $node->field_ddp_video_updated = array(
+    array(
+      'value' => $asset['updated_at'],
+    ),
+  );
+  $node->field_video_width = array(
+    array(
+      'value' => $asset['width'],
+    ),
+  );
+  $node->field_video_height = array(
+    array(
+      'value' => $asset['height'],
+    ),
+  );
+
+  $topics = array();
+    if($node->taxonomy){
+     foreach($node->taxonomy as $saved_topics){
+      if($saved_topics->vid == '2')
+         $topics[] = $saved_topics;
+     }
+    $node->taxonomy= $topics;
+  }
+
+
+  $node->taxonomy['tags'] = array($tax_id => $tags);
+
+  // #40209: If updating a node, don't change path alias.
+  if (!empty($node->nid)) {
+    $node->pathauto_perform_alias = FALSE;
+  }
+
+  $node = node_submit($node);
+  $node_return = node_save($node);
+  $node->nodewords['metatags']['canonical'] =  array('value' => $node->path);
+  $node_return = node_save($node);
+  $query = "UPDATE node SET created= $created WHERE nid= $node->nid";
+  $result = db_query($query);
+  unset($node);
+}
+
+function _create_audio($asset) {
+  global $user;
+  $time_duration = convert_ms($asset['duration']);
+  $node_type = 'audio';
+  $taxonomies = taxonomy_get_vocabularies();
+  foreach($taxonomies as $taxonomy) {
+    if(strtolower($taxonomy->name) == 'content tags') {
+      $tax_id = $taxonomy->vid;
+      break;
+    }
+  }
+
+  // Look for existing docs by GUID
+  $query = 'SELECT nid, vid, field_ddp_audio_updated_value FROM {content_type_audio} WHERE field_ddp_audio_guid_value = "%s" order by vid desc limit 1';
+  $result = db_fetch_array(db_query($query, (string)$asset['guid']));
+
+  $expired = FALSE;
+  if(!empty($asset['expires_at']) && strtotime($asset['expires_at']) < time()) {
+    $expired = TRUE;
+  }
+
+  $updated = FALSE;
+  if(strtotime((string)$asset['updated_at']) > strtotime($result['field_ddp_audio_updated_value'])) {
+    $updated = TRUE;
+  }
+
+  $deleted = FALSE;
+  if($asset['deleted'] == 'true') {
+    $deleted = TRUE;
+  }
+
+  $private = FALSE;
+  if ($asset['public'] != 'true') {
+    $private = TRUE;
+  }
+
+    /*
+   if($asset['conversions']['conversion'] && !empty($asset['conversions']['conversion']) && is_array($asset['conversions'])){ 
+     foreach($asset['conversions'] as $conversion){
+       foreach($conversion as $conversion_detail){
+       }
+      }
+   }
+ // $updated = TRUE;
+*/
+  $tags = explode(',', $asset['tags']);
+  $tags = implode(', ', $tags);
+
+  $published_at = ($asset['publishes_at'] == '' ? '' : date('c', strtotime($asset['publishes_at'])));
+
+  if($published_at)
+    $created = strtotime($asset['publishes_at']);
+  else
+    $created = time();
+
+  if(!$result && !$deleted && !$expired && !$private){
+    // Not found so create a new node
+    $node = array(
+      'uid' => (string)$user->uid,
+      'name' => (string)$user->name,
+      'type' => (string)$node_type,
+      'language' => '',
+      'title' => NULL,
+      'format' => NULL,
+      'status' => 0,
+      'promote' => 0,
+      'sticky' => 0,
+      'created' => $created,
+      'revision' => false,
+      'comment' => '0',
+    );
+    $node = (object)$node;
+    $node->field_audio_http_url = array(
+       array(
+         'value' =>  trim($asset['cloudfront_http_url'][0]),
+       ),
+     );
+  } elseif($result && $updated && !$deleted && !$expired && !$private) {
+    // Node exists. Load it.
+    $nid = (int)$result['nid'];
+    $vid = (int)$result['vid'];
+    $node = node_load($nid, $vid);
+    $node->field_audio_http_url = array(
+       array(
+         'value' =>  trim($asset['cloudfront_http_url'][0]),
+       ),
+     );
+    file_delete($node->field_ddp_image_image[0]['filepath']);
+  } elseif($result && ($deleted || $expired || $private)) {
+    // Asset was deleted, set private, or has expired -- delete the node
+    $nid = (int)$result['nid'];
+    $vid = (int)$result['vid'];
+    $node = node_load($nid, $vid);
+    file_delete($asset['fileinfo']['filepath']);
+    file_delete($node->field_ddp_image_file[0]['filepath']);
+    node_delete($nid);
+    return;
+  } else {
+    file_delete($asset['fileinfo']['filepath']);
+    return;
+  }
+
+  module_load_include('inc', 'node', 'node.pages');
+
+  $node->title = trim($asset['title']);
+  $node->uid = $user->uid;
+  $node->name = $user->name;
+  $node->op = t('Save');
+  if(!$node->status)
+    $node->status = 0;
+  $node->promote = 0;
+  $node->sticky = 0;
+
+  $node->field_audio_full_description= array(
+    array(
+      'value' => trim($asset['description']),
+    ),
+  );
+
+  $topics=array();
+    if($node->taxonomy){
+     foreach($node->taxonomy as $saved_topics){
+      if($saved_topics->vid == '2')
+         $topics[] = $saved_topics;
+     }
+    $node->taxonomy= $topics;
+  } 
+
+  $node->nodewords['metatags']['keywords'] = array('value' => $asset['tags']);
+  $node->nodewords['metatags']['description'] = array('value'=>trim ($asset['description']));
+
+  $node->field_audio_short_description= array(
+    array(
+      'value' => trim(truncate_utf8($asset['description'],100,false,true)),
+    ),
+  );
+  $node->field_audio_cloudfront_url = array(
+    array(
+      'value' => trim($asset['cloudfront_http_url']['1']),
+    ),
+  );
+  $node->field_audio_http_url = array(
+     array(
+       'value' =>  trim($asset['cloudfront_http_url'][0]),
+     ),
+  );
+  $node->field_audio_thumbnail = array(
+    array(
+      'filepath' => trim('/sites/default/files/files/audio/SAIC_microphone_thumb.jpg'),
+    ),
+  );
+  $node->field_ddp_audio_guid = array(
+    array(
+      'value' => trim($asset['guid']),
+    ),
+  );
+  $node->field_ddp_audio_ddpid = array(
+    array(
+      'value' => $asset['id'],
+    ),
+  );
+  $node->field_ddp_audio_updated = array(
+    array(
+      'value' => $asset['updated_at'],
+    ),
+  );
+
+  $node->taxonomy['tags'] = array($tax_id => $tags);
+
+  // #40209: If updating a node, don't change path alias.
+  if (!empty($node->nid)) {
+    $node->pathauto_perform_alias = FALSE;
+  }
+
+  $node = node_submit($node);
+  $node_return =  node_save($node);
+  $node->nodewords['metatags']['canonical'] =  array('value' => $node->path);
+  $node_return = node_save($node);
+
+  $query = "UPDATE node SET created= $created WHERE nid= $node->nid";
+  $result = db_query($query);
+  unset($node);
+}
+
+
+function _create_image($asset) {
+  global $user;
+  $node_type = 'ddp_image';
+  $taxonomies = taxonomy_get_vocabularies();
+  $tags = explode(',', $asset['tags']);
+  $tags = implode(', ', $tags);
+
+
+  foreach($taxonomies as $taxonomy) {
+    if(strtolower($taxonomy->name) == 'content tags') {
+      $tax_id = $taxonomy->vid;
+      break;
+    }
+  }
+
+  // Look for existing docs by GUID
+  $query = 'SELECT nid, vid, field_ddp_image_updated_value FROM {content_type_ddp_image} WHERE field_ddp_image_guid_value = "%s" order by vid desc limit 1';
+  $result = db_fetch_array(db_query($query, (string)$asset['guid']));
+  $expired = FALSE;
+  if(!empty($asset['expires_at']) && strtotime($asset['expires_at']) < time()) {
+    $expired = TRUE;
+  }
+
+  $updated = FALSE;
+  if(strtotime((string)$asset['updated_at']) > strtotime($result['field_ddp_image_updated_value'])) {
+    $updated = TRUE;
+  }
+
+  $deleted = FALSE;
+  if($asset['deleted'] == 'true') {
+    $deleted = TRUE;
+  }
+
+  $private = FALSE;
+  if ($asset['public'] != 'true') {
+    $private = TRUE;
+  }
+  $file_save = false;
+  //$updated = TRUE;
+  if(!$result && !$deleted && !$expired && !$private){
+    if($thumb_file = _ddp_file_save_thumbnail($asset['download_url'])){
+      $asset['fileinfo'] = $thumb_file;
+      $file_save = true;
+    }
+
+    // Not found so create a new node
+    $node = array(
+      'uid' => (string)$user->uid,
+      'name' => (string)$user->name,
+      'type' => (string)$node_type,
+      'language' => '',
+      'title' => NULL,
+      'format' => NULL,
+      'status' => 0,
+      'promote' => 0,
+      'sticky' => 0,
+      'created' => time(),
+      'revision' => false,
+      'comment' => '0',
+    );
+    $node = (object)$node;
+  } elseif($result && $updated && !$deleted && !$expired && !$private) {
+    // Node exists. Load it.
+    $nid = (int)$result['nid'];
+    $vid = (int)$result['vid'];
+    $node = node_load($nid, $vid);
+    file_delete($node->field_ddp_image_image[0]['filepath']);
+  } elseif($result && ($deleted || $expired || $private)) {
+    // Asset was deleted, set private, or has expired -- delete the node
+    $nid = (int)$result['nid'];
+    $vid = (int)$result['vid'];
+    $node = node_load($nid, $vid);
+    file_delete($asset['fileinfo']['filepath']);
+    file_delete($node->field_ddp_image_file[0]['filepath']);
+    node_delete($nid);
+    return;
+  } else {
+    // No action, delete temporary file
+    file_delete($asset['fileinfo']['filepath']);
+    return;
+  }
+
+  module_load_include('inc', 'node', 'node.pages');
+
+  $published_at = ($asset['publishes_at'] == '' ? '' : date('c', strtotime($asset['publishes_at'])));
+  if($published_at)
+      $created = strtotime($asset['publishes_at']);
+  else
+      $created = time();
+
+  if($file_save)
+    $node->field_image_thumbnail = array($asset['fileinfo'],);
+
+  $node->field_image_full_desc  = array(
+    array(
+      'value' => trim($asset['description']),
+    ),
+  );
+  $topics=array();
+    if($node->taxonomy){
+     foreach($node->taxonomy as $saved_topics){
+      if($saved_topics->vid == '2')
+         $topics[] = $saved_topics;
+     }
+    $node->taxonomy= $topics;
+  } 
+  $node->taxonomy['tags'] = array( $tax_id => $tags);
+
+  $node->nodewords['metatags']['keywords'] = array('value' => $asset['tags']);
+  $node->nodewords['metatags']['description'] = array('value'=>trim ($asset['description']));
+  $node->field_image_short_desc= array(
+    array(
+      'value' => trim(truncate_utf8($asset['description'],100,false,true)),
+    ),
+  );
+
+  $asset_url = str_replace (" ", "", $asset['cloudfront_http_url']);
+
+  $node->field_image_cloudfront_url = array(
+    array(
+      'value' => trim($asset_url),
+    ),
+  );
+  if($asset['title'] =='')
+    $asset['title'] = 'new_image';
+  $node->title = trim($asset['title']);
+  $node->uid = $user->uid;
+  $node->name = $user->name;
+  $node->op = t('Save');
+  if(!$node->status)
+    $node->status = 0;
+
+  $node->promote = 0;
+  $node->sticky = 0;
+
+  $node->field_ddp_image_guid = array(
+    array(
+      'value' => trim($asset['guid']),
+    ),
+  );
+  $node->field_ddp_image_ddpid = array(
+    array(
+      'value' => $asset['id'],
+    ),
+  );
+  $node->field_ddp_image_updated = array(
+    array(
+      'value' => $asset['updated_at'],
+    ),
+  );
+
+  // #40209: If updating a node, don't change path alias.
+  if (!empty($node->nid)) {
+    $node->pathauto_perform_alias = FALSE;
+  }
+
+  $node = node_submit($node);
+  $node_return = node_save($node);
+  $node->nodewords['metatags']['canonical'] =  array('value' => $node->path);
+  $node_return = node_save($node);
+  $query = "UPDATE node SET created= $created WHERE nid= $node->nid";
+  $result = db_query($query);
+
+  unset($node);
+}

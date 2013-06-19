@@ -1,0 +1,15 @@
+; $Id: views_node_feed.info,v 1.1.4.1 2008/12/07 05:33:02 andrewlevine Exp $
+name = Views Node Feed
+description = Allows the Creation of node pages based on Custom Functions
+package = Views
+dependencies[] = views
+dependencies[] = views_ui
+core = 6.x
+
+
+; Information added by drupal.org packaging script on 2010-11-12
+version = "6.x-1.x-dev"
+core = "6.x"
+project = "views_node_feed"
+datestamp = "1289564921"
+

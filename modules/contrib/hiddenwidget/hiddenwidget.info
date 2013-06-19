@@ -1,0 +1,5 @@
+name = Hidden Widget
+description = Defines the hidden widget for text and numeric fields.
+dependencies[] = content
+package = CCK
+core = 6.x

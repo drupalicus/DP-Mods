@@ -1,0 +1,39 @@
+<?php
+
+function popularity_menu() {
+  $items = array();
+  $items['popularity/video'] = array(
+    'page callback' => 'popularity_video',
+    'access callback' => 'user_access',
+    'access arguments' => array('popularize content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function popularity_perm() {
+  return array('popularize content', 'use PHP for popularity target');
+}
+
+function popularity_video() {
+  switch ($_GET['type']) {
+    case 'numerator':
+      db_query("insert into {popularity_popularity} values (%d, 1, 0, 0) on duplicate key update numerator = numerator + 1, quotient = (numerator + 1) / denominator", $_GET['nid']);
+      break;
+    case 'denominator':
+      db_query("insert into {popularity_popularity} values (%d, 0, 1, 0) on duplicate key update denominator = denominator + 1, quotient = numerator / (denominator + 1)", $_GET['nid']);
+      break;
+  }
+}
+
+function popularity_get_popularity($nid) {
+  return db_result(db_query("select (numerator / denominator) as popularity from popularity_popularity where nid = %d", $_GET['nid']));
+}
+
+function popularity_db_rewrite_sql($query, $primary_table = 'n', $primary_field = 'nid', $args = array()) {
+  if (isset($args['view']) && is_object($args['view']) && $args['view']->name=='video_gallery_list') {
+    $rewrite_array = array();
+    $rewrite_array['join'] = "left join {popularity_popularity} qualcomm_popularity on node.nid = qualcomm_popularity.nid";
+    return $rewrite_array;
+  }
+}

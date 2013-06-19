@@ -1,0 +1,270 @@
+<?php
+// $Id: views_node_feed.module,v 1.1.2.1.2.3 2010/05/11 18:00:21 andrewlevine Exp $
+
+/**
+ * @file
+ * views_node_feed.module
+ * Provides a views style plugin that allows you to define new theme syles for
+ * things like XML and JSON through an easy contemplate like interface
+ */
+
+/**
+ * Implementation of hook_views_api().
+ * indicates compatible views API version
+ */
+function views_node_feed_views_api() {
+  return array('api' => 2);
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function views_node_feed_theme($existing, $type, $theme, $path) {
+  return array(
+    'views_node_feed_admin' => array(
+      'arguments' => array(
+        'feeds' => NULL,
+      ),
+    ),
+    'views_node_feed' => array(
+      'arguments' => array(
+        'view' => NULL,
+        'nodes' => NULL,
+        'type' => NULL
+      ),
+    ),
+  );
+}
+
+
+/**
+ * Implementation of hook_menu().
+ */
+function views_node_feed_menu() {
+  $items = array();
+  $items['admin/settings/views_node_feed'] = array(
+    'title' => 'Views Node Feed',
+    'description' => 'Manage Different Types of Node Feeds',
+    'access arguments' => array('administer views'),
+    'page callback' => 'views_node_feed_admin_settings',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/settings/views_node_feed/add'] = array(
+    'title' => 'Add Node Feed',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('views_node_feed_edit_form', 'new'),
+    'access arguments' => array('administer views'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/settings/views_node_feed/edit/%'] = array(
+    'title' => 'Edit Feed @ident',
+    'title arguments' => array('@ident' => 4),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('views_node_feed_edit_form', 4),
+    'access arguments' => array('administer views'),
+    'type' => MENU_CALLBACK,
+  );
+  $items['admin/settings/views_node_feed/delete'] = array(
+    'title' => 'Delete Node Feed',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('views_node_feed_delete_form'),
+    'access arguments' => array('delete views node feed'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function views_node_feed_perm() {
+  return array('delete views node feed');
+}
+
+/**
+ *  Title Callback
+ */
+function _views_node_feed_edit_title_callback() {
+  $op = (arg(4) == 'new') ? "New" : "Edit";
+  return t('!op Node Feed', array('!op' => $op));
+}
+
+/**
+ *  Build the themed admin page
+ */
+function views_node_feed_admin_settings() {
+  $feeds = views_node_feed_get_feeds();
+  return theme('views_node_feed_admin', $feeds);
+}
+
+/**
+ *  Provide the Views Node Feed create/edit form
+ */
+function views_node_feed_edit_form($arg1, $ident) {
+  $new = $ident === 'new';
+  if (!$new) {
+    if (_views_node_feed_valid_identifier($ident)) {
+      $feed = views_node_feed_get_feeds($ident);
+    }
+    if (!$feed) {
+      drupal_not_found();
+      exit;
+    }
+  }
+  $form = array();
+  $form['new'] = array(
+    '#type' => 'value',
+    '#value' => $new,
+  );
+  $form['identifier'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Feed identifier'),
+    '#description' => t('Name with which you will identify this node feed. Only letters, numbers and underscores allowed.'),
+    '#maxlength' => 50,
+    '#required' => TRUE,
+    '#default_value' => $new ? '' : $ident,
+  );
+  $form['wrapper'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Wrapper Template'),
+    '#description' => t('Template that will be placed around the list of nodes. Be sure to include the string ***VIEWS_NODE_FEED_ITEMS*** which will automatically be replaced with the necessary items. The variables $view, $nodes, and $type will be available.'),
+    '#default_value' => $new ? '***VIEWS_NODE_FEED_ITEMS***' : $feed['wrapper'],
+    '#required' => FALSE,
+  );
+  $form['node'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Node template'),
+    '#description' => t('Template that will be generated for each node. The variables $view, $nodes, $node, and $type will be available.'),
+    '#default_value' => $new ? '<?php print $node->title; ?><br/>' : $feed['node'],
+    '#required' => FALSE,
+  );
+  $form['#original_identifier'] = $new ? '' : $ident;
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+  return $form;
+}
+
+/**
+ *  Validate the Views Node Feed create/edit form
+ */
+function views_node_feed_edit_form_validate($form, &$form_state) {
+  if (!_views_node_feed_valid_identifier($form_state['values']['identifier'])) {
+    form_set_error('identifier', t('Invalid feed identifier'));
+  }
+  $feeds = views_node_feed_get_feeds();
+  if ($form_state['values']['new'] && in_array($form_state['values']['identifier'], $feeds)) {
+    form_set_error('identifier', t('Feed identifier already exists.'));
+  }
+}
+
+/**
+ *  Process submission of the Views Node Feed create/edit form
+ */
+function views_node_feed_edit_form_submit($form, &$form_state) {
+  $val = array(
+    'identifier' => $form_state['values']['identifier'],
+    'wrapper' => $form_state['values']['wrapper'],
+    'node' => $form_state['values']['node']
+  );
+  $ident = $form_state['values']['identifier'];
+  $feeds = views_node_feed_get_feeds();
+  
+  unset($feeds[$form['#original_identifier']]);
+  variable_del('views_node_feed_' . $form['#original_identifier']);
+  
+  $feeds[$ident] = $ident;
+  variable_set("views_node_feed_$ident", $val);
+  variable_set("views_node_feed_feeds", $feeds);
+
+  drupal_set_message(t('Node feed %feed updated', array('%feed' => $ident)));
+  $form_state['redirect'] = 'admin/settings/views_node_feed';
+}
+
+/**
+ *  Provide the Views Node Feed delete form
+ */
+function views_node_feed_delete_form($info, $ident) {
+  $feeds = views_node_feed_get_feeds();
+  if (!in_array($ident, $feeds)) {
+    drupal_not_found();
+    exit;
+  }
+  $form['identifier'] = array('#type' => 'value', '#value' => $ident);
+  $form['#redirect'] = 'admin/settings/views_node_feed';
+  return confirm_form($form,
+    t('Delete the node feed %feed?', array('%feed' => $ident)),
+    'admin/settings/views_node_feed',
+    t('This will delete the node feed %feed.', array('%feed' => $ident)),
+    t('Delete'), t('Cancel'));
+}
+
+/**
+ *  Process submission of the Views Node Feed delete form
+ */
+function views_node_feed_delete_form_submit($form, &$form_state) {
+  $feeds = views_node_feed_get_feeds();
+  $ident = $form_state['values']['identifier'];
+  unset($feeds[$ident]);
+  variable_del("views_node_feed_$ident");
+  variable_set("views_node_feed_feeds", $feeds);
+  drupal_set_message(t('Node feed %feed deleted.', array('%feed' => $ident)));
+}
+
+/**
+ *  Ensure that the Views Node Feed identifier is valid
+ */
+function _views_node_feed_valid_identifier($ident) {
+  $ident = (string)$ident;
+  if (drupal_strlen($ident) <=0 || drupal_strlen($ident) > 50) {
+    return FALSE;
+  }
+  $new = preg_replace('/[^a-zA-Z0-9_]/', '', $ident);
+  if ($new !== $ident) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/**
+ * Get views_node_feed feeds
+ * @param $ident
+ * a string containing the views_node_feed feed identity
+ * @return
+ * An array of feeds
+ */
+function views_node_feed_get_feeds($ident = NULL) {
+  if ($ident === NULL) {
+    return variable_get("views_node_feed_feeds", array());
+  }
+  else {
+    return variable_get("views_node_feed_$ident", FALSE);
+  }
+}
+
+/**
+ * themes the views_node_feed admin page
+ *
+ * @ingroup themeable
+ */
+function theme_views_node_feed_admin($feeds) {
+  $output = '';
+  $output .= '<p>'. l(t('Add new node feed'), 'admin/settings/views_node_feed/add') .'</p>';
+
+  $output .= '<p>';
+  if (count($feeds) == 0) {
+    $output .= t("No existing node feeds");
+  }
+  else {
+    $header = array(t('Identifier'), t('Actions'));
+    $rows = array();
+    foreach ($feeds as $ident) {
+      $rows[] = array($ident, l(t('Edit'), 'admin/settings/views_node_feed/edit/'. $ident) .' / '. l(t('Delete'), 'admin/settings/views_node_feed/delete/'. $ident));
+    }
+    $output .= theme('table', $header, $rows);
+  }
+  $output .= '</p>';
+
+  return $output;
+}

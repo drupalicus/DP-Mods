@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Administration and debugging functionality for developers and site builders.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function admin_devel_init() {
+  drupal_add_js(drupal_get_path('module', 'admin_devel') . '/admin_devel.js');
+}
+
+/**
+ * Implements hook_form_FORMID_alter().
+ */
+function admin_devel_form_admin_menu_theme_settings_alter(&$form, &$form_state) {
+  $form['admin_devel_rebuild'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Rebuild menu links'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('Under unknown and hard to reproduce circumstances, Drupal\'s <a href="@issue-url">menu system fails to store menu links in their proper hierarchy</a>. In case links are either completely missing, appear multiple times or in displaced locations, you may try to <strong>delete all</strong> menu links and rebuild them from menu router information defined in enabled modules.<br /><br />Only menu links whose paths start with <code>admin*</code> will be deleted and rebuild.', array(
+      '@issue-url' => url('http://drupal.org/node/550254'),
+    )),
+    '#tree' => TRUE,
+    '#access' => user_access('administer site configuration'),
+    // Purposively move at the end of the form, so the contained form button is
+    // not the first in the form. Browsers trigger the first ("closest") submit
+    // button when pressing ENTER after focusing a form input element.
+    '#weight' => 1000,
+  );
+  $form['admin_devel_rebuild']['custom'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Include custom links'),
+    '#return_value' => 1,
+    '#default_value' => 0,
+    '#description' => t('Additionally deletes any links that have been edited, customized, or manually created. <strong>All customizations and custom links will be lost, they cannot be rebuilt.</strong> Customizations to menu links are known to cause improper hierarchies.'),
+  );
+  $form['admin_devel_rebuild']['wipe_rebuild'] = array(
+    '#type' => 'submit',
+    '#value' => t('Delete and rebuild menu links'),
+    '#submit' => array('admin_devel_form_admin_menu_theme_settings_alter_rebuild_submit'),
+  );
+  // system_settings_form_submit() workaround.
+  $form['#validate'][] = 'admin_devel_form_admin_menu_theme_settings_alter_validate';
+}
+
+/**
+ * Form validation handler for admin_menu_theme_settings().
+ */
+function admin_devel_form_admin_menu_theme_settings_alter_validate(&$form, &$form_state) {
+  $form_state['admin_devel_rebuild_custom'] = $form_state['values']['admin_devel_rebuild']['custom'];
+  unset($form_state['values']['admin_devel_rebuild']);
+}
+
+/**
+ * Form submission handler to delete and rebuild menu links.
+ */
+function admin_devel_form_admin_menu_theme_settings_alter_rebuild_submit($form, &$form_state) {
+  // If enabled, delete all admin* links.
+  if ($form_state['admin_devel_rebuild_custom']) {
+    $where = "(link_path = 'admin' OR link_path LIKE 'admin/%%')";
+  }
+  // Delete all auto-generated admin* links derived from menu router items.
+  else {
+    $where = "(router_path = 'admin' OR router_path LIKE 'admin/%%')
+      AND module = 'system'
+      AND customized = 0";
+  }
+  db_query("DELETE FROM {menu_links} WHERE $where");
+
+  // Rebuild menu links from current menu router items.
+  menu_rebuild();
+
+  drupal_set_message(t('Menu links have been deleted and rebuilt.'));
+}

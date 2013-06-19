@@ -1,0 +1,8 @@
+name = "SAIC imagecache Presets"
+description = "All imagecache presets"
+core = "6.x"
+package = "Features"
+version = "6.x-1.0-20130325"
+project = "saic_imagecache_presets"
+features[imagecache][] = "list_item_center_play_thumb"
+features[imagecache][] = "play_thumb"

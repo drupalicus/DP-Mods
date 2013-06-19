@@ -1,0 +1,13 @@
+; $Id$
+name = "DQX AdminMenu"
+description = "Alternative to the wonderful and well-known admin_menu module."
+package = Administration
+core = 6.x
+php = 5.1
+
+; Information added by drupal.org packaging script on 2011-06-22
+version = "6.x-2.0-beta8"
+core = "6.x"
+project = "dqx_adminmenu"
+datestamp = "1308708715"
+

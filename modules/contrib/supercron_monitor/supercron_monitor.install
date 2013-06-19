@@ -1,0 +1,9 @@
+<?php
+function supercron_monitor_install() {
+
+  $sql = 'create table {supercron_monitor}(
+            id int not null,
+            last_exec_warn int not null
+          )';
+  db_query($sql);
+}

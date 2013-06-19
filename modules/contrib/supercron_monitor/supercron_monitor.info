@@ -1,0 +1,10 @@
+name = Supercron Monitor
+description = Monitors supercron activity and notifies users of specific events
+package = Other
+core = 6.x
+version = 1.0
+dependencies[] = supercron
+dependencies[] = messaging_phpmailer
+
+
+

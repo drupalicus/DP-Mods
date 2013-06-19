@@ -1,0 +1,520 @@
+
+/**
+ * reset
+ */
+#dqx_adminmenu li {
+  border:none;
+}
+#dqx_adminmenu li a {
+  border-color:#323232;
+}
+
+/**
+ * Implementation of Sons of Suckerfish Dropdowns.
+ *
+ * @see www.htmldog.com/articles/suckerfish
+ */
+
+#dqx_adminmenu {
+  background: #101010 url(../images/bkg.png) bottom left repeat-x;
+  left: 0;
+  position: absolute;
+  text-align: left;
+  top:20px;
+  top: 0;
+  width: 100%;
+}
+#dqx_adminmenu,
+#dqx_adminmenu * {
+  font-size:9px;
+  font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+  line-height:12px;
+  text-shadow:none;
+  border:none;
+}
+#dqx_adminmenu ul li table *,
+#dqx_adminmenu ul li ul * {
+  line-height:10px;
+}
+#dqx_adminmenu-wrapper {
+  overflow: hidden;
+}
+#dqx_adminmenu a#dqx_adminmenu-icon-link {
+  padding: 1px 8px 4px;
+}
+#dqx_adminmenu a#dqx_adminmenu-icon-link img {
+  vertical-align: bottom;
+}
+#dqx_adminmenu a#dqx_adminmenu-user-counter {
+  background: transparent url(../images/icon_users.png) 90% center no-repeat;
+  padding-right: 22px;
+}
+
+#dqx_adminmenu ul#dqx_adminmenu-admin {
+  float:left;
+}
+#dqx_adminmenu ul#dqx_adminmenu-user {
+  float:right;
+}
+
+ul#dqx_adminmenu-admin li {
+  float:left;
+}
+
+ul#dqx_adminmenu-admin li a {
+  border-right-width:1px;
+}
+
+ul#dqx_adminmenu-admin li a.active-trail {
+  font-weight:bold;
+}
+
+#dqx_adminmenu ul#dqx_adminmenu-user {
+  float:right;
+}
+
+ul#dqx_adminmenu-user li {
+  float:right;
+}
+
+ul#dqx_adminmenu-user a {
+  border-left-width:1px;
+}
+
+#dqx_adminmenu li li {
+  float:none;
+}
+#dqx_adminmenu li li a {
+  border-width: 1px 0 0;
+}
+
+body.dqx_adminmenu {
+  margin-top: 20px !important;
+}
+
+/* All lists */
+#dqx_adminmenu,
+#dqx_adminmenu ul {
+  line-height: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 999;
+}
+#dqx_adminmenu ul {
+  position: static;
+}
+#dqx_adminmenu ul a {
+  background: transparent none;
+  border: 0px solid #323232;
+  color: #EEE;
+  display: block;
+  font-weight: normal;
+  padding: 4px 8px;
+  text-align: left;
+  text-decoration: none;
+}
+#dqx_adminmenu ul li.dqx_adminmenu-tab a {
+  border-right: 1px solid #52565E;
+}
+
+/* All list items */
+#dqx_adminmenu li {
+  background-image: none;
+  float: left;
+  height: 100%;
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0 !important;
+  padding: 0;
+}
+#dqx_adminmenu li.dqx_adminmenu-tab {
+  background: url(../images/bkg_tab.png) repeat-x left bottom;
+  padding-bottom: 1px;
+}
+#dqx_adminmenu li li {
+  background: #202020;
+  filter: Alpha(opacity=88);
+  opacity: 0.88;
+  /* width: 160px; /* Required for Opera */
+}
+#dqx_adminmenu li li li,
+#dqx_adminmenu li td li {
+  filter: Alpha(opacity=100);
+  opacity: 1;
+}
+
+/* Second-level lists */
+/* Note: We must hide sub-lists or scrollbars might appear (display: none is not read by screen readers). */
+#dqx_adminmenu li ul {
+  background: none;
+  display: none;
+  left: -999em;
+  line-height: 10px;
+  margin: 0;
+  position: absolute;
+  width: 160px;
+}
+
+/* Third-and-above-level lists */
+#dqx_adminmenu li li.expandable ul {
+  margin: -20px 0 0 160px;
+}
+
+#dqx_adminmenu ul ul {
+  display: none;
+  left: -999em;
+}
+
+/* Lists nested under hovered list items */
+#dqx_adminmenu-wrapper #dqx_adminmenu ul ul.show {
+  display: block;
+  left: auto;
+}
+/* User menu on the right */
+#dqx_adminmenu-wrapper #dqx_adminmenu li.dqx_adminmenu-action ul.show {
+  right: auto;
+}
+
+/* Second-and-more-level hovering */
+#dqx_adminmenu li li.expandable {
+  background: #45454A url(../images/arrow.png) no-repeat 145px 7px;
+}
+#dqx_adminmenu li li:hover,
+#dqx_adminmenu li li.iehover {
+  background-color: #111;
+}
+#dqx_adminmenu li li a:hover {
+  color: #FFF;
+}
+#dqx_adminmenu li li a.expandable:hover {
+  border-color: #666666;
+  color: #EEE;
+}
+#dqx_adminmenu li li a.iehover {
+  color: #FFF;
+  /* width: 90%; /* IE */
+}
+
+/* #210615: Mozilla on Mac fix */
+html.js fieldset.collapsible div.fieldset-wrapper {
+  overflow: visible;
+}
+
+/* Hide the menu on print output. */
+@media print {
+  #dqx_adminmenu {
+    display: none !important;
+  }
+  body.dqx_adminmenu {
+    margin-top: 0 !important;
+  }
+}
+
+/**
+ * Tweaks permissions, if enabled.
+ */
+tr.dqx_adminmenu-tweak-permissions-processed {
+  cursor: pointer;
+  cursor: hand;
+}
+tr.dqx_adminmenu-tweak-permissions-processed td.module {
+  border-top: 0;
+}
+
+/**
+ * Hide elements from all users. (D7 backport)
+ *
+ * Used for elements which should not be immediately displayed to any user. An
+ * example would be a collapsible fieldset that will be expanded with a click
+ * from a user. The effect of this class can be toggled with the jQuery show()
+ * and hide() functions.
+ */
+.element-hidden {
+  display: none;
+}
+
+
+#dqx_adminmenu a#dqx_adminmenu-icon-link {
+  padding:none;
+}
+
+
+#dqx_adminmenu #dqx_adminmenu-wrapper li a.no-access {
+  color:#aaf;
+}
+
+#dqx_adminmenu #dqx_adminmenu-wrapper li a.no-access:hover {
+  color:#bbf;
+}
+
+
+/* content table */
+/* -------------------------------------------------------------------------- */
+
+#dqx_adminmenu table {
+  margin:0;
+  width:auto;
+  position:absolute;
+  left:-5000px;
+  border:none;
+  font-size:9px;
+  line-height:10px;
+}
+
+#dqx_adminmenu li li > table {
+  margin: -20px auto 0 160px;
+  right:auto;
+  left:-5000px;
+  table-layout:auto;
+  white-space:nowrap;
+}
+
+#dqx_adminmenu tbody,
+#dqx_adminmenu tfoot {
+  border:none;
+  font-size:9px;
+  line-height:10px;
+}
+
+#dqx_adminmenu table tr {
+  font-size:9px;
+  line-height:10px;
+}
+
+#dqx_adminmenu table td {
+  background:#323232;
+  opacity:0.88;
+  padding:0;
+  border:none;
+  position:relative;
+  vertical-align:top;
+  line-height:10px;
+  width:auto;
+}
+
+#dqx_adminmenu li table td.no-link,
+#dqx_adminmenu li table td.no-link:hover,
+#dqx_adminmenu li table tr:hover td.no-link {
+  opacity:0.77;
+  background:#323232;
+  border-top:1px solid #383838;
+  border: 0px solid #323232;
+  color: #EEE;
+  font-weight: normal;
+  padding: 4px 8px;
+  text-align: left;
+  text-decoration: none;
+}
+
+#dqx_adminmenu table td.td-space {
+  width:8px;
+  opacity:0.77;
+}
+
+#dqx_adminmenu li td a {
+  border-right:medium none;
+  border-top:1px solid #383838;
+  position:relative;
+  display:block;
+}
+
+#dqx_adminmenu li td.td-list a {
+  text-align:right;
+  padding-left:16px;
+}
+
+#dqx_adminmenu li td a span.node-count_ {
+  width:24px;
+  float:left;
+  text-align:right;
+  padding-right:6px;
+}
+
+#dqx_adminmenu li td a span.tip {
+  display:none;
+  position:absolute;
+  top:150%;
+  background:#222;
+  padding:2px 5px;
+  z-index:100;
+}
+
+#dqx_adminmenu li td a:hover span.tip {
+  display:block;
+}
+
+#dqx_adminmenu table tr:hover > td {
+  background:#222;
+  padding-top:0;
+  padding-bottom:0;
+}
+
+#dqx_adminmenu table tr td:hover,
+#dqx_adminmenu table tr:hover td:hover {
+  background:#000;
+}
+
+#dqx_adminmenu table tr td.td-submenu,
+#dqx_adminmenu table tr:hover > td.td-submenu,
+#dqx_adminmenu table tr:hover > td.td-submenu:hover,
+#dqx_adminmenu table tr td.td-space-colspan,
+#dqx_adminmenu table tr:hover > td.td-space-colspan,
+#dqx_adminmenu table tr:hover > td.td-space-colspan:hover,
+#dqx_adminmenu table tr:hover > td.td-space,
+#dqx_adminmenu table tr:hover > td.td-space:hover {
+  /* opacity:0.77; */
+  background:#323232;
+}
+
+#dqx_adminmenu table td.td-submenu {
+  padding-left:2px;
+}
+
+#dqx_adminmenu table td.td-submenu div {
+  position:relative;
+  width:0;
+}
+
+#dqx_adminmenu-wrapper #dqx_adminmenu li table.show {
+  left:auto;
+}
+
+#dqx_adminmenu li tr > td > div > ul,
+#dqx_adminmenu li:hover tr > td > div > ul {
+  top:0;
+  display:block;
+  position: absolute;
+  left:-3000px;
+}
+
+#dqx_adminmenu tr.expandable td.td-create a {
+  width:107px;
+  padding-right:20px;
+  background:transparent url(../images/arrow.png) no-repeat 120px 7px;
+}
+
+
+/* inline list */
+/* -------------------------------------------------------------------------- */
+
+#dqx_adminmenu tr.expandable li.dqx_adminmenu-inline.expandable {
+  background-image:none;
+}
+
+#dqx_adminmenu tr.expandable li.dqx_adminmenu-inline.expandable:hover {
+  background-color:#45454A;
+}
+
+#dqx_adminmenu li.dqx_adminmenu-inline > a {
+  font-weight:bold;
+}
+
+#dqx_adminmenu li.dqx_adminmenu-inline > ul.dqx_adminmenu-inline {
+  display:block;
+  position:static;
+  left:auto;
+  top:auto;
+  margin:0;
+  width:auto;
+}
+
+#dqx_adminmenu li.dqx_adminmenu-inline > ul.dqx_adminmenu-inline > li {
+  position:static;
+}
+
+#dqx_adminmenu li.dqx_adminmenu-inline > ul.dqx_adminmenu-inline > li > a {
+  white-space:nowrap;
+}
+
+#dqx_adminmenu li.dqx_adminmenu-inline > ul.dqx_adminmenu-inline > li > a:before {
+  content:'\2022';
+  display:inline;
+  float:left;
+  padding:0 5px 0 0;
+  margin:0;
+}
+
+#dqx_adminmenu li a.bold {
+  font-weight:bold;
+}
+
+/* display fields */
+/* -------------------------------------------------------------------------- */
+
+#dqx_adminmenu td.dqx_adminmenu-display-cck {
+  overflow-y:hidden;
+}
+
+#dqx_adminmenu td.dqx_adminmenu-display-cck a {
+  display:block;
+  padding-bottom:200px;
+  margin-bottom:-200px;
+}
+
+#dqx_adminmenu tr.nd-excluded td.dqx_adminmenu-display-nd a {
+  text-decoration:line-through;
+  
+}
+
+#dqx_adminmenu tbody:hover > tr > td.dqx_adminmenu-display-cck {
+  background:#222;
+}
+
+/* quick find */
+/* -------------------------------------------------------------------------- */
+
+li#dqx_adminmenu-quickfind-li {
+  position:absolute;
+  left:-4000px;
+}
+
+li#dqx_adminmenu-quickfind-monitor-li {
+  padding:4px 6px 0 20px;
+  position:absolute;
+  left:-4000px;
+}
+
+li#dqx_adminmenu-quickfind-monitor-li div {
+  background:#333;
+  padding:0 3px;
+  border:1px solid #666;
+  width:30px;
+}
+
+span#dqx_adminmenu-quickfind-monitor {
+  font-size:9px;
+  color:#eee;
+}
+
+li#dqx_adminmenu-quickfind-monitor-li.dqx_adminmenu-quickfind-focus {
+  left:auto;
+  position:static;
+}
+
+#dqx_adminmenu .dqx_adminmenu-quickfind-parent-m1 > a,
+#dqx_adminmenu .dqx_adminmenu-quickfind-parent-m2 > a,
+#dqx_adminmenu .dqx_adminmenu-quickfind-parent-m3 > a,
+#dqx_adminmenu .dqx_adminmenu-quickfind-parent-m1 > td > a,
+#dqx_adminmenu .dqx_adminmenu-quickfind-parent-m2 > td > a,
+#dqx_adminmenu .dqx_adminmenu-quickfind-parent-m3 > td > a {
+  color:#fca;
+}
+
+#dqx_adminmenu ul li a.dqx_adminmenu-quickfind-m1,
+#dqx_adminmenu ul li a.dqx_adminmenu-quickfind-m2,
+#dqx_adminmenu ul li a.dqx_adminmenu-quickfind-m3 {
+  color:#ffa;
+}
+
+#dqx_adminmenu ul li * a.dqx_adminmenu-quickfind-m1,
+#dqx_adminmenu ul li * a.dqx_adminmenu-quickfind-m2,
+#dqx_adminmenu ul li * a.dqx_adminmenu-quickfind-m3 {
+  font-weight:bold;
+}
+
+
+
+
+
+

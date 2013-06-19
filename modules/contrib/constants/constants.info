@@ -1,0 +1,12 @@
+; $Id: constants.info,v 1.2 2010/06/21 20:35:31 thebuckst0p Exp $
+name = Constants
+description = "Store arbitrary key-value pairs with a UI"
+core = 6.x
+
+
+; Information added by drupal.org packaging script on 2010-06-21
+version = "6.x-1.0"
+core = "6.x"
+project = "constants"
+datestamp = "1277152807"
+

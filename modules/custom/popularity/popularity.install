@@ -1,0 +1,39 @@
+<?php
+
+function popularity_schema() {
+  $schema['popularity_popularity'] = array(
+    'description' => 'Table to track popularity.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The primary identifier for a node.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE),
+      'numerator' => array(
+        'description' => 'The top number of the popularity fraction',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0),
+      'denominator' => array(
+        'description' => 'The bottom number of the popularity fraction',        
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0),
+      'quotient' => array(
+        'description' => 'The cached, computed divison',
+        'type' => 'float',
+        'not null' => TRUE,
+        'default' => 0),
+    ),
+    'primary key' => array('nid'),
+  );
+  return $schema;
+}
+
+function popularity_install() {
+  drupal_install_schema('popularity');
+}
+
+function popularity_uninstall() {
+  drupal_uninstall_schema('popularity');
+}
