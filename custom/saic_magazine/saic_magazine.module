@@ -1,0 +1,478 @@
+<?php
+
+/**
+ * Implementation of hook_theme().
+ */
+function saic_magazine_theme() {
+  return array(
+    'saic_magazine_header' => array(
+      'arguments' => array('image' => NULL, 'link' => NULL, 'title' => NULL, 'body'=>NULL),
+      'template' => 'block-saic_magazine_header',
+    ),
+    'saic_magazine_pdf_block' => array(
+      'arguments' => array('pdf_link' => NULL),
+      'template' => 'block-saic_magazine_pdf',
+    ),
+    'saic_magazine_archive_block' => array(
+      'arguments' => array('nid' => NULL),
+      'template' => 'block-saic_magazine_archive',
+    ),
+    'saic_magazine_article_teaser' => array(
+      'arguments' => array('data' => NULL),
+      'template' => 'saic_magazine_article_teaser',
+    ),
+    'saic_magazine_archive_item' => array(
+      'arguments' => array('data' => NULL),
+      'template' => 'saic_magazine_archive_item',
+    ),
+    'saic_magazine_archive_item_issue' => array(
+      'arguments' => array('node' => NULL, 'content' => NULL),
+      'template' => 'saic_magazine_archive_item_issue',
+    ),
+    'saic_magazine_article_contents' => array(
+      'arguments' => array('node' => NULL, 'content' => NULL),
+      'template' => 'block-saic_article_contents',
+    ),
+    'saic_magazine_article_custom_blocks' => array(
+      'arguments' => array('title' => NULL,'content' => NULL),
+      'template' => 'block-saic_article_custom',
+    ),
+    'saic_magazine_article_list' => array(
+      'arguments' => array('issue' => NULL,'articles'=>NULL),
+      'template' => 'saic_magazine_article_list',
+    ),
+    'saic_magazine_issue_menu_li' => array(
+      'arguments' => array('page' => NULL),
+      'template' => 'saic_magazine_menu_li',
+    ),
+    'saic_magazine_featured_page' => array(
+      'arguments' => array('node' => NULL, 'content' => NULL),
+      'template' => 'page-saic_magazine_featured',
+    ),
+    'saic_magazine_archived_page' => array(
+      'arguments' => array('content' => NULL),
+      'template' => 'page-saic_magazine_archived',
+    ),
+    'saic_magazine_archived_bottom_link' => array(
+      'arguments' => array('nid' => NULL),
+      'template' => 'block-saic_magazine_archived_bottom',
+    ),
+    'saic_magazine_articles_center' => array(
+      'arguments' => array('title' => NULL,'tout'=>NULL,'content'=>NULL),
+      'template' => 'saic_magazine_article_center',
+    ),
+    'saic_magazine_article_tout' => array(
+      'arguments' => array('article' => NULL),
+      'template' => 'saic_magazine_article_tout',
+    ),
+    'saic_magazine_article_header' => array(
+      'arguments' => array('node' => NULL),
+      'template' => 'block-saic_magazine_article_header',
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_context_default_contexts().
+ */
+function saic_magazine_default_contexts() {
+  $contexts = digitaria_utility_install_context_dir('saic_magazine');
+  return $contexts;
+}
+
+/**
+ * Implementation of hook_views_default_views().
+ */
+function saic_magazine_views_default_views() {
+  return views_install_view_dir('saic_magazine');
+}
+
+/**
+ * Implementation of hook_imagecache_default_presets
+ */
+function saic_magazine_default_presets() {
+  return digitaria_utility_install_imagecache('saic_magazine');
+}
+
+/**
+ * Implementation of hook_block
+ */
+function saic_magazine_block($op = 'list', $delta = 0, $edit = array()) {
+  switch ($op) {
+    case 'list':
+      $blocks['saic_magazine_header'] = array(
+        'info' => t("Magazine header"),
+      );
+      $blocks['magazine_bottom_link'] = array(
+        'info' => t("Magazine bottom link"),
+      );
+      $blocks['saic_magazine_pdf_block'] = array(
+        'info' => t("Magazine pdf block"),
+      );
+      $blocks['saic_magazine_archive_block'] = array(
+        'info' => t("Magazine archive block"),
+      );
+      $blocks['saic_magazine_article_contents'] = array(
+        'info' => t("Magazine issue content"),
+      );
+      $blocks['saic_magazine_featured_content'] = array(
+        'info' => t("Magazine featured contents"),
+      );
+      $blocks['saic_magazine_custom_block'] = array(
+        'info' => t("Magazine issue custom blocks"),
+      );
+      $blocks['saic_magazine_article_header'] = array(
+        'info' => t("Magazine article header"),
+      );
+      $blocks['saic_magazine_article_list'] = array(
+        'info' => t("Magazine article list"),
+      );
+      return $blocks;
+      break;
+
+    case 'view':
+      switch ($delta) {
+        case 'saic_magazine_header':
+          $block['content'] = saic_magazine_header();
+          break;
+        case 'saic_magazine_pdf_block':
+          $block['content'] = saic_magazine_pdf_block();
+          break;
+        case 'magazine_bottom_link':
+          $block['content'] = saic_magazine_archive_bottom();
+          break;
+        case 'saic_magazine_archive_block':
+          $block['content'] = saic_magazine_archive_block();
+          break;
+        case 'saic_magazine_featured_content':
+          $block['content'] = saic_magazine_get_current_issue_page();
+          break;
+        case 'saic_magazine_article_contents':
+          $block['content'] = saic_magazine_get_article_contents();
+          break;
+        case 'saic_magazine_article_header':
+          $block['content'] = saic_magazine_article_header();
+          break;
+        case 'saic_magazine_custom_block':
+          $block['content'] = saic_magazine_custom_blocks();
+          break;
+        case 'saic_magazine_article_list':
+          $block['content'] = saic_magazine_article_list();
+          break;
+      }
+      return $block;
+      break;
+  }
+}
+
+function saic_magazine_archive_bottom() {
+
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+  if($node->type !='magazine') {
+    $magazine_node = node_load($node->field_magazine_issue_magazine[0]['nid']);
+  }
+  else {
+    $magazine_node = $node;
+  }
+
+  return theme('saic_magazine_archived_bottom_link',$magazine_node->nid);
+}
+
+function saic_magazine_archive_block() {
+
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+  if($node->type !='magazine') {
+    $magazine_node = node_load($node->field_magazine_issue_magazine[0]['nid']);
+  }
+  else {
+    $magazine_node = $node;
+  }
+
+  return theme('saic_magazine_archive_block',$magazine_node->nid);
+}
+
+/**
+ *
+ */
+function saic_magazine_custom_blocks() {
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+    $custom_blocks = '';
+    if(isset($node)) {
+      foreach($node->field_magazine_custom_content as $content => $content_text) {
+        if(!empty($content_text['value'])) {
+          $custom_title = $node->field_magazine_custom_title[$content]['value'];
+          $custom_blocks .= theme('saic_magazine_article_custom_blocks',$custom_title,$content_text['value']);
+        }
+      }
+    }
+    return $custom_blocks;
+  }
+}
+
+/**
+ *
+ */
+function saic_magazine_article_header() {
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+    return theme('saic_magazine_article_header', $node);
+  }
+}
+
+/**
+ *
+ */
+function saic_magazine_get_article_contents() {
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+  $issue_node = $node->field_magazine_article_issue_node;
+  //$node->side_image = $issue_node->field_magazine_issue_side_image[0]['filepath'];
+  $articles = get_magazine_issue_articles($node->field_magazine_article_issue[0]['nid']);
+  $issue_content = '';
+  foreach($articles  as $index => $article) {
+    $issue_content .= theme('saic_magazine_issue_menu_li',$article);
+  }
+
+  return theme('saic_magazine_article_contents', $issue_node, $issue_content);
+}
+
+function saic_magazine_header() {
+
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+
+  if($node->type !='magazine') {
+    $magazine_node = node_load($node->field_magazine_issue_magazine[0]['nid']);
+    $issue_node = $node;
+  }
+  else {
+    $magazine_node = $node;
+    $current_issue = saic_magazine_get_current_issue_node_info($magazine_node->nid);
+    $issue_node = node_load($current_issue['nid']);
+  }
+
+  $image_path =  digitaria_imagecache_apply_preset("magazine_featured_thumb",  $issue_node->field_magazine_issue_image[0]['filepath']);
+  $first_article = get_magazine_issue_articles($issue_node->nid);
+  $article_link = drupal_get_path_alias('node/' . $first_article[0]['nid']);
+  return theme('saic_magazine_header', $image_path, $article_link, $magazine_node->title,$magazine_node->body);
+}
+
+function saic_magazine_article_list() {
+
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+
+  if($node->type !='magazine') {
+    $magazine_node = node_load($node->field_magazine_issue_magazine[0]['nid']);
+    $issue_node = $node;
+  }
+  else {
+    $magazine_node = $node;
+    $current_issue = saic_magazine_get_current_issue_node_info($magazine_node->nid);
+    $issue_node = node_load($current_issue['nid']);
+  }
+
+  $issue_content = '';
+  $articles = get_magazine_issue_articles($issue_node->nid);
+
+  if($articles == FALSE) {
+    return FALSE;
+  }
+
+  foreach($articles  as $index => $article) {
+    $issue_content .= theme('saic_magazine_article_tout', $article);
+  } 
+
+  return theme('saic_magazine_articles_center',$issue_node->title,$issue_node->body,$issue_content);
+}
+
+function saic_magazine_pdf_block() {
+
+  if ((arg(0) == 'node') && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+
+  if($node->type !='magazine') {
+    $issue_node = $node;
+  }
+  else {
+    $magazine_node = $node;
+    $current_issue = saic_magazine_get_current_issue_node_info($magazine_node->nid);
+    $issue_node = node_load($current_issue['nid']);
+  }
+
+  $file['file_size'] = number_format(($issue_node->field_magazine_issue_pdf[0]['filesize'] / 1048576), 1);
+  $file['file_path'] = $issue_node->field_magazine_issue_pdf[0]['filepath'];
+  return theme('saic_magazine_pdf_block', $file);
+}
+
+function saic_magazine_get_current_issue_page() {
+  $node_info = saic_magazine_get_current_issue_node_info();
+  $issue_node = node_load($node_info['nid']);
+  $issue_content = '';
+
+  foreach ($issue_node->field_magazine_issue_article as $index => $issue ) {
+    $issues_data = node_load($issue['nid']);
+    $issues = array();
+    $issues['image'] = digitaria_imagecache_apply_preset("featured_stories_thumb",  $issues_data->field_magazine_article_image[0]['filepath']);
+    $issues['title'] = $issues_data->title;
+    $issues['path'] = $issues_data->path;
+    $issues['teaser'] = $issues_data->field_magazine_article_teaser[0]['value'];
+    $issue_content .= theme('saic_magazine_article_teaser', $issues);
+  }
+
+  return theme('saic_magazine_featured_page', $issue_node, $issue_content);
+}
+
+function saic_magazine_get_current_issue_node_info($magazine_issue_id = NULL,$archived = 1) {
+
+  $get_current_issue = "
+    SELECT
+     field_magazine_issue_archive_value,
+     node.title,
+     node.nid
+    FROM
+      {node}
+      LEFT JOIN {content_type_magazine_issue} ON node.vid = content_type_magazine_issue.vid
+    WHERE
+      node.status <> 0
+    AND
+      node.type = 'magazine_issue'
+    AND
+      field_magazine_issue_magazine_nid = '".$magazine_issue_id."'
+    AND
+      field_magazine_issue_archive_value != $archived
+    GROUP BY
+      node.nid
+    ORDER BY
+      node.nid DESC
+    LIMIT 1
+  ";
+
+  $data = array();
+  $result = db_query($get_current_issue);
+  while ($row = db_fetch_array($result)) {
+    $data = $row;
+  }
+  return $data;
+}
+
+function saic_magazine_get_magazine_nid_from_issue_nid($magazine_issue_id = NULL) {
+
+  $get_current_issue = "
+    SELECT
+     field_magazine_issue_magazine_nid,
+     field_magazine_issue_archive_value,
+     node.title,
+     node.nid
+    FROM
+      {node}
+      LEFT JOIN {content_type_magazine_issue} ON node.vid = content_type_magazine_issue.vid
+    WHERE
+      node.status <> 0
+    AND
+      node.type = 'magazine_issue'
+    AND
+      content_type_magazine_issue.nid = '".$magazine_issue_id."'
+    GROUP BY
+      node.nid
+    ORDER BY
+      node.nid DESC
+    LIMIT 1
+  ";
+
+  $data = array();
+  $result = db_query($get_current_issue);
+  while ($row = db_fetch_array($result)) {
+    $data = $row;
+  }
+  return $data;
+}
+
+function get_magazine_issue_articles($issue_id) {
+
+    if(empty($issue_id))
+      return false;
+
+    $get_archived_issues = "
+    SELECT  
+     field_magazine_article_teaser_value as body,
+     f.filepath,           
+     node.title,
+     node.nid      
+    FROM 
+      node    
+      LEFT JOIN node_revisions nv ON node.vid = nv.vid  
+      LEFT JOIN content_type_magazine_article ON node.vid = content_type_magazine_article.vid   
+      LEFT JOIN files f ON field_magazine_article_image_fid = f.fid
+    WHERE        
+      node.status <> 0      
+    AND        
+      node.type = 'magazine_article'    
+    AND
+      field_magazine_article_issue_nid = $issue_id
+    GROUP BY 
+      node.vid
+   ";
+ 
+   $data = array();
+   $result = db_query($get_archived_issues);
+   while ($row = db_fetch_array($result)) {
+    $row['thumb'] = digitaria_imagecache_apply_preset('featured_stories_thumb',  $row['filepath']); 
+    $row['path'] = drupal_get_path_alias( 'node/' . $row['nid']);
+    $data[] = $row;
+   }
+  return $data;
+}
+
+
+function saic_magazine_nodeapi(&$node, $op, $a3 = NULL, $page = FALSE) {
+  if ($op == 'view' && $page == TRUE) {
+    $trail = array();
+    $router_item = menu_get_item("content/science-solutions-magazine");
+    $trail[] = $router_item;
+    menu_set_active_trail($trail);
+  }
+  if($node->type =='magazine_article' && $op = 'load') {
+    $node->field_magazine_article_issue_node =node_load($node->field_magazine_article_issue[0]['nid']) ;
+    
+  }
+}
+
+
+function saic_magazine_get_archived_issues() {
+    $get_archived_issues = "
+    SELECT           
+     node.title,
+     node.nid      
+    FROM 
+      node    
+      LEFT JOIN content_type_magazine_issue ON node.vid = content_type_magazine_issue.vid   
+    WHERE        
+      node.status <> 0      
+    AND        
+      node.type = 'magazine_issue'    
+    AND
+      content_type_magazine_issue.field_magazine_issue_archive_value = 1
+    GROUP BY 
+      node.vid
+    ORDER BY
+      field_magazine_issue_date_value DESC
+   ";
+ 
+   $data = array();
+   $result = db_query($get_archived_issues);
+   while ($row = db_fetch_array($result)) {
+    $data[] = $row;
+   }
+  
+  return $data;
+}

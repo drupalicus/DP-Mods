@@ -1,0 +1,259 @@
+<?php
+
+define("RESOURCE_CAT_ID",     "6");
+define("RESOURCE_TYPE_ID",    "7");
+
+
+
+function saic_resource_center_views_pre_view(&$view, &$display_id, &$args) {
+  if( $_GET['type'] =='')
+   $_GET['type'] = 'all';
+  if( $_GET['category'] =='')
+   $_GET['category'] = 'all';
+  if($view->name  =='resource_center' && $_GET['category'] && $_GET['type']) {
+    $args = array($_GET['category'],$_GET['type']);
+  }
+  elseif($view->name  =='resource_center' && $_GET['category']) {
+    $args = array($_GET['category'],'all');
+  }
+  elseif($view->name  =='news_index' && $_GET['type']) {
+    $args = array('all',$_GET['type']);
+  }
+}
+
+
+function saic_resource_center_views_default_views() {
+  //return digitaria_utility_install_view_dir('saic_media');
+}
+
+function saic_resource_get_resource_info($rid) {
+  
+  $get_products = "
+    SELECT            
+      file.filepath
+    FROM 
+      node node       
+      LEFT JOIN content_type_resource ON node.vid = content_type_resource.vid     
+      LEFT JOIN files file ON  field_resource_document_file_fid = file.fid
+    WHERE        
+      node.status <> 0      
+    AND        
+      node.type = 'resource'  
+    AND
+      node.nid = %d    
+    GROUP BY 
+      node.vid     
+    ORDER BY 
+      node.title
+    ";
+  $data = array();
+  $result = db_query($get_products,$rid);
+  $row = db_fetch_array($result);
+  return $row;
+}
+
+/**
+* Implementation of hook_menu().
+*/
+function saic_resource_center_menu() {
+  $items = array();
+
+  $items['news/resourcesRegister'] = array(
+    'title' => 'News & Media: Resource Center: Register',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+    'page callback' => 'resource_form'
+  );
+
+  $items['news/registerthankyou'] = array(
+    'title' => 'News & Media: Resource Center: Register',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+    'page callback' => 'resource_thankyou'
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_block
+ */
+function saic_resource_center_block($op = 'list', $delta = 0, $edit = array()) {
+  switch($op) {
+    case 'list':
+      $blocks['resource_center_header'] = array(
+        'info' => t("Resource center header from block"),
+      );
+      $blocks['block-resource_top'] = array(
+        'info' => t("Resource center header block"),
+      );
+      return $blocks;
+      break;
+    case 'view':
+      switch($delta) {
+        case 'resource_center_header':
+          $block['content'] = theme('saic_resource_center_header_block');
+          break;
+        case 'block-resource_top':
+          $block['content'] = theme('block-resource_top');
+          break;
+      }
+      return $block;
+      break;
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function saic_resource_center_theme() {
+  return array(
+    'saic_resource_center_form_reg' => array(
+      'arguments' => array('form' => NULL),
+      'template' => 'page-resource_reg_form',
+    ),
+    'saic_resource_center_header_block' => array(
+      'template' => 'block-resource_form_top',
+    ),
+    'block-resource_top' => array(
+      'template' => 'block-resource_top',
+    ),
+    'saic_resource_center_thank_you' => array(
+      'arguments' => array('download' => NULL),
+      'template' => 'page-resource_thankyou',
+    ),
+    'resource_center' => array(
+      'template' => 'page-resource_center',
+    ),
+);
+}
+
+function resource_center() {
+  return theme('resource_center');
+}
+
+function resource_form() {
+  if(!empty($_GET['docid']) && saic_main_check_valid_resource_id($_GET['docid']))  
+    $resource_form = drupal_get_form('saic_resource_center_form','');
+  else
+    $resource_form = "You have reached this page in error. Please use your browsers 'Back' button to return to the previous page.";
+  return theme('saic_resource_center_form_reg',$resource_form);
+}
+
+function resource_thankyou() {
+  $file_link = saic_resource_get_resource_info($_GET['docid']);
+  return theme('saic_resource_center_thank_you',$file_link);
+}
+
+function saic_resource_center_form_validate ($form_id, &$form_state) {
+  $email = $form_state['values']['email'];
+  if(!valid_email_address($email)) {
+    form_set_error('email', t('Please enter a valid email address.'));
+  }
+}
+
+/**
+ * form_submit function, once the form passes the validation (above) this runs
+ * 
+ * Docs @
+ * http://api.drupal.org/api/file/developer/topics/forms_api.html/6
+ * (under Submitting Forms)
+ * 
+ * drupal_set_message() Docs @
+ * http://api.drupal.org/api/function/drupal_set_message/6
+ *
+ */
+function saic_resource_center_form_submit($form, &$form_state) {
+  setcookie("download_access", '1',time()+36000, "/");
+  drupal_goto('news/registerthankyou/',array('docid' => $_GET['docid']));
+}
+
+/**
+ * Implementation of hook_form().
+ */
+function saic_resource_center_form(&$node, $form_state) {
+
+  $form['submit']['#value'] = t('Save');
+  $form['submit']['#weight'] = 20;
+  $form['submit']['#prefix'] ="<div style='border-bottom:1px solid #D4D4D4; padding-bottom:20px; height: 1px;'></div><div class=\"center\">";
+  $form['submit']['#theme'] = 'button';
+  $form['submit']['#type'] = 'submit';
+  $form['submit']['#button_type'] = 'image';
+  $form['submit']['#attributes'] = array('src' => '/sites/all/themes/saic/images/btn_submitform.gif');
+  $form['submit']['#suffix'] = '</div>';
+
+  $form['name'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Your Name',
+    '#required' => TRUE,
+    '#weight' => 1,
+  );
+
+  $form['email'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Email Address',
+    '#required' => TRUE,
+    '#weight' => 2,
+  );
+
+  $form['company'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Company Name',
+    '#required' => TRUE,
+    '#weight' => 3,
+  );
+
+  $form['job'] = array(
+    '#type' => 'select',
+    '#title' => 'Job Title',
+    '#options' => array(
+        'Coordinator' => t('Coordinator'), 
+        'Specialist' => t('Specialist'), 
+        'Manager' => t('Manager'),
+        'Senior Manager' => t('Senior Manager'),
+        'Director' => t('Director'),
+        'Senior Director' => t('Senior Director'),
+        'Senior VP' => t('Senior VP'),
+        'VP' => t('VP'),
+        'Chief Officer' => t('Chief Officer'),
+        'Consultant' => t('Consultant'),
+        'Other' => t('Other'),
+     ),
+    '#required' => TRUE,
+    '#weight' => 4,
+  );
+
+  $form['company_size'] = array(
+    '#type' => 'select',
+    '#title' => 'Company Size',
+    '#required' => TRUE,
+    '#options' => array(
+        '1-10'       => t('1-10'), 
+        '11-50'       => t('11-50'), 
+        '51-200'      => t('51-200'),
+        '201-500'     => t('201-500'), 
+        '501-1000'    => t('501-1000'), 
+        '1001-5000'   => t('1001-5000'),
+        '5001-10,000' => t('5001-10,000'), 
+        '10,000+'     => t('10,000+'), 
+     ),
+    '#weight' => 5,
+  );
+
+  $form['time_to_buy'] = array(
+    '#type' => 'select',
+    '#title' => 'Time Frame to Buy',
+    '#required' => TRUE,
+    '#weight' => 6,
+    '#options' => array(
+        'ASAP' => t('ASAP'), 
+        '3-6 months' => t('3-6 months'), 
+        '6-12 months' => t('6-12 months'),
+        '12+ months' => t('12+ months'),
+     ),
+  );
+
+  return $form;
+}
+
+
+?>

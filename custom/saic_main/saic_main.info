@@ -1,0 +1,7 @@
+name = SAIC Main
+description = Main saic module, for importing contexts, content types, menus etc.
+core = 6.x
+package = SAIC
+dependencies[] = content_podgroup
+dependencies[] = imagecache
+dependencies[] = context

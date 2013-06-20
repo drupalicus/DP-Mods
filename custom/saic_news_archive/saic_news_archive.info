@@ -1,0 +1,5 @@
+; $Id$
+name = SAIC News Archive
+description = "Blocks , Views and logic for the news archive page."
+package = SAIC
+core = 6.x

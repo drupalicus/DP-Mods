@@ -1,0 +1,428 @@
+<?php
+
+/**
+* Implementation of hook_menu().
+*/
+function saic_media_menu() {
+  $items = array();
+
+  $items['media/%/detail.xml'] = array(
+    'title' => '',
+    'type' => MENU_CALLBACK,
+    'page arguments' => array(arg(0)),
+    'access arguments' => array('access content'),
+    'page callback' => 'get_media_detail'
+  );
+
+  $items['rss/media/rss.xml'] = array(
+    'title' => '',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+    'page callback' => 'get_video_rss'
+  );
+
+  $items['media/vw_explore.xml'] = array(
+    'title' => '',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+    'page callback' => 'get_media_wall'
+  );
+
+  return $items;
+}
+
+function get_media_wall() {
+  header ("content-type: text/xml");
+  print base64_decode('PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4=')."\r\n"; 
+  //Build query for type
+  $media_types = $_GET['type'];
+  if(!$_GET['type'])
+    $types = " AND node.type IN ('video','audio','ddp_image') ";
+  else if( !is_array($media_types) || count($media_types) == 0   || ( count($media_types) == 1 && $media_types[0] == 'All' ) )
+    $types = " AND node.type IN ('video','audio','ddp_image') ";
+    else{
+     foreach($media_types as $position => $type){
+       if($type == 'video')
+         $type = 'video';
+       else if($type == 'ddp_image' || $type == 'image')
+         $type = 'ddp_image';
+       else if($type == 'all')
+         continue;
+       if($type =='audio' || $type =='video' || $type =='ddp_image')
+         $all_types[] = $type;
+     }
+      $media  = implode(",", $all_types);
+      $node_types = str_replace(",", "','", $media);
+      $types = " AND node.type IN ('$node_types') ";
+    }
+
+  //Build query for channel
+   if(!$_GET['channel']) {
+    $query_terms= "SELECT * FROM term_data WHERE vid = 2";
+    $result_terms = db_query($query_terms);
+    $term_ids = array();
+    while ($data_terms = db_fetch_object($result_terms)){
+      $term_ids[] = $data_terms->tid;
+    }
+    $channel_and = 'AND (';
+    $channel_join = '';   
+    $counter = 0;
+    foreach ($term_ids as $index => $id) {
+      $channel_join .= "LEFT JOIN term_node term_node_value_".$counter." ON node.vid = term_node_value_".$counter.".vid AND term_node_value_".$counter.".tid =".$id." ";
+      if(($counter +1) != count($term_ids)) {
+        $channel_and .= 'term_node_value_'.$counter.'.tid = '.$id.' OR ';
+      }
+      else {
+         $channel_and .= 'term_node_value_'.$counter.'.tid = '.$id.')';
+      }
+       $counter++;
+    }
+  }
+   else {
+       $channels = $_GET['channel'];
+       $channel_counter = 0;
+       $channel_and .= 'AND (';
+       foreach($channels as $position => $channel){
+        $all_channels[] = ((int) $channel);
+        $channel_join .= 'LEFT JOIN term_node term_node_value_'.$channel_counter.' ON node.vid = term_node_value_'.$channel_counter.'.vid AND term_node_value_'.$channel_counter.'.tid = '.$channel.' ';
+        $channel_and .= 'term_node_value_'.$channel_counter.'.tid = '.$channel;
+        if(count($channels) != 1 && $channel_counter+1 != count($channels))
+          $channel_and .= ' OR ';
+        $channel_counter++;
+      }
+      $channel_and .= ')';
+   }
+
+  // paging
+  if(!$_GET['page']) {
+    $limit = ' LIMIT 0, 13';
+  }
+  else {
+    $page_offset = (int)($_GET['page'] -1) * 13;
+    $limit = "LIMIT $page_offset, 13";
+  }
+
+  //sort
+  if(!$_GET['sort']) {
+    $order_by = 'ORDER BY node_data_field_video_feature_field_video_feature_value DESC, node_created DESC';
+  }
+  elseif ($_GET['sort'] == 'popular'  && module_exists('popularity')) {
+    $order_by = 'ORDER BY(popularity_popularity.quotient + (ifnull(votingapi_cache_node_percent_vote_average_value, 0) / 100)) desc';
+  }
+  elseif ($_GET['sort'] == 'recent') {
+    $order_by = 'ORDER BY node_data_field_video_feature_field_video_feature_value DESC, node_created DESC';
+  }
+  elseif ($_GET['sort'] == 'ratings') {
+    $order_by = 'ORDER BY node_data_field_video_feature_field_video_feature_value DESC, ifnull(votingapi_cache_node_percent_vote_average_value, 0) DESC, node_created DESC';
+  }
+  else {
+    $order_by = 'ORDER BY node_data_field_video_feature_field_video_feature_value DESC, node_created DESC';
+  }
+
+ $get_media_wall_items = "
+ SELECT DISTINCT(node.nid) AS nid,
+   node_data_field_video_feature.field_video_feature_value AS node_data_field_video_feature_field_video_feature_value,
+   node.promote AS node_promote,
+   node.created AS node_created,
+   popularity_popularity.quotient,
+   votingapi_cache_node_percent_vote_average.value AS votingapi_cache_node_percent_vote_average_value
+ FROM node node 
+   LEFT JOIN votingapi_cache votingapi_cache_node_percent_vote_average ON node.nid = votingapi_cache_node_percent_vote_average.content_id AND (votingapi_cache_node_percent_vote_average.content_type = 'node' AND votingapi_cache_node_percent_vote_average.value_type = 'percent' AND votingapi_cache_node_percent_vote_average.tag = 'vote' AND votingapi_cache_node_percent_vote_average.function = 'average')
+   $channel_join
+   INNER JOIN content_field_display_wall node_data_field_display_wall ON node.vid = node_data_field_display_wall.vid
+   LEFT JOIN content_type_video node_data_field_video_feature ON node.vid = node_data_field_video_feature.vid
+   LEFT JOIN popularity_popularity ON popularity_popularity.nid = node.nid
+ WHERE (node.status <> 0)
+ $types
+ $channel_and
+ AND (node_data_field_display_wall.field_display_wall_value = 1)
+ GROUP BY nid
+  $order_by
+  $limit
+ ";
+
+ echo '<wall>';
+ $rss_items = array();
+ $result = db_query($get_media_wall_items);
+ $items = '';
+ while ($rss_row = db_fetch_array($result)) {
+   $node = node_load($rss_row['nid']);
+   $date_created = strtoupper(strftime('%b %Y', $node->created)); 
+   switch($node->type){
+     case 'audio':
+        $img_path =   $node->field_audio_thumbnail[0]['filepath']; 
+        $length =  theme('cck_time', $node->field_audio_length[0]);
+        $descr = $node->field_audio_full_description[0]['value'];
+        $type = 'audio';
+     break;
+     case 'video':
+        $img_path =   $node->field_video_thumbnail[0]['filepath'];
+        $length =  theme('cck_time', $node->field_video_length[0]);
+        $descr = $node->field_video_full_description[0]['value'];
+        $type = 'video';
+     break;
+     case 'ddp_image':
+        $img_path =  $node->field_image_thumbnail[0]['filepath'];
+        $length =  '00:00:00';
+        $descr = $node->field_image_short_desc[0]['value'];
+        $type = 'image';
+     break;
+  }
+  $img_path = '/'.imagecache_create_path('media_thumb_image_wall', $img_path); 
+
+  $items .=  '<item type="'.$type.'" img=\''.$img_path.'\'>
+     <details id=\''.$node->nid.'\' date=\''.$date_created.'\' length=\''.$length.'\' rating=\''.$node->rating.'\'>
+		  <title>
+			  <![CDATA['.$node->title.']]>
+		  </title>
+		  <desc>
+			  <![CDATA['.$descr.']]>
+		  </desc>
+	  </details>
+  </item>';
+ }
+
+ echo $items.'</wall>';
+ exit;
+}
+
+function get_video_rss() {
+  $get_rss_items = 
+  "SELECT DISTINCT(node.nid) AS nid,
+      node.created AS node_created
+   FROM node node 
+   LEFT JOIN votingapi_cache votingapi_cache_node_percent_vote_average ON node.nid = votingapi_cache_node_percent_vote_average.content_id AND (votingapi_cache_node_percent_vote_average.content_type = 'node' AND votingapi_cache_node_percent_vote_average.value_type = 'percent' AND votingapi_cache_node_percent_vote_average.tag = 'vote' AND votingapi_cache_node_percent_vote_average.function = 'average')
+   LEFT JOIN content_field_display_wall node_data_field_display_wall ON node.vid = node_data_field_display_wall.vid
+   WHERE (node.status <> 0) AND (node.type in ('audio', 'ddp_image', 'video')) AND (node_data_field_display_wall.field_display_wall_value = 1)
+   GROUP BY nid
+    ORDER BY node_created DESC
+    LIMIT 20  
+  ";
+
+  if($_SERVER['HTTP_HOST'] == 'content.saic.com')
+    $host =  'www.saic.com';
+  else 
+    $host = $_SERVER['HTTP_HOST'];
+  header ("content-type: text/xml");
+
+ $rss_items = array();
+ $result = db_query($get_rss_items);
+ $items = '';
+ while ($rss_row = db_fetch_array($result)) {
+   $node = node_load($rss_row['nid']);
+   $date_created = strtoupper(strftime('%b %Y', $node->created)); 
+   switch($node->type){
+     case 'audio':
+        $img_path =  '/'.$node->field_audio_thumbnail[0]['filepath'];;
+        $length =  theme('cck_time', $node->field_audio_length[0]);
+        $descr = $node->field_audio_short_description[0]['value'];
+     break;
+     case 'video':
+        $img_path =   '/'.$node->field_video_thumbnail[0]['filepath'];
+        $length =  theme('cck_time', $node->field_video_length[0]);
+        $descr = $node->field_video_short_description[0]['value'];
+     break;
+     case 'ddp_image':
+        $img_path = '/'.$node->field_image_thumbnail[0]['filepath'];
+        $length =  '00:00:00';
+        $descr = $node->field_image_short_desc[0]['value'];
+     break;
+    }
+
+  $items .= '<item>
+            <title>'.htmlspecialchars($node->title).'</title>
+            <link>http://'.$host.url($node->path).'</link>
+            <description><![CDATA[';
+  if ($img_path) {$items .= '<img src="http://'.$host.'/'.imagecache_create_path('media_thumb_image_wall', $img_path).'" /><br/>';} 
+  $items .= htmlspecialchars($descr).']]></description><pubDate>'.date('r', $node->created).'</pubDate><guid>http://'.$host.url($node->path).'</guid></item>';
+
+ }
+
+echo '<rss version="2.0" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title><![CDATA[SAIC Media]]></title>
+    <link><![CDATA[http://'.$host.'/media]]></link>
+    <description><![CDATA[A list of recently posted SAIC videos.]]></description>
+    <language><![CDATA[en-us]]></language>
+    <lastBuildDate><![CDATA['.date('r').']]></lastBuildDate>'.$items.'</channel></rss>';
+
+exit;
+}
+
+function get_media_detail() {
+  if($_SERVER['HTTP_HOST'] == 'content.saic.com')
+    $host =  'www.saic.com';
+  else 
+    $host = $_SERVER['HTTP_HOST'];
+
+  if(!preg_match('/[0-9]+/', arg(1)))
+    exit;
+  else {
+    header ("content-type: text/xml");
+    print base64_decode('PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4=')."\r\n"; 
+    $node = node_load(arg(1));
+    switch($node->type){
+       case 'audio':
+          $img_path =  $node->field_audio_thumbnail[0]['filepath'];
+          $length =  theme('cck_time', $node->field_audio_length[0]);
+          $descr = $node->field_audio_full_description[0]['value'];
+          $links = $node->field_audio_related_links;
+          $rtmpServer =  $node->field_audio_cloudfront_url[0]['server'];
+          $rtmpFile =    $node->field_audio_cloudfront_url[0]['filepath']; 
+          $type = 'audio';
+       break;
+       case 'video':
+          $img_path =  $node->field_video_thumbnail[0]['filepath'];
+          $length =  theme('cck_time', $node->field_video_length[0]);
+          $descr = $node->field_video_full_description[0]['value'];
+          $links = $node->field_video_links;
+          $desc = $node->field_video_full_description;
+          $image = $node->field_video_thumbnail['0']['filepath']; 
+          $rtmpServer =   $node->field_video_stream_url[0]['server'];
+          $rtmpFile =   $node->field_video_stream_url[0]['filepath'];
+          $type = 'video'; 
+       break;
+       case 'ddp_image':
+          $download_path = $node->field_image_cloudfront_url[0]['value'];
+          $img_path =   $node->field_image_thumbnail[0]['filepath'];
+          $length =  '00:00:00';
+          $descr = $node->field_image_full_desc[0]['value'];
+          $links = $node->field_image_links;
+          $rtmpServer =$node->field_image_cloudfront_url[0]['server'];
+          $rtmpFile =    $node->field_image_cloudfront_url[0]['filepath'];
+          $type = 'image';
+       break;
+      }
+       $img_path = '/'.imagecache_create_path('media_thumb_image_wall_2', $img_path); 
+       $return = array();
+       if (!empty($node->taxonomy)) {
+         foreach ($node->taxonomy as $taxonomy) {
+           $return[] = $taxonomy->tid;
+         }
+         $tags =  implode('+',$return);
+       }
+
+      if($tags && !empty($tags)) {
+         $args = array($tags);
+         $view = views_get_view('related_content');
+      if (is_object($view)) {
+         $view->set_arguments($args);
+         $view->set_display('block_2');
+         $view->pre_execute();
+         $view->execute();
+
+         $related_by_tags = '';
+
+         foreach ($view->result as $result_num)
+         { 
+           if($result_num->nid == $node->nid )
+             continue;
+
+           $node_result = node_load($result_num->nid);
+           $node_id = $node_result->nid;
+           $title = $node_result->title;
+           $link = $node_result->path;
+           switch($node_result->type){
+             case 'audio':
+                $nrdesc = $node_result->field_audio_short_description[0]['value'];
+                $nrimage=  $node_result->field_audio_thumbnail[0]['filepath'];
+                $nrtype = 'audio';
+             break;
+             case 'video':
+                $nrdesc = $node_result->field_video_short_description[0]['value'];
+                $nrimage = $node_result->field_video_thumbnail[0]['filepath'];
+                $nrtype = 'video';
+             break;
+             case 'ddp_image':
+                $nrdesc = $node_result->field_image_short_desc[0]['value'];   
+                $nrimage = $node_result->field_image_thumbnail[0]['filepath'];
+                $nrtype = 'image';
+             break;
+            }
+           $nrimage = 'http://'.$host.'/'.imagecache_create_path('media_thumb_image_wall_3', $nrimage);    
+          $related_by_tags .= 
+                '<item type="'.$nrtype.'">'.
+                '<id>'.$node_id.'</id>'.
+                '<image>'. $nrimage.'</image>'.
+                '<title>'.$title.'</title>'
+                .'<description>'.$nrdesc.'</description>'.
+                '<link>'.'http://'.$host.'/'.$link.'</link>'.'</item>';
+         }
+       }
+    }
+
+  echo '<item type="'.$type.'" img="'.$img_path.'">
+    <download_link>'.$download_path.'</download_link>
+     <id>'.$node->nid.'</id>
+     <title>'.$node->title.'</title>';
+
+  if($type !='image') { 
+     echo '<rtmpServer>'.$rtmpServer.'</rtmpServer>';
+     echo '<rtmpFile>'.$rtmpFile.'</rtmpFile>';
+   } 
+
+   echo '<image>http://'.$host.$img_path.'</image>
+   <description>
+       <text><![CDATA['.$descr.']]></text>
+       <date>'.strftime('%B %d, %Y', $node->created).'</date>
+   </description>';
+
+  echo '<embeddable>';
+    if ($node->field_disable_embed[0]['value'] == 1) { print '0'; } else { print '1'; }
+  echo '</embeddable>';
+
+  if(empty($node->rating))
+    $node->rating = 0;
+
+   echo '<url>http://'.$host.url($node->path).'</url>
+         <directurl>http://'.$host.url($node->path).'</directurl>
+         <rating>'.$node->rating.'</rating>';
+   
+   if ($links['0']['url'] != NULL ) { 
+     echo '<links>';
+         foreach ($links as $link) { 
+           echo '<link href="'.$link['url'].'"><![CDATA['.$link['title'].']]></link>';
+          } 
+      echo '</links>';
+   } 
+
+   if ($related_by_tags!='') echo $related_by_tags; 
+   if (isset($node->tags) && isset($node->tags[1])) { 
+    foreach($node->tags[1] as $tag) {
+     echo '<tag>';
+         echo '<title><![CDATA['.$tag->name.']]></title>
+         <size>'.$tag->weight.'</size>
+         <link>/videos/explore?search='.urlencode($tag->name).'</link>';
+     echo '</tag>';
+    } 
+   }
+    echo '<width>'.$node->field_video_width[0]['value'].'</width>';
+    echo '<height>'.$node->field_video_height[0]['value'].'</height></item>';
+    exit;
+  }
+}
+
+function saic_create_media_menu($page = 1,$result_count = 0,$per_page = 12,$landing_page = 'explore') {
+   $pages = ceil( $result_count / $per_page );
+   if($pages > 1) {
+      $onclick = "com.saic.media_library.change_page('.$page.');";
+      //Build paging
+      $paging = '<div class="media-library-paginator"><ul>';
+      if($page - 1 > 1)
+        $paging .= '<li class="prev"><a href="#" onclick="'.$onclick.'" >Prev</a></li>';
+      for( $x = 1; $x <= $pages; $x++){
+        if($x == $page)
+         $paging .= '<li class="active"><a href="#" onclick="'.$onclick.'" >'.$x.'</a></li>';
+        else
+         $paging .= '<li class=""><a href="#" onclick="'.$onclick.'" >'.$x.'</a></li>';
+      }
+      if($page + 1 <= $pages)
+        $paging .= '<li class="next"><a href="#" onclick="'.$onclick.'" >Next</a></li>';
+      $paging .= '</ul></div>';
+   }
+   else
+      $paging = '';
+   return $paging;
+}
+
+?>

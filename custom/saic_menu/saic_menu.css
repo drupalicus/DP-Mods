@@ -1,0 +1,36 @@
+#pk-saic-menu-admin-draggable-table label.option {
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+#pk-saic-menu-admin-draggable-table select {
+  margin-left: 7px;
+}
+
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-arguments,
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-arguments .form-item-labeled,
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-arguments .form-item-labeled .operator,
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-arguments .form-item {
+  display: block;
+  float: left;
+}
+
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-arguments .form-item.form-option {
+  float: none;
+  padding-bottom: 10px;
+}
+
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-actions label,
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-actions select {
+  display: block;
+  float: left;
+}
+#pk-saic-menu-admin-draggable-table .saic-menu-admin-form-actions label {
+  clear: left;
+}
+
+#pk-saic-menu-admin-draggable-table .draggable a.tabledrag-handle {
+  margin: 0px;
+}
+

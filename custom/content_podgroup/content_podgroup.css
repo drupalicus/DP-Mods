@@ -1,0 +1,92 @@
+/* Podgroup generic CSS file */
+/*
+.content-podgroup-wrapper {
+  border: 1px solid;
+  padding:4px;
+  margin:4px;
+}
+*/
+td.podgroup-configure-column {
+  width:100px;
+}
+
+.podgroup-configure span,
+.podgroup-collapse span {
+	font-size: 130%;
+	font-weight: bold;
+}
+
+.podgroup-configure span.after,
+.podgroup-collapse span.after {
+	display: none;
+}
+
+tr.content-multiple-removed-row span.title {
+  clear: none;
+  display: block;
+  float: left;
+  text-decoration:line-through;
+}
+
+.podgroup-configure-table div.indentation {
+	height: 22px;
+}
+
+.podgroup-configure-table a.tabledrag-handle {
+	clear: none;
+	float: left;
+}
+
+.podgroup-configure-table .edit_form {
+	clear: none;
+	float: left;
+	padding-top: 20px;
+	width: 350px;
+}
+
+.podgroup-configure-table .edit_form .form-item {
+	margin-bottom: 1.5em;
+}
+
+
+.podgroup-configure-table .edit_form .form-radios .form-item {
+	margin-bottom: 0
+}
+
+.page-content table.podgroup-configure-table .form-item {
+	position: relative !important;
+}
+
+.page-content table.podgroup-configure-table .form-item .description {
+	background-color: #FFFFCC;
+	border: 1px solid #666;
+	bottom: auto;
+	display: none;
+	margin: 5px 0 0 20px;
+	padding: 5px;
+	position: absolute;
+	box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+	-moz-box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+	-o-box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+}
+
+.page-content table.podgroup-configure-table .form-item:hover .description {
+	display: block;
+}
+
+.page-content table.podgroup-configure-table .form-item:hover .form-item .description {
+	display:none;
+}
+
+.page-content table.podgroup-configure-table .form-item:hover .form-item:hover .description {
+	display:block;
+}
+
+.page-content table.podgroup-configure-table .form-item:hover .form-item:hover .form-item .description {
+	display:none;
+}
+
+.page-content table.podgroup-configure-table .form-item:hover .form-item:hover .form-item:hover .description {
+	display:block;
+}

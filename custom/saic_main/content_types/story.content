@@ -1,0 +1,6024 @@
+$content['type']  = array (
+  'name' => 'Story',
+  'type' => 'story',
+  'description' => '',
+  'title_label' => 'Title',
+  'body_label' => '',
+  'min_word_count' => '0',
+  'help' => '',
+  'maxlength_title' => '',
+  'maxlength_title_js' => 0,
+  'maxlength_title_text' => 'Content limited to !limit characters, remaining: <strong>!remaining</strong>',
+  'maxlength_body' => '',
+  'maxlength_body_js' => 0,
+  'maxlength_body_text' => 'Content limited to !limit characters, remaining: <strong>!remaining</strong>',
+  'node_options' => 
+  array (
+    'revision' => true,
+    'status' => false,
+    'promote' => false,
+    'sticky' => false,
+    'revision_moderation' => false,
+  ),
+  'new_revisions' => 1,
+  'revisioning_auto_publish' => 0,
+  'language_content_type' => '0',
+  'upload' => '0',
+  'old_type' => 'story',
+  'orig_type' => '',
+  'module' => 'node',
+  'custom' => '1',
+  'modified' => '1',
+  'locked' => '0',
+  'fivestar' => 0,
+  'fivestar_stars' => 5,
+  'fivestar_labels_enable' => 1,
+  'fivestar_label_0' => 'Cancel rating',
+  'fivestar_label_1' => 'Poor',
+  'fivestar_label_2' => 'Okay',
+  'fivestar_label_3' => 'Good',
+  'fivestar_label_4' => 'Great',
+  'fivestar_label_5' => 'Awesome',
+  'fivestar_label_6' => 'Give it @star/@count',
+  'fivestar_label_7' => 'Give it @star/@count',
+  'fivestar_label_8' => 'Give it @star/@count',
+  'fivestar_label_9' => 'Give it @star/@count',
+  'fivestar_label_10' => 'Give it @star/@count',
+  'fivestar_style' => 'average',
+  'fivestar_text' => 'dual',
+  'fivestar_title' => 1,
+  'fivestar_feedback' => 1,
+  'fivestar_unvote' => 0,
+  'fivestar_position_teaser' => 'hidden',
+  'fivestar_position' => 'below',
+);
+$content['groups']  = array (
+  0 => 
+  array (
+    'label' => 'Teaser Content',
+    'group_type' => 'standard',
+    'settings' => 
+    array (
+      'form' => 
+      array (
+        'style' => 'fieldset_collapsible',
+        'description' => '',
+      ),
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '-1',
+    'group_name' => 'group_story_teaser_content',
+  ),
+  1 => 
+  array (
+    'label' => 'Header',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 1,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '8',
+    'group_name' => 'group_pod_header',
+  ),
+  2 => 
+  array (
+    'label' => 'List Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '10',
+    'group_name' => 'group_pod_list_group',
+  ),
+  3 => 
+  array (
+    'label' => 'List Node Item',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => '',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 1,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '11',
+    'group_name' => 'group_pod_list_node_item',
+  ),
+  4 => 
+  array (
+    'label' => 'List Open Item',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 1,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '12',
+    'group_name' => 'group_pod_list_open_item',
+  ),
+  5 => 
+  array (
+    'label' => 'List Tags Group ',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '13',
+    'group_name' => 'group_list_group_tags',
+  ),
+  6 => 
+  array (
+    'label' => 'Spotlight',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => '',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'Spotlight',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '14',
+    'group_name' => 'group_pod_spotlight',
+  ),
+  7 => 
+  array (
+    'label' => 'Open HTML',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 1,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 1,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 1,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '15',
+    'group_name' => 'group_pod_open_html',
+  ),
+  8 => 
+  array (
+    'label' => 'Tabs Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'Tabs',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '16',
+    'group_name' => 'group_pod_tabs_wrapper',
+  ),
+  9 => 
+  array (
+    'label' => 'Tab',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'Tabs',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 1,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '17',
+    'group_name' => 'group_pod_tab',
+  ),
+  10 => 
+  array (
+    'label' => 'FAQ Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'FAQ',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '18',
+    'group_name' => 'group_pod_faq_wrapper',
+  ),
+  11 => 
+  array (
+    'label' => 'FAQ Item',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Question',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'FAQ',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 1,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '19',
+    'group_name' => 'group_pod_faq_item',
+  ),
+  12 => 
+  array (
+    'label' => 'Content Top Single Image',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => false,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => false,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => false,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => false,
+          'group_pod_sbs' => false,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '20',
+    'group_name' => 'group_pod_content_top_image',
+  ),
+  13 => 
+  array (
+    'label' => 'Content Top Text + Image',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => false,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => false,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => false,
+          'group_pod_sbs' => false,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '21',
+    'group_name' => 'group_pod_content_top_t_i',
+  ),
+  14 => 
+  array (
+    'label' => 'Feature Image with Button and Sub Navigation',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'Header Features',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '22',
+    'group_name' => 'group_pod_ft_img_btn_subnav',
+  ),
+  15 => 
+  array (
+    'label' => 'Callouts',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 1,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '23',
+    'group_name' => 'group_pod_callout',
+  ),
+  16 => 
+  array (
+    'label' => 'Block Reference',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => '',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '24',
+    'group_name' => 'group_block_ref',
+  ),
+  17 => 
+  array (
+    'label' => 'Side by Side Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '25',
+    'group_name' => 'group_pod_sbs',
+  ),
+  18 => 
+  array (
+    'label' => 'Pseudo Content Right',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '26',
+    'group_name' => 'group_pod_pse_cont_right',
+  ),
+  19 => 
+  array (
+    'label' => 'Page Settings',
+    'group_type' => 'standard',
+    'settings' => 
+    array (
+      'form' => 
+      array (
+        'style' => 'fieldset',
+        'description' => '',
+      ),
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '27',
+    'group_name' => 'group_page_settings',
+  ),
+);
+$content['fields']  = array (
+  0 => 
+  array (
+    'label' => 'Teaser',
+    'field_name' => 'field_story_teaser',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '6',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_story_teaser][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => NULL,
+    'group' => 'group_story_teaser_content',
+    'required' => 1,
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  1 => 
+  array (
+    'label' => 'Date',
+    'field_name' => 'field_story_date',
+    'type' => 'date',
+    'widget_type' => 'date_popup',
+    'change' => 'Change basic information',
+    'weight' => '7',
+    'default_value' => 'blank',
+    'default_value2' => 'same',
+    'default_value_code' => '',
+    'default_value_code2' => '',
+    'input_format' => 'm/d/Y - H:i',
+    'input_format_custom' => '',
+    'year_range' => '-3:+3',
+    'increment' => '1',
+    'advanced' => 
+    array (
+      'label_position' => 'above',
+      'text_parts' => 
+      array (
+        'year' => 0,
+        'month' => 0,
+        'day' => 0,
+        'hour' => 0,
+        'minute' => 0,
+        'second' => 0,
+      ),
+    ),
+    'label_position' => 'above',
+    'text_parts' => 
+    array (
+    ),
+    'description' => '',
+    'group' => 'group_story_teaser_content',
+    'required' => 1,
+    'multiple' => '0',
+    'repeat' => 0,
+    'todate' => '',
+    'granularity' => 
+    array (
+      'year' => 'year',
+      'month' => 'month',
+      'day' => 'day',
+    ),
+    'default_format' => 'medium',
+    'tz_handling' => 'none',
+    'timezone_db' => 'America/Los_Angeles',
+    'op' => 'Save field settings',
+    'module' => 'date',
+    'widget_module' => 'date',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  2 => 
+  array (
+    'label' => 'Image',
+    'field_name' => 'field_story_image',
+    'type' => 'filefield',
+    'widget_type' => 'imagefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '8',
+    'file_extensions' => 'png gif jpg jpeg',
+    'progress_indicator' => 'bar',
+    'file_path' => '',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'max_resolution' => 0,
+    'min_resolution' => 0,
+    'custom_alt' => 1,
+    'alt' => '',
+    'custom_title' => 0,
+    'title_type' => 'textfield',
+    'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
+    'description' => '',
+    'group' => 'group_story_teaser_content',
+    'required' => 0,
+    'multiple' => '0',
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'imagefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  3 => 
+  array (
+    'label' => 'k',
+    'field_name' => 'field_k',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '20',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'k',
+        '_error_element' => 'default_value_widget][field_k][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_k' => 
+      array (
+        0 => 
+        array (
+          'value' => 'k',
+          '_error_element' => 'default_value_widget][field_k][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_header',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  4 => 
+  array (
+    'label' => 'Header Style',
+    'field_name' => 'field_pod_header_header_style',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_select',
+    'change' => 'Change basic information',
+    'weight' => '21',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_header_header_style' => 
+      array (
+        'value' => 
+        array (
+          0 => '',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_header',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => 'h1|h1
+h2|h2
+h3|h3
+h4|h4
+h5|h5',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  5 => 
+  array (
+    'label' => 'Subtitle',
+    'field_name' => 'field_pod_header_subtitle',
+    'type' => 'text',
+    'widget_type' => 'text_textfield',
+    'change' => 'Change basic information',
+    'weight' => '22',
+    'rows' => 5,
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_header_subtitle' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_header_subtitle][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_header',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  6 => 
+  array (
+    'label' => 'b',
+    'field_name' => 'field_b',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '89',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'b',
+        '_error_element' => 'default_value_widget][field_b][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_b' => 
+      array (
+        0 => 
+        array (
+          'value' => 'b',
+          '_error_element' => 'default_value_widget][field_b][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_group',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  7 => 
+  array (
+    'label' => 'Description',
+    'field_name' => 'field_pod_list_group_description',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '90',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_pod_list_group_description][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_list_group_description' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_list_group_description][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_group',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  8 => 
+  array (
+    'label' => 'Display Type',
+    'field_name' => 'field_pod_list_group_display',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_buttons',
+    'change' => 'Change basic information',
+    'weight' => '91',
+    'description' => 'Full List will display larger images. 
+Mini List will display smaller images.
+Title Only will not show the description at all, displayed as a list.',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'fulllist',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_list_group_display' => 
+      array (
+        'value' => 
+        array (
+          'fulllist' => true,
+          'minilist' => false,
+          'title' => false,
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_group',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => 'fulllist|Full List
+minilist|Mini List
+title|Title Only',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  9 => 
+  array (
+    'label' => 'Node Item',
+    'field_name' => 'field_pod_l_n_i_list_group',
+    'type' => 'nodereference',
+    'widget_type' => 'nodereference_autocomplete',
+    'change' => 'Change basic information',
+    'weight' => '19',
+    'autocomplete_match' => 'contains',
+    'size' => '60',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'nid' => NULL,
+        '_error_element' => 'default_value_widget][field_pod_l_n_i_list_group][0][nid][nid',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_l_n_i_list_group' => 
+      array (
+        0 => 
+        array (
+          'nid' => 
+          array (
+            'nid' => '',
+            '_error_element' => 'default_value_widget][field_pod_l_n_i_list_group][0][nid][nid',
+          ),
+          '_error_element' => 'default_value_widget][field_pod_l_n_i_list_group][0][nid][nid',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_node_item',
+    'required' => 1,
+    'multiple' => true,
+    'referenceable_types' => 
+    array (
+      'announcement' => 'announcement',
+      'audio' => 'audio',
+      'contract' => 'contract',
+      'ddp_image' => 'ddp_image',
+      'in_the_news_article' => 'in_the_news_article',
+      'magazine' => 'magazine',
+      'magazine_article' => 'magazine_article',
+      'magazine_issue' => 'magazine_issue',
+      'page' => 'page',
+      'person' => 'person',
+      'photo_gallery' => 'photo_gallery',
+      'press_release' => 'press_release',
+      'resource' => 'resource',
+      'story' => 'story',
+      'video' => 'video',
+      'webform' => 'webform',
+      'contact' => 0,
+      'disclaimer' => 0,
+      'product' => 0,
+      'service' => 0,
+      'tweet' => 0,
+      'twitter_feed' => 0,
+    ),
+    'advanced_view' => '--',
+    'advanced_view_args' => '',
+    'op' => 'Save field settings',
+    'module' => 'nodereference',
+    'widget_module' => 'nodereference',
+    'columns' => 
+    array (
+      'nid' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'index' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  10 => 
+  array (
+    'label' => 'c',
+    'field_name' => 'field_c',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '63',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'c',
+        '_error_element' => 'default_value_widget][field_c][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_c' => 
+      array (
+        0 => 
+        array (
+          'value' => 'c',
+          '_error_element' => 'default_value_widget][field_c][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_open_item',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  11 => 
+  array (
+    'label' => 'Description',
+    'field_name' => 'field_pod_list_open_item_desc',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '64',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_pod_list_open_item_desc][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_list_open_item_desc' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_list_open_item_desc][0][value',
+          'format' => 1,
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_open_item',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+      'format' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'views' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  12 => 
+  array (
+    'label' => 'd',
+    'field_name' => 'field_d',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '65',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'd',
+        '_error_element' => 'default_value_widget][field_d][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_d' => 
+      array (
+        0 => 
+        array (
+          'value' => 'd',
+          '_error_element' => 'default_value_widget][field_d][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_open_item',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  13 => 
+  array (
+    'label' => 'Image',
+    'field_name' => 'field_pod_list_open_item_image',
+    'type' => 'filefield',
+    'widget_type' => 'imagefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '66',
+    'file_extensions' => 'png gif jpg jpeg',
+    'progress_indicator' => 'bar',
+    'file_path' => 'page/image',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'max_resolution' => 0,
+    'min_resolution' => 0,
+    'custom_alt' => 0,
+    'alt' => '',
+    'custom_title' => 0,
+    'title_type' => 'textfield',
+    'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
+    'description' => '',
+    'group' => 'group_pod_list_open_item',
+    'required' => 0,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'imagefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  14 => 
+  array (
+    'label' => 'URL',
+    'field_name' => 'field_pod_list_open_item_url',
+    'type' => 'link',
+    'widget_type' => 'link',
+    'change' => 'Change basic information',
+    'weight' => '67',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'title' => '',
+        'url' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_list_open_item_url' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'url' => '',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_list_open_item',
+    'required' => 0,
+    'multiple' => true,
+    'validate_url' => 0,
+    'url' => 0,
+    'title' => '',
+    'title_value' => '',
+    'enable_tokens' => 0,
+    'display' => 
+    array (
+      'url_cutoff' => '80',
+    ),
+    'attributes' => 
+    array (
+      'target' => 'default',
+      'rel' => '',
+      'class' => '',
+      'title' => '',
+    ),
+    'op' => 'Save field settings',
+    'module' => 'link',
+    'widget_module' => 'link',
+    'columns' => 
+    array (
+      'url' => 
+      array (
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'title' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'attributes' => 
+      array (
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  15 => 
+  array (
+    'label' => 'File',
+    'field_name' => 'field_pod_list_open_item_file',
+    'type' => 'filefield',
+    'widget_type' => 'filefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '68',
+    'file_extensions' => '',
+    'progress_indicator' => 'bar',
+    'file_path' => '',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'description' => '',
+    'group' => 'group_pod_list_open_item',
+    'required' => 0,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '1',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'filefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  16 => 
+  array (
+    'label' => 'Description',
+    'field_name' => 'field_list_group_description',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '93',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_list_group_description][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_list_group_description' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_list_group_description][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_list_group_tags',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  17 => 
+  array (
+    'label' => 'Tags',
+    'field_name' => 'field_list_group_tags',
+    'type' => 'content_type_tag',
+    'widget_type' => 'content_type_tag_widget',
+    'change' => 'Change basic information',
+    'weight' => '94',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'content_type' => 'page',
+        'tweet_tags' => '',
+        'public_tags' => '',
+        'private_tags' => '',
+        'content_limit' => '10',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_list_group_tags' => 
+      array (
+        0 => 
+        array (
+          'content_type' => 'page',
+          'tweet_tags' => '',
+          'public_tags' => '',
+          'private_tags' => '',
+          'content_limit' => '10',
+        ),
+      ),
+    ),
+    'group' => 'group_list_group_tags',
+    'required' => 0,
+    'multiple' => true,
+    'op' => 'Save field settings',
+    'module' => 'content_type_tag',
+    'widget_module' => 'content_type_tag',
+    'columns' => 
+    array (
+      'content_type' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+        'default' => '',
+      ),
+      'private_tags' => 
+      array (
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => false,
+        'sortable' => true,
+        'default' => '',
+      ),
+      'public_tags' => 
+      array (
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => false,
+        'sortable' => true,
+        'default' => '',
+      ),
+      'tweet_tags' => 
+      array (
+        'type' => 'varchar',
+        'length' => 1024,
+        'not null' => false,
+        'sortable' => true,
+        'default' => '',
+      ),
+      'content_limit' => 
+      array (
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => false,
+        'sortable' => true,
+        'default' => '',
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  18 => 
+  array (
+    'label' => 'Heading Link',
+    'field_name' => 'field_list_group_heading_link',
+    'type' => 'link',
+    'widget_type' => 'link',
+    'change' => 'Change basic information',
+    'weight' => '95',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'title' => '',
+        'url' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_list_group_heading_link' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'url' => '',
+        ),
+      ),
+    ),
+    'group' => 'group_list_group_tags',
+    'required' => 0,
+    'multiple' => true,
+    'validate_url' => 1,
+    'url' => 0,
+    'title' => 'optional',
+    'title_value' => '',
+    'enable_tokens' => 0,
+    'display' => 
+    array (
+      'url_cutoff' => '80',
+    ),
+    'attributes' => 
+    array (
+      'target' => 'default',
+      'rel' => '',
+      'class' => '',
+      'title' => '',
+    ),
+    'op' => 'Save field settings',
+    'module' => 'link',
+    'widget_module' => 'link',
+    'columns' => 
+    array (
+      'url' => 
+      array (
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'title' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'attributes' => 
+      array (
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  19 => 
+  array (
+    'label' => 'Display Type',
+    'field_name' => 'field_list_group_display',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_buttons',
+    'change' => 'Change basic information',
+    'weight' => '96',
+    'description' => 'Full List will display larger images. 
+Mini List will display smaller images.
+Title Only will not show the description at all, displayed as a list.',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'default',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_list_group_display' => 
+      array (
+        'value' => 
+        array (
+          'default' => true,
+          'fulllist' => false,
+          'minilist' => false,
+          'title' => false,
+        ),
+      ),
+    ),
+    'group' => 'group_list_group_tags',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => 'default|Default
+fulllist|Full List
+minilist|Mini List
+title|Title Only',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  20 => 
+  array (
+    'label' => 'Show Date',
+    'field_name' => 'field_list_group_tags_show_date',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '97',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => NULL,
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_list_group_tags_show_date' => 
+      array (
+        'value' => false,
+      ),
+    ),
+    'group' => 'group_list_group_tags',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0
+Show Date',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  21 => 
+  array (
+    'label' => 'Show more Link',
+    'field_name' => 'field_list_group_tags_m',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '98',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => NULL,
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_list_group_tags_m' => 
+      array (
+        'value' => false,
+      ),
+    ),
+    'group' => 'group_list_group_tags',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0
+Show More Link',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  22 => 
+  array (
+    'label' => 'Description',
+    'field_name' => 'field_pod_spotlight_desc',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '20',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_pod_spotlight_desc][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_spotlight_desc' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_spotlight_desc][0][value',
+          'format' => 1,
+        ),
+      ),
+    ),
+    'group' => 'group_pod_spotlight',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+      'format' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'views' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  23 => 
+  array (
+    'label' => 'Image',
+    'field_name' => 'field_pod_spotlight_bg_image',
+    'type' => 'filefield',
+    'widget_type' => 'imagefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '21',
+    'file_extensions' => 'png gif jpg jpeg',
+    'progress_indicator' => 'bar',
+    'file_path' => 'page/bg_image',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'max_resolution' => 0,
+    'min_resolution' => 0,
+    'custom_alt' => 0,
+    'alt' => '',
+    'custom_title' => 0,
+    'title_type' => 'textfield',
+    'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
+    'description' => '',
+    'group' => 'group_pod_spotlight',
+    'required' => 0,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'imagefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  24 => 
+  array (
+    'label' => 'Image Align ',
+    'field_name' => 'field_pod_spotlight_img_align',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_buttons',
+    'change' => 'Change basic information',
+    'weight' => '22',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'top',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_spotlight_img_align' => 
+      array (
+        'value' => 
+        array (
+          'top' => true,
+          'bottom' => false,
+        ),
+      ),
+    ),
+    'group' => 'group_pod_spotlight',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => 'top
+bottom',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  25 => 
+  array (
+    'label' => 'File',
+    'field_name' => 'field_pod_spotlight_file',
+    'type' => 'filefield',
+    'widget_type' => 'filefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '23',
+    'file_extensions' => 'pdf',
+    'progress_indicator' => 'bar',
+    'file_path' => 'page/file',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'description' => '',
+    'group' => 'group_pod_spotlight',
+    'required' => 0,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'filefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  26 => 
+  array (
+    'label' => 'Content',
+    'field_name' => 'field_pod_open_html_content',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '12',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_pod_open_html_content][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_open_html_content' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_open_html_content][0][value',
+          'format' => 1,
+        ),
+      ),
+    ),
+    'group' => 'group_pod_open_html',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+      'format' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'views' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  27 => 
+  array (
+    'label' => 'Show page border',
+    'field_name' => 'field_page_openhtml_showborder',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '13',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'Show border',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_page_openhtml_showborder' => 
+      array (
+        'value' => true,
+      ),
+    ),
+    'group' => 'group_pod_open_html',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0
+Show border',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  28 => 
+  array (
+    'label' => 'f',
+    'field_name' => 'field_f',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '21',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'f',
+        '_error_element' => 'default_value_widget][field_f][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_f' => 
+      array (
+        0 => 
+        array (
+          'value' => 'f',
+          '_error_element' => 'default_value_widget][field_f][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_tabs_wrapper',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  29 => 
+  array (
+    'label' => 'g',
+    'field_name' => 'field_g',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '22',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'g',
+        '_error_element' => 'default_value_widget][field_g][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_g' => 
+      array (
+        0 => 
+        array (
+          'value' => 'g',
+          '_error_element' => 'default_value_widget][field_g][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_tab',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  30 => 
+  array (
+    'label' => 'h',
+    'field_name' => 'field_h',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '71',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'h',
+        '_error_element' => 'default_value_widget][field_h][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_h' => 
+      array (
+        0 => 
+        array (
+          'value' => 'h',
+          '_error_element' => 'default_value_widget][field_h][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_faq_wrapper',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  31 => 
+  array (
+    'label' => 'Answer',
+    'field_name' => 'field_pod_faq_item_answer',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '20',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_pod_faq_item_answer][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_faq_item_answer' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_faq_item_answer][0][value',
+          'format' => 1,
+        ),
+      ),
+    ),
+    'group' => 'group_pod_faq_item',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+      'format' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'views' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  32 => 
+  array (
+    'label' => 'Image',
+    'field_name' => 'field_pod_content_top_image',
+    'type' => 'filefield',
+    'widget_type' => 'imagefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '28',
+    'file_extensions' => 'png gif jpg jpeg',
+    'progress_indicator' => 'bar',
+    'file_path' => 'page/image',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'max_resolution' => 0,
+    'min_resolution' => 0,
+    'custom_alt' => 0,
+    'alt' => '',
+    'custom_title' => 0,
+    'title_type' => 'textfield',
+    'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
+    'description' => '',
+    'group' => 'group_pod_content_top_image',
+    'required' => 1,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'imagefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  33 => 
+  array (
+    'label' => 'Link',
+    'field_name' => 'field_content_top_image_link',
+    'type' => 'link',
+    'widget_type' => 'link',
+    'change' => 'Change basic information',
+    'weight' => '29',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'title' => '',
+        'url' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_content_top_image_link' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'url' => '',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_content_top_image',
+    'required' => 0,
+    'multiple' => true,
+    'validate_url' => 1,
+    'url' => 'optional',
+    'title' => 'none',
+    'title_value' => '',
+    'enable_tokens' => 0,
+    'display' => 
+    array (
+      'url_cutoff' => '80',
+    ),
+    'attributes' => 
+    array (
+      'target' => 'default',
+      'rel' => '',
+      'class' => '',
+      'title' => '',
+    ),
+    'op' => 'Save field settings',
+    'module' => 'link',
+    'widget_module' => 'link',
+    'columns' => 
+    array (
+      'url' => 
+      array (
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'title' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'attributes' => 
+      array (
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  34 => 
+  array (
+    'label' => 'Text',
+    'field_name' => 'field_pod_content_top_text',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '21',
+    'rows' => '5',
+    'size' => 60,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        'format' => '1',
+        '_error_element' => 'default_value_widget][field_pod_content_top_text][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_content_top_text' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          'format' => '1',
+          '_error_element' => 'default_value_widget][field_pod_content_top_text][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_content_top_t_i',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+      'format' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'views' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  35 => 
+  array (
+    'label' => 'Image',
+    'field_name' => 'field_pod_content_top_img',
+    'type' => 'filefield',
+    'widget_type' => 'imagefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '22',
+    'file_extensions' => 'png gif jpg jpeg',
+    'progress_indicator' => 'bar',
+    'file_path' => 'page/image',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'max_resolution' => 0,
+    'min_resolution' => 0,
+    'custom_alt' => 0,
+    'alt' => '',
+    'custom_title' => 0,
+    'title_type' => 'textfield',
+    'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
+    'description' => '',
+    'group' => 'group_pod_content_top_t_i',
+    'required' => 1,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'imagefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  36 => 
+  array (
+    'label' => 'Link',
+    'field_name' => 'field_content_top_t_i_link',
+    'type' => 'link',
+    'widget_type' => 'link',
+    'change' => 'Change basic information',
+    'weight' => '23',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'title' => '',
+        'url' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_content_top_t_i_link' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'url' => '',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_content_top_t_i',
+    'required' => 0,
+    'multiple' => true,
+    'validate_url' => 1,
+    'url' => 'optional',
+    'title' => 'optional',
+    'title_value' => '',
+    'enable_tokens' => 0,
+    'display' => 
+    array (
+      'url_cutoff' => '80',
+    ),
+    'attributes' => 
+    array (
+      'target' => 'default',
+      'rel' => '',
+      'class' => '',
+      'title' => '',
+    ),
+    'op' => 'Save field settings',
+    'module' => 'link',
+    'widget_module' => 'link',
+    'columns' => 
+    array (
+      'url' => 
+      array (
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'title' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'attributes' => 
+      array (
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  37 => 
+  array (
+    'label' => 'Show bottom line',
+    'field_name' => 'field_content_top_t_i_line',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '24',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 0,
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_content_top_t_i_line' => 
+      array (
+        'value' => true,
+      ),
+    ),
+    'group' => 'group_pod_content_top_t_i',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0
+Show Line',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  38 => 
+  array (
+    'label' => 'Show Image Border',
+    'field_name' => 'field_content_top_t_i_border',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '25',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'Show Image Border',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_content_top_t_i_border' => 
+      array (
+        'value' => true,
+      ),
+    ),
+    'group' => 'group_pod_content_top_t_i',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0
+Show Image Border',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  39 => 
+  array (
+    'label' => 'Image',
+    'field_name' => 'field_pod_ft_i_b_sn_image',
+    'type' => 'filefield',
+    'widget_type' => 'imagefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '23',
+    'file_extensions' => 'png gif jpg jpeg',
+    'progress_indicator' => 'bar',
+    'file_path' => 'page/image',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'max_resolution' => 0,
+    'min_resolution' => 0,
+    'custom_alt' => 0,
+    'alt' => '',
+    'custom_title' => 0,
+    'title_type' => 'textfield',
+    'title' => '',
+    'use_default_image' => 0,
+    'default_image_upload' => '',
+    'default_image' => NULL,
+    'description' => '',
+    'group' => 'group_pod_ft_img_btn_subnav',
+    'required' => 1,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'imagefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'image_plain',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  40 => 
+  array (
+    'label' => 'Link',
+    'field_name' => 'field_pod_ft_i_b_sn_button',
+    'type' => 'link',
+    'widget_type' => 'link',
+    'change' => 'Change basic information',
+    'weight' => '24',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'title' => '',
+        'url' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_ft_i_b_sn_button' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'url' => '',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_ft_img_btn_subnav',
+    'required' => 0,
+    'multiple' => true,
+    'validate_url' => 1,
+    'url' => 'optional',
+    'title' => 'optional',
+    'title_value' => '',
+    'enable_tokens' => 0,
+    'display' => 
+    array (
+      'url_cutoff' => '80',
+    ),
+    'attributes' => 
+    array (
+      'target' => 'default',
+      'rel' => '',
+      'class' => '',
+      'title' => '',
+    ),
+    'op' => 'Save field settings',
+    'module' => 'link',
+    'widget_module' => 'link',
+    'columns' => 
+    array (
+      'url' => 
+      array (
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'title' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'attributes' => 
+      array (
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  41 => 
+  array (
+    'label' => 'Move Navigation',
+    'field_name' => 'field_pod_ft_i_b_sn_move_nav',
+    'type' => 'number_integer',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '25',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 0,
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_ft_i_b_sn_move_nav' => 
+      array (
+        'value' => false,
+      ),
+    ),
+    'group' => 'group_pod_ft_img_btn_subnav',
+    'required' => 0,
+    'multiple' => true,
+    'min' => '',
+    'max' => '',
+    'prefix' => '',
+    'suffix' => '',
+    'allowed_values' => '0|No
+1|Show Navigation in featured region ',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'number',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'sortable' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  42 => 
+  array (
+    'label' => 'Description',
+    'field_name' => 'field_pod_callout_desc',
+    'type' => 'text',
+    'widget_type' => 'text_textarea',
+    'change' => 'Change basic information',
+    'weight' => '75',
+    'rows' => '5',
+    'size' => '60',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '',
+        '_error_element' => 'default_value_widget][field_pod_callout_desc][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_callout_desc' => 
+      array (
+        0 => 
+        array (
+          'value' => '',
+          '_error_element' => 'default_value_widget][field_pod_callout_desc][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_callout',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'text',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  43 => 
+  array (
+    'label' => 'Background Image',
+    'field_name' => 'field_pod_callout_image',
+    'type' => 'filefield',
+    'widget_type' => 'filefield_widget',
+    'change' => 'Change basic information',
+    'weight' => '76',
+    'file_extensions' => 'jpg png gif',
+    'progress_indicator' => 'bar',
+    'file_path' => '',
+    'max_filesize_per_file' => '',
+    'max_filesize_per_node' => '',
+    'description' => '',
+    'group' => 'group_pod_callout',
+    'required' => 1,
+    'multiple' => true,
+    'list_field' => '0',
+    'list_default' => 1,
+    'description_field' => '0',
+    'op' => 'Save field settings',
+    'module' => 'filefield',
+    'widget_module' => 'filefield',
+    'columns' => 
+    array (
+      'fid' => 
+      array (
+        'type' => 'int',
+        'not null' => false,
+        'views' => true,
+      ),
+      'list' => 
+      array (
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => false,
+        'views' => true,
+      ),
+      'data' => 
+      array (
+        'type' => 'text',
+        'serialize' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  44 => 
+  array (
+    'label' => 'Link',
+    'field_name' => 'field_pod_callout_link',
+    'type' => 'link',
+    'widget_type' => 'link',
+    'change' => 'Change basic information',
+    'weight' => '77',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'title' => '',
+        'url' => '',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_callout_link' => 
+      array (
+        0 => 
+        array (
+          'title' => '',
+          'url' => '',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_callout',
+    'required' => 0,
+    'multiple' => true,
+    'validate_url' => 1,
+    'url' => 0,
+    'title' => 'optional',
+    'title_value' => '',
+    'enable_tokens' => 0,
+    'display' => 
+    array (
+      'url_cutoff' => '80',
+    ),
+    'attributes' => 
+    array (
+      'target' => 'default',
+      'rel' => '',
+      'class' => '',
+      'title' => '',
+    ),
+    'op' => 'Save field settings',
+    'module' => 'link',
+    'widget_module' => 'link',
+    'columns' => 
+    array (
+      'url' => 
+      array (
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'title' => 
+      array (
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => false,
+        'sortable' => true,
+      ),
+      'attributes' => 
+      array (
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  45 => 
+  array (
+    'label' => 'Block',
+    'field_name' => 'field_pod_block_ref',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_select',
+    'change' => 'Change basic information',
+    'weight' => '16',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '120',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_pod_block_ref' => 
+      array (
+        'value' => 
+        array (
+          0 => '120',
+        ),
+      ),
+    ),
+    'group' => 'group_block_ref',
+    'required' => 1,
+    'multiple' => true,
+    'text_processing' => '1',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => 'return saic_main_get_blocks();',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+      'format' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'views' => false,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  46 => 
+  array (
+    'label' => 'j',
+    'field_name' => 'field_j',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '85',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'j',
+        '_error_element' => 'default_value_widget][field_j][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_j' => 
+      array (
+        0 => 
+        array (
+          'value' => 'j',
+          '_error_element' => 'default_value_widget][field_j][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_sbs',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  47 => 
+  array (
+    'label' => 'i',
+    'field_name' => 'field_i',
+    'type' => 'text',
+    'widget_type' => 'hiddenwidget',
+    'change' => 'Change basic information',
+    'weight' => '21',
+    'save_hidden_field_on_update' => true,
+    'prepopulate_field_with_default' => false,
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 'i',
+        '_error_element' => 'default_value_widget][field_i][0][value',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_i' => 
+      array (
+        0 => 
+        array (
+          'value' => 'i',
+          '_error_element' => 'default_value_widget][field_i][0][value',
+        ),
+      ),
+    ),
+    'group' => 'group_pod_pse_cont_right',
+    'required' => 0,
+    'multiple' => true,
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'hiddenwidget',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  48 => 
+  array (
+    'label' => 'Page layout',
+    'field_name' => 'field_page_layout',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_select',
+    'change' => 'Change basic information',
+    'weight' => '1',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => '200px left and right',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_page_layout' => 
+      array (
+        'value' => '200px left and right',
+      ),
+    ),
+    'group' => 'group_page_settings',
+    'required' => 1,
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '300px left and right
+200px left and right
+2 Column (center 550px , right 350)
+EE&I 2 Column (center 605px , right 290)',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  49 => 
+  array (
+    'label' => 'Show Left Menu',
+    'field_name' => 'field_page_left_menu',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '2',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 1,
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_page_left_menu' => 
+      array (
+        'value' => true,
+      ),
+    ),
+    'group' => 'group_page_settings',
+    'required' => 0,
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0|Dont Show
+1|Show Left Menu',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  50 => 
+  array (
+    'label' => 'Show Breadcrumb',
+    'field_name' => 'field_page_breadcrumb',
+    'type' => 'text',
+    'widget_type' => 'optionwidgets_onoff',
+    'change' => 'Change basic information',
+    'weight' => '3',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'value' => 1,
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_page_breadcrumb' => 
+      array (
+        'value' => true,
+      ),
+    ),
+    'group' => 'group_page_settings',
+    'required' => 0,
+    'multiple' => '0',
+    'text_processing' => '0',
+    'max_length' => '',
+    'allowed_values' => '0|Dont Show
+1|Show Breadcrumbs',
+    'allowed_values_php' => '',
+    'op' => 'Save field settings',
+    'module' => 'text',
+    'widget_module' => 'optionwidgets',
+    'columns' => 
+    array (
+      'value' => 
+      array (
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => false,
+        'sortable' => true,
+        'views' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+  51 => 
+  array (
+    'label' => 'Disclaimer',
+    'field_name' => 'field_disclaimer',
+    'type' => 'nodereference',
+    'widget_type' => 'nodereference_autocomplete',
+    'change' => 'Change basic information',
+    'weight' => '4',
+    'autocomplete_match' => 'contains',
+    'size' => '60',
+    'description' => '',
+    'default_value' => 
+    array (
+      0 => 
+      array (
+        'nid' => NULL,
+        '_error_element' => 'default_value_widget][field_disclaimer][0][nid][nid',
+      ),
+    ),
+    'default_value_php' => '',
+    'default_value_widget' => 
+    array (
+      'field_disclaimer' => 
+      array (
+        0 => 
+        array (
+          'nid' => 
+          array (
+            'nid' => '',
+            '_error_element' => 'default_value_widget][field_disclaimer][0][nid][nid',
+          ),
+          '_error_element' => 'default_value_widget][field_disclaimer][0][nid][nid',
+        ),
+      ),
+    ),
+    'group' => 'group_page_settings',
+    'required' => 0,
+    'multiple' => '1',
+    'referenceable_types' => 
+    array (
+      'disclaimer' => 'disclaimer',
+      'announcement' => 0,
+      'audio' => 0,
+      'contact' => 0,
+      'contract' => 0,
+      'ddp_image' => 0,
+      'in_the_news_article' => 0,
+      'magazine' => 0,
+      'magazine_article' => 0,
+      'magazine_issue' => 0,
+      'page' => 0,
+      'person' => 0,
+      'photo_gallery' => 0,
+      'press_release' => 0,
+      'product' => 0,
+      'resource' => 0,
+      'service' => 0,
+      'story' => 0,
+      'tweet' => 0,
+      'twitter_feed' => 0,
+      'video' => 0,
+      'webform' => 0,
+    ),
+    'advanced_view' => '--',
+    'advanced_view_args' => '',
+    'op' => 'Save field settings',
+    'module' => 'nodereference',
+    'widget_module' => 'nodereference',
+    'columns' => 
+    array (
+      'nid' => 
+      array (
+        'type' => 'int',
+        'unsigned' => true,
+        'not null' => false,
+        'index' => true,
+      ),
+    ),
+    'display_settings' => 
+    array (
+      'label' => 
+      array (
+        'format' => 'above',
+        'exclude' => 0,
+      ),
+      'teaser' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'full' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      4 => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+      'token' => 
+      array (
+        'format' => 'default',
+        'exclude' => 0,
+      ),
+    ),
+  ),
+);
+$content['extra']  = array (
+  'title' => '-2',
+  'revision_information' => '3',
+  'author' => '5',
+  'options' => '6',
+  'menu' => '1',
+  'taxonomy' => '-3',
+  'path' => '4',
+  'path_redirect' => '7',
+  'nodewords' => '2',
+);
+

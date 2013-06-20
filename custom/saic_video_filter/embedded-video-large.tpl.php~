@@ -1,0 +1,22 @@
+<?php 
+  $serverName = qualcomm_hooks_server();
+  if($show_title){
+    $title = '<h6 style="padding:0;margin:0 10px;font-weight:normal;color:#782f97;font-size:20px;font-family:Arial, Helvetica, sans-serif;">' . $video->title . '</h6>';
+  }
+
+  if($show_more_link){
+    $disable_embedViewMore = "false";
+  }
+  else{
+    $disable_embedViewMore = "true";
+  }
+
+  if($show_border){
+    $border_style = 'margin:0 0 10px;padding:5px 0 0;width:500px; border:1px solid #d3d3d3;';
+  }
+  else{
+    $border_style = 'margin:0 0 0px;padding:0px 0 0;width:500px;';
+  }
+?>
+
+<div style="<?php print $border_style;?>"><?php print $title; ?><object height="300" width="500"><param name="movie" value="http://<?php print $serverName; ?>/sites/all/themes/qualcomm/swfs/player.swf"></param><param name="allowScriptAccess" value="always"></param><param name="wmode" value="transparent"></param><param name="allowFullScreen" value="true"></param><param name="flashvars" value="xmlPath=http://<?php print $serverName; ?>/feeds/video/<?php print $video->nid ?>/detail.xml&mode=embedded&swfPath=http://<?php print $serverName ?>/sites/all/themes/qualcomm/swfs/&disable_title=false&disable_share=false&disable_send=false&primary=7810710&secondary=3712950&disable_rating=false&send_mailto=true&simple_endScreen=false&simple_infoPanel=false&disable_embed=false&disable_embedViewMore=false"></param><embed src="http://<?php print $serverName; ?>/sites/all/themes/qualcomm/swfs/player.swf?xmlPath=http://<?php print $serverName; ?>/feeds/video/<?php print $video->nid ?>/detail.xml&mode=embedded&swfPath=http://www.qualcomm.com/sites/all/themes/qualcomm/swfs&disable_title=false&disable_share=false&disable_send=false&primary=7810710&secondary=3712950&disable_rating=false&send_mailto=true&simple_endScreen=false&simple_infoPanel=false&disable_embed=false&disable_embedViewMore=<?php print $disable_embedViewMore; ?>" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" scale="noscale" wmode="transparent" width="500" height="300"></embed></object></div>

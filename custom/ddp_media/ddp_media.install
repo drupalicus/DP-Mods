@@ -1,0 +1,31 @@
+<?php
+/**
+* Implementation of hook_install().
+*/
+function ddp_media_install() {
+  drupal_execute('_ddp_media_create_content_type', $form_state);
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function ddp_media_uninstall() {
+
+}
+
+function _ddp_media_create_content_type() {
+  /* get the CCK node types to be created. This is where you load the 
+   * file containing your function from above, if necessary, and then call
+   * that function.
+   */
+  module_load_include('content', 'ddp_media', 'content_types/ddp_media');
+  $content = _ddp_media_content_type_export(); // in ddp_image.content
+
+  // CCK content_copy.module may not be enabled, so make sure it is included
+  require_once './' . drupal_get_path('module', 'content') .  '/modules/content_copy/content_copy.module';
+  $form_state['values']['type_name'] = '<create>';
+  $form_state['values']['macro'] = '$content = ' . var_export($content, TRUE) . ';';
+  // form provided by content_copy.module 
+  drupal_execute('content_copy_import_form', $form_state);
+  content_clear_type_cache();
+}

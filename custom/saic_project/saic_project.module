@@ -1,0 +1,363 @@
+<?php
+
+/**
+ * Implementation of hook_block().
+ */
+function saic_project_block($op = 'list', $delta = 0, $edit = array()) {
+  if ($op == 'list') {
+    $blocks['project_index'] = array(
+      'info' => t('Project Index'),
+      'status' => 1,
+    );
+    $blocks['project_filter'] = array(
+      'info' => t('Project Filter'),
+      'status' => 1,
+      'cache' => BLOCK_CACHE_GLOBAL,
+    );
+    $blocks['featured'] = array(
+      'info' => t('Featured projects'),
+      'status' => 1,
+      'cache' => BLOCK_CACHE_GLOBAL,
+    );
+
+    return $blocks;
+  }
+  else if ($op == 'view') {
+    if ($delta == 'project_index') {
+      $block = array(
+        'subject' => '',
+        'content' => saic_project_index(),
+      );
+    }
+    elseif ($delta == 'project_filter') {
+      $block = array(
+        'subject' => t('Browse Projects'),
+        'content' => saic_project_browse(),
+      );
+    }
+    elseif ($delta == 'featured') {
+      $block = array(
+        'subject' => t('Featured Projects'),
+        'content' => saic_project_featured_block(),
+      );
+    }
+    return $block;
+  }
+}
+
+/**
+ * Implementation of hook_nodeapi().
+ */
+function saic_project_nodeapi(&$node, $op) {
+  if ($node->type == 'project' && $op == 'view') {
+    $node->project_services = array();
+    foreach ($node->taxonomy as $term) {
+      if ($term->vid == 10) {
+        $parents = taxonomy_get_parents($term->tid);
+        foreach ($parents as $parent) {
+          $node->project_services[$term->tid] = $term;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Renders project index.
+ */
+function saic_project_index() {
+  drupal_add_js(drupal_get_path('module', 'saic_project') . '/js/project_index.js');
+  $tid = saic_project_filter_value();
+  $content = '<div class="view-project-filter">' . str_replace(array('<div', '</div'), array('<span', '</span'), saic_project_index_filter()) . '</div>';
+  $content .= views_embed_view('project_index', 'default', $tid);
+  return $content;
+}
+
+/**
+ * Renders filter form on project index page.
+ */
+function saic_project_index_filter() {
+  _saic_project_add_js_terms();
+  return drupal_get_form('saic_project_index_filter_form');
+}
+
+/**
+ * Renders project filter block.
+ */
+function saic_project_browse() {
+  drupal_add_js(drupal_get_path('module', 'saic_project') . '/js/project_filter.js');
+  return saic_project_index_filter();
+}
+
+/**
+ * Renders featured project block.
+ */
+function saic_project_featured_block() {
+  drupal_add_js(drupal_get_path('module', 'saic_project') . '/js/featured.js');
+  return views_embed_view('featured_projects', 'default');
+}
+
+/**
+ * Gets the current filter value.
+ *
+ * @return int $tid
+ *   The taxonomy term ID.
+ */
+function saic_project_filter_value() {
+  $tid = isset($_REQUEST['project_tid']) ? $_REQUEST['project_tid'] : 'all';
+  return $tid;
+}
+
+/**
+ * FAPI definition for filter form.
+ */
+function saic_project_index_filter_form($form_state) {
+  $vocab = digitaria_utility_get_vocab_by_name('Project Type');
+  $tree = taxonomy_get_tree($vocab->vid);
+
+  $default_project_type = isset($_REQUEST['project_type']) ? $_REQUEST['project_type'] : 'showall';
+  $default_cap = saic_project_filter_value();
+
+  $title = !empty($_REQUEST['title']) && $_REQUEST['title'] !='all'  ? $_REQUEST['title'] : '';
+
+  $options = array('showall' => t('- All -'));
+
+  foreach ($tree as $term) {
+    $options[$term->tid] = $term->name;
+  }
+
+  $form['search_box'] = array(
+    '#type' => 'textfield',
+    '#default_value' =>  $title,
+    '#title' => t('Search Keyword'),
+    '#weight' => -6,
+    '#prefix'=>  '<h3>Browse Projects</h3><p>We deliver integrated solutions that help our customers succeed. Search our featured project profiles that highlight our capabilities.</p>'
+  );
+
+  $form['project_type_tid'] = array(
+    '#type' => 'select',
+    '#title' => t('Project Type'),
+    '#options' => $options,
+    '#default_value' => $default_project_type,
+    '#weight' => -5
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Go'),
+    '#weight' => 5,
+  );
+
+  return $form;
+}
+
+/**
+ * FAPI filter form submit handler.
+ */
+function saic_project_index_filter_form_submit($form, &$form_state) {
+
+  $title = isset($form_state['values']['search_box']) ? $form_state['values']['search_box'] : 'all';
+  $project_type = !empty($form_state['values']['project_type_tid']) ? $form_state['values']['project_type_tid'] : 'all';
+
+  $redirect_url = array( 'title' => $title,'project_type' => $project_type);
+  $path = drupal_get_path_alias('node/312');
+  $form_state['redirect'] = array($path,$redirect_url);
+
+}
+
+/**
+ * FAPI browse form definition.
+ */
+function saic_project_browse_form(&$form_state) {
+  $tree = _saic_taxonomy_get_real_tree(10);
+
+  $form['heading'] = array(
+    '#type' => 'markup',
+    '#value' => '<h3>Browse Projects</h3><p>' . t('We bring our expertise to bear in a way that few other companies do, developing integrated solutions that help our customers succeed.') . '</p>',
+  );
+
+  foreach ($tree as $tid => $parent) {
+    $options = array('all' => t('All'));
+
+    foreach ($parent->children as $tid_child => $child) {
+      $options[$tid_child] = $child->name;
+    }
+    $id = preg_replace("/[^a-zA-Z0-9\s]/", "_", $parent->name);
+    $form[$id] = array(
+      '#type' => 'select',
+      '#title' => $parent->name,
+      '#options' => $options,
+      '#default_value' => 'all',
+    );
+  }
+
+  return $form;
+}
+
+/**
+ * Implementation of hook_views_post_render().
+ */
+function saic_project_views_post_render(&$view) {
+  if ($view->name == 'project_index') {
+    _saic_project_add_js_terms();
+  }
+}
+
+
+function saic_project_views_query_alter(&$view, &$query) {
+  if($view->name == 'project_index') {
+
+    if($_GET['view'] == 'all' || !($_GET['view'])) {
+      unset($view->query->where['date']);
+    }
+
+    foreach($query->where[0]['clauses'] as $key => $value) {
+      if ($value == "node.title = '%s'") {
+       $title = mysql_real_escape_string ($_REQUEST['title']);
+
+       $query->where[0]['clauses'][$key] =
+        "(node.title like '%%$title%' OR
+          node_data_field_project_main_image.field_project_intro_value like '%%$title%' OR
+          node_data_field_project_main_image.field_project_bottom_text_value like '%%$title%' OR
+          node_data_field_project_main_image.field_project_proof_point_value like '%%$title%' OR
+          node_data_field_project_main_image.field_project_quick_links_value like '%%$title%' OR
+          node_data_field_project_main_image.field_project_facts_value like '%%$title%' OR
+          node_data_field_project_main_image.field_project_overview_value like '%%$title%'
+      )";
+
+      }
+    }
+  }
+}
+
+
+/**
+ * Implementation of hook_views_pre_view().
+ */
+function saic_project_views_pre_view(&$view, &$display_id, &$args) {
+  if ($view->name == 'project_index') {
+
+    $title = !empty($_REQUEST['title']) ? $_REQUEST['title'] : 'showall';
+    $project_type_tid = isset($_REQUEST['project_type']) ? $_REQUEST['project_type'] : 'showall';
+
+    if ($title != 'all') {
+      $vocab = digitaria_utility_get_vocab_by_name('Project Type');
+
+      $title_sql = mysql_real_escape_string ($title);
+      $sql = "SELECT tid from term_data where name like '%$title_sql%' AND vid = %d";
+      $result = db_query($sql, $vocab->vid);
+
+      $tids = array();
+      while ($row = db_fetch_array($result)) {
+        $tids[] = $row['tid'];
+      }
+      if(!empty($tids)) {
+        $tids = implode("+", $tids);
+      }
+    }
+    else {
+      $tids = 'showall';
+    }
+
+#kpr($project_type_tid);
+#kpr("tids");
+#kpr($tids);
+#kpr("title");
+#kpr($title);
+
+    $args = array($project_type_tid, $title, $tids);
+  }
+}
+
+/**
+ * Adds taxonomy tree as javascript setting.
+ */
+function _saic_project_add_js_terms() {
+  static $once = FALSE;
+
+  if (!$once) {
+    $settings = array('project_term_tree' => _saic_taxonomy_get_real_tree(10));
+    drupal_add_js($settings, 'setting');
+    $once = TRUE;
+  }
+}
+
+/**
+ * Returns a hierarchical array of taxonomy terms
+ *
+ * @param int $vid
+ *   Vocabulary ID.
+ * @return array
+ */
+function _saic_taxonomy_get_real_tree($vid){
+  static $trees = array();
+
+  if (!isset($trees[$vid])) {
+    $result_tree = array();
+    $terms = array();
+    foreach(taxonomy_get_tree($vid) as $term){
+      if(isset($terms[$term->tid])){
+        $term->children = $terms[$term->tid]->children;
+        $terms[$term->tid] = $term;
+      }else{
+        $terms[$term->tid] = $term;
+      }
+
+      if($term->depth === 0){
+        $result_tree[$term->tid] = &$terms[$term->tid];
+        continue;
+      }
+
+      foreach($term->parents as $tid){
+        if($tid){
+          if(!isset($terms[$tid])){
+            $terms[$tid] = new stdClass();
+          }
+          $terms[$tid]->children[$term->tid] = &$terms[$term->tid];
+        }
+      }
+    }
+    $trees[$vid] = $result_tree;
+  }
+  return $trees[$vid];
+}
+
+function saic_project_saic_menu_block_alter(&$block) {
+  $arg = arg();
+  if ($arg[0] == 'node' && is_numeric($arg[1]) && (empty($arg[2]) || $arg[2] == 'revisions')) {
+    $node = menu_get_object();
+    if ($arg[2] == 'revisions') {
+      // Temporary menu item for revisions
+      $block['content'] = <<<EOT
+<ul id="section">
+  <li class="level-1 active-trail has-children bottom-level odd first last saic-menu-block-item saic-menu-block-item-1">
+    <a href="#" title="Temporary Placeholder" class="active-trail">
+      <div class="menu-container"></div>Temporary Placeholder
+    </a>
+    <ul id="mainnav">
+      <li class="level-2 odd first saic-menu-block-item saic-menu-block-item-2">
+        <a href="#" title="Viewing A Page Revision" class="not-active">
+          <div class="menu-container"></div>You are viewing a revision
+        </a>
+      </li>
+
+      <li class="level-2 even last saic-menu-block-item saic-menu-block-item-2">
+        <a href="#" title="This is only temporary" class="not-active">
+          <div class="menu-container"></div>This menu is only temporary
+          </a>
+      </li>
+
+      <li class="level-2 active-trail active even last saic-menu-block-item saic-menu-block-item-2">
+        <a href="#" title="Section Placeholder" class="active-trail active">
+          <div class="menu-container"></div>Section Placeholder</a>
+      </li>
+
+    </ul>
+  </li>
+</ul>
+EOT;
+    }
+    else {
+      return;
+    }
+  }
+}

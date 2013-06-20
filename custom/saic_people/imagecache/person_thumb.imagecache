@@ -1,0 +1,18 @@
+$presets = array();
+$presets['person_thumb'] = array (
+  'presetname' => 'person_thumb',
+  'actions' => 
+  array (
+    0 => 
+    array (
+      'weight' => '0',
+      'module' => 'imagecache',
+      'action' => 'imagecache_scale_and_crop',
+      'data' => 
+      array (
+        'width' => '192',
+        'height' => '192',
+      ),
+    ),
+  ),
+);

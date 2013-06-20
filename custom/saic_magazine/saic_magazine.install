@@ -1,0 +1,12 @@
+<?php
+// $Id: saic.magazine.install,v 1.0 2011/01/12 10:10:10 tbudz Exp $
+
+/**
+ * @file
+ * The main saic magizine, used to define blocks, views themes and functions for magaizines
+*/
+
+function saic_magazine_install() {
+  // Create all the content types required by the module
+  cck_install_content_dir('saic_magazine');
+}

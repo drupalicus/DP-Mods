@@ -1,0 +1,553 @@
+<?php
+
+/**
+* Implementation of hook_menu().
+*/
+function saic_hooks_menu(){
+  $items = array();
+  $items['login'] = array(
+    'title' => 'Login',
+    'page callback' => 'saic_hooks_login_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_LOCAL_TASK,
+  );
+  return $items;
+}
+
+
+/**
+ * Custom login page - if user is logged in, redirect to page in qs variable destination. 
+ * If that isn't set redirect to user page 
+ */ 
+function saic_hooks_login_page(){
+  $content = '';
+  //show login if user is not logged in
+  global $user;
+  if($user->uid == 0){
+    $content .= drupal_get_form('user_login');
+  }
+  else{
+    if(!empty($_GET['destination'])){
+      drupal_goto($_GET['destination']);
+    }
+    else{
+      drupal_goto('user');
+    }
+  }  
+  $output = $content;
+  return $output;
+
+}
+
+function saic_hooks_views_query_alter(&$view, &$query) {
+  switch($view->name) {
+    case 'video_gallery_list':
+      $sort_by = 'node_data_field_video_feature_field_video_feature_value DESC';
+      if (isset($_GET['sort'])) {
+        if ($_GET['sort'] == 'ratings') {
+          $sort_by .= ', ifnull(votingapi_cache_node_percent_vote_average_value, 0) DESC';
+        } elseif ($_GET['sort'] == 'popular' && module_exists('popularity')) {
+          $sort_by = '(saic_popularity.quotient + (ifnull(votingapi_cache_node_percent_vote_average_value, 0) / 100)) desc';
+        }
+      }
+
+      $sort_by .= ', node_created DESC';
+      $query->orderby = array();
+      $query->orderby[] = $sort_by;
+      break;
+
+    case 'blog':
+    case 'author_blogs':
+    case 'tag_blogs':
+    case 'blog_archive_browser':
+      $sort_by = ' node_created DESC';
+      if (isset($_GET['sort']) && $_GET['sort'] == 'comments') {
+          $sort_by = ' node_comment_statistics_comment_count DESC';
+      } elseif (isset($_GET['sort']) && $_GET['sort'] == 'popular') {
+          $sort_by = ' node_counter_totalcount DESC';
+      }
+      $query->orderby = array();
+      $query->orderby[] = $sort_by;
+      break;
+    case 'doc_center':
+      if($view->current_display != 'block_1'){
+        $sort_by = ' node_data_field_document_pubdate_field_document_pubdate_value DESC ';
+        if (isset($_GET['sort']) && $_GET['sort'] == 'date') {
+            $sort_by = ' node_data_field_document_pubdate_field_document_pubdate_value ';
+            $sort_by .= saic_hooks_get_sort_direction();
+        }
+        elseif (isset($_GET['sort']) && $_GET['sort'] == 'title') {
+            $sort_by = ' node_title ';
+            $sort_by .= saic_hooks_get_sort_direction();
+        }
+        elseif (isset($_GET['sort']) && $_GET['sort'] == 'format') {
+            $sort_by = " right(filename, instr(reverse(filename), '.')-1) ";
+            $sort_by .= saic_hooks_get_sort_direction();
+        }
+        $query->orderby = array();
+        $query->orderby[] = $sort_by;
+      }
+    break;
+    case 'api_event_list':
+      // we want a pager!
+      $view->set_use_pager(true);
+      if ($_GET['per_page'] && is_numeric($_GET['per_page'])) {
+        $view->set_items_per_page($_GET['per_page']);
+      }
+      // default sort
+      $sort_by = "node_data_field_event_date_field_event_date_value ASC";
+      if (isset($_GET['sort'])) {
+        if (strtolower($_GET['sort']) == 'start_date') {
+          if (isset($_GET['sort_direction']) && strtolower($_GET['sort_direction']) == 'desc') {
+            $sort_by = "node_data_field_event_date_field_event_date_value DESC";
+          }
+        } elseif (strtolower($_GET['sort']) == 'title') {
+          $sort_by = "node.title";
+          $sort_by .= saic_hooks_get_sort_direction();
+        }
+      }
+      $query->orderby = array();
+      $query->orderby[] = $sort_by;
+      break;
+    break;
+  }
+
+}
+
+/**
+ * based on $_GET['sort_direction'] get the sort direction variable
+ */
+function saic_hooks_get_sort_direction(){
+  $sort_dir = '';
+  if (isset($_GET['sort_direction'])) {
+    if (strtolower($_GET['sort_direction']) == 'desc') {
+      $sort_dir .= " desc";
+    } else {
+      $sort_dir .= " asc";
+    }
+  } else {
+    $sort_dir.= " asc";
+  }
+
+  return $sort_dir;
+}
+
+function saic_hooks_db_rewrite_sql($query, $primary_table = 'n', $primary_field = 'nid', $args = array()) {
+  if (is_object($args['view']) && $args['view']->name=='video_gallery_list') {
+    if ($_GET['search']) {
+      $search_term = '%' . strtolower(db_escape_string(saic_clean_arg(urldecode($_GET['search'])))) . '%';
+
+      $result = db_query("select tid from term_data where lower(name) like '%s'", $search_term);
+      $matching_tids = array();
+      while ($row = db_fetch_array($result)) {
+        $matching_tids[] = $row['tid'];
+      }
+      $table_alias = 'saic_videos_content_fields';
+      $rewrite_array = array();
+      $rewrite_array['join'] = "left join {term_node} saic_term_node on node.vid = saic_term_node.vid inner join {content_type_video} $table_alias on node.vid = $table_alias.vid";
+      $where = "(lower(node.title) like '%$search_term%' OR lower({$table_alias}.field_video_short_description_value) like '%$search_term%'";
+      if ($matching_tids) {
+        $where .= ' OR saic_term_node.tid in (' . join($matching_tids, ',') . ')';
+      }
+      $where .= ')';
+      $rewrite_array['where'] = $where;
+      return $rewrite_array;
+    }
+  }
+}
+      
+function saic_hooks_nodeapi(&$node, $op, $teaser, $page) {
+  switch ($op) {
+    case 'load':
+      if (
+        (strpos($_SERVER['REQUEST_URI'], '/feeds/vw_explore.xml') !== false) ||
+        (strpos($_SERVER['REQUEST_URI'], '/feeds/video') !== false)
+      ) {
+        $rating    = fivestar_get_votes('node', $node->nid, 'vote');
+        $num_stars = $rating['average']['value'] / 20;
+        return array('rating' => $num_stars);
+      }
+
+      //add full display name to people nodes
+      if($node->type == 'person'){
+        $first_name = ($node->field_person_nickname[0]['value'] ? $node->field_person_nickname[0]['value'] : $node->field_person_first_name[0]['value']);
+        $node->display_first_name = $first_name;        
+        $node->full_display_name = trim($node->field_person_prefix[0]['value'] . ' ' . $first_name . ' ' . $node->field_person_last_name[0]['value']);
+        if(empty($node->full_display_name)){
+          $node->full_display_name = $node->title;
+        }
+      }
+
+      if($node->type == 'video'){
+        //hack to fix bug in default image field
+        if(empty($node->field_video_thumbnail[0])){
+          $field = content_fields('field_video_thumbnail');
+          $node->field_video_thumbnail[0] = $field['widget']['default_image'];
+        }
+      }
+
+    default:
+      break;
+  }
+}
+
+function saic_related_videos_by_tag($node, $limit = 5) {
+  $sql = "select n.nid, count(*) as count 
+          from node n 
+          join content_type_video v on v.nid = n.nid and v.vid = n.vid
+          join content_field_display_wall dw on dw.nid = n.nid
+          inner join term_node tn1 on tn1.nid = n.nid 
+            and tn1.vid = n.vid
+            and tn1.tid in (
+              select tid 
+              from term_node 
+              where nid = $node->nid 
+              and vid = $node->vid
+            ) 
+          where n.nid <> $node->nid 
+          and n.status = 1 
+          and n.type = 'video' 
+          group by n.nid 
+          order by count desc limit $limit";
+  $result = db_query($sql);
+  $related_videos = array();
+  while ($row = db_fetch_array($result)) {
+    $related_videos[] = node_load($row['nid']);
+  }
+  return $related_videos;
+}
+
+function saic_related_videos_by_node($node, $limit = 5) {
+    $related_videos = array();
+    if (!empty($node->field_video_related_videos[0]['nid']) || !empty($node->field_video_related_videos[1]['nid']) || !empty($node->field_video_related_videos[2]['nid'])) {
+        foreach ($node->field_video_related_videos as $delta => $video) {
+            $related_video = node_load($video['nid']);
+            if ($related_video->status == 1 && $related_video->field_video_display_video_wall[0]['value'] == 1) {
+                $related_videos[] = $related_video;
+                if (sizeof($related_videos) >= $limit) {
+                    break;
+                }
+            }
+        }
+    }
+    return $related_videos;
+}
+function saic_clean_arg($arg) {
+  if (isset($arg) && $arg !== '') {
+    return preg_replace("/[^a-zA-Z0-9\s-_'\"]/", '', $arg);
+  } else {
+    return '';
+  }
+}
+
+function saic_get_args() {
+  $params = array();
+  foreach ($_GET as $key => $value) {
+    if ($key != 'q') {
+      $params[$key] = saic_clean_arg($value);
+    }
+  }
+  return $params;
+}
+
+function saic_hooks_transform_for_url($string){
+  $string = str_replace('-', '—', $string);
+  $string = str_replace(' ', '-', $string);
+  $string = strtolower($string);
+  return $string;
+}
+
+function saic_hooks_transform_from_url($string){
+  $string = str_replace('-', ' ', $string);
+  $string = str_replace('—', '-', $string);
+  $string = ucwords($string);
+  return $string;
+}
+
+function saic_hooks_implode_without_nulls($glue, $arr){
+  $implode_arr = array(); 
+  foreach($arr as $item){
+    if(!empty($item)){
+      $implode_arr[] = $item;
+    }
+  }
+
+  $ret_string = implode($glue, $implode_arr);
+  return $ret_string;
+}
+
+// remove some confusing parts of the node form
+// https://redmine.digitaria.com/issues/show/18313
+function saic_hooks_form_alter(&$form, $form_state, $form_id) {
+
+
+if($form_id == 'audio_node_form')
+{
+   $form['menu']['#access'] = false;
+   $form['author']['#access'] = false;
+   $form['field_ddp_video_guid']['#access'] = false;
+   $form['field_ddp_video_ddpid']['#access'] = false;
+   $form['field_ddp_video_updated']['#access'] = false;
+}
+else if($form_id == 'video_node_form')
+{
+   $form['menu']['#access'] = false;
+   $form['author']['#access'] = false;
+   $form['field_ddp_video_guid']['#access'] = false;
+   $form['field_ddp_video_ddpid']['#access'] = false;
+   $form['field_ddp_video_updated']['#access'] = false;
+}
+else if($form_id == 'ddp_image_node_form')
+{
+   $form['menu']['#access'] = false;
+   $form['author']['#access'] = false;
+   $form['field_ddp_video_guid']['#access'] = false;
+   $form['field_ddp_video_ddpid']['#access'] = false;
+   $form['field_ddp_video_updated']['#access'] = false;
+}
+
+  
+    if($form_id == 'video_node_form'){
+      $form['taxonomy']['tags']['1']['#description'] = 'Enter a list of words or phrases separated by commas describing this video\'s content. Example: funny, bungee jumping, "Company, Inc". Recommend max of 10 tags that will be presented with the video information on the front-end.';
+      $form['taxonomy']['tags']['3']['#description'] = 'Enter a SUPPLEMENTAL list of words or phrases separated by commas describing this video\'s content. These tags will NOT be visible on the web page as clickable topics, but would be helpful for search.';
+    }
+
+}
+
+/**
+ * submit function for video_node_form
+ */
+function saic_hooks_video_node_form_submit($form, &$form_state) {
+
+   //if Display on Video Wall is unchecked, remove node from recently viewed list
+  if($form_state['values']['field_video_display_video_wall'][0]['value'] == 0){
+    if(!empty($_COOKIE['__CJ_qc_video_wall_rv'])){
+      $recent_array = json_decode($_COOKIE['__CJ_qc_video_wall_rv']);
+      foreach($recent_array as $key => $recent){
+        if(html_entity_decode($recent->title, ENT_QUOTES) == $form_state['values']['title']){
+          unset($recent_array[$key]);
+        }
+      }
+
+      $new_array = array();
+      foreach($recent_array as $key => $recent){
+        $new_array[] = $recent;
+      }
+
+      $cookie_val = json_encode($new_array);
+      setcookie('__CJ_qc_video_wall_rv', $cookie_val, time() + (3600*10000), '/');
+    }
+  }
+}
+
+/**
+* Implementation of hook_theme().
+*/
+function saic_hooks_theme() {
+  return array(
+    'modal_popup' => array(
+      'template' => 'modal-popup',
+      'arguments' => array(
+        'class_id' => null,
+        'title' => null,
+        'content' => null
+      ),
+    ),
+    'right_rail_block' => array(
+      'template' => 'right-rail-block',
+      'arguments' => array(
+        'title' => null,
+        'content' => null,
+        'link_id' => null,
+        'show_more' => true
+      ),
+    ),
+    'filter_details' => array(
+      'template' => 'filter-details',
+      'arguments' => array(
+        'back' => '',
+        'type' => '',
+        'term' => '',
+        'count' => null
+      ),
+    ),
+    'content_search' => array(
+      'template' => 'content-search',
+      'arguments' => array(
+        'action' => null,
+        'default_value' => null,
+        'do_sort' => false
+      ),
+    ),
+    'qcerror' => array(
+      'template' => 'custom-error',
+      'path' => base_path() . path_to_theme(),
+      'arguments' => array(
+        'code' => null,
+        'title' => null,
+        'description' => null,
+      ),
+    ),
+  );
+}
+/**
+ * Implementation of hook_install().
+ */
+function saic_hooks_install() {
+  // sink module's weight to the deepest depths of the module_list()
+  db_query("UPDATE {system} SET weight = 998 WHERE name = 'saic_hooks'");
+}
+
+function saic_hooks_server() {
+  return ($_SERVER['HTTP_HOST'] == 'content.saic.com' ? 'www.saic.com' : $_SERVER['HTTP_HOST']);
+}
+
+function saic_hooks_token_list($type){
+  if ($type == 'node' || $type == 'all') {
+    $tokens['user']['saic-url'] = 'The url with the real root.';
+    $tokens['user']['saic-url-login'] = 'Brings people to a login page if they are not logged in, or redirects them to the node page if they are logged in.';
+    $tokens['user']['default-language-path'] = 'The url path of the node this node was translated from.';
+  }
+  if ($type == 'comment' || $type == 'all') {  
+    $tokens['comment']['saic-comment-url'] = t('The comment view url with the real root');
+    $tokens['comment']['saic-comment-url-login'] = t('The comment view url with a login redirect');
+  }
+  return $tokens;
+}
+function saic_hooks_token_values($type, $object = NULL, $options = array()) {
+  $tokens = array();
+  if ($type == 'node' || $type == 'all') {
+    $node = $object;
+    $tokens['saic-url'] = 'http://' . saic_hooks_server() . url('node/' . $node->nid);
+    $tokens['saic-url-login'] = 'http://' . $_SERVER['HTTP_HOST'] . '/login?destination=node/' . $node->nid;
+    $tokens['default-language-path'] = saic_hooks_get_default_language_path($node->nid);
+  }
+  elseif($type == 'comment' || $type == 'all'){
+    if ($comment = (object)$object) {
+      $tokens['saic-comment-url'] = 'http://' . saic_hooks_server() . url('node/'. $comment->nid) . '#comment-'. $comment->cid;
+      $tokens['saic-comment-url-login'] = 'http://' . $_SERVER['HTTP_HOST']. '/login?destination=node/'. $comment->nid . '#comment-'. $comment->cid;
+    }
+  }
+  return $tokens;
+
+}
+
+/**
+ * gets path of node this node was translated from
+ * if this is the source node, it just returns the path alias
+ */
+function saic_hooks_get_default_language_path($nid){
+  $node = node_load($nid);
+  $tnid = $node->tnid;
+  if(!empty($tnid) && $tnid != $node->nid){
+    $source_node = node_load($tnid);
+    $path = $source_node->path;
+  }else{
+    $path = drupal_get_path_alias('node/' . $nid);
+  }
+  return $path;
+}
+/**
+ * function to get content for the right side filter blocks
+ * $sql - sql to get your links: rows should be themed by the $link_theme function
+ * $title - title to display above the links
+ * $link_theme - theme function used to theme your links
+ * $link_id - id of the "See full list" button
+ * $sort_function - function used to sort links in your popup
+ * $modal_class_id - class id of the modal popup box
+ */
+function saic_hooks_right_rail_block_content($sql, $title, $link_theme, $link_id, $sort_function, $modal_class_id){
+  $result = db_query($sql);
+  $rows = digitaria_uitlity_get_dbresult_as_array($result);
+
+
+  //theme row content
+  $link_html = '';
+  for($x = 0; $x < 5 && $x < count($rows); $x++){
+    $link_html .= theme($link_theme, $rows[$x]);
+  }
+
+  $show_more = false;
+  if(count($rows) > 5){
+    $show_more = true;
+  }
+
+  $content = theme('right_rail_block', $title, $link_html, $link_id, $show_more);
+
+  //theme modal popup
+  if($sort_function != ''){
+    usort($rows, $sort_function);
+  }
+
+  $modal_content .= digitaria_uitlity_split_array_to_ul($rows, 4, $link_theme);
+  $content .= theme('modal_popup', $modal_class_id, $title, $modal_content);
+
+  return $content;
+}
+
+
+/**
+ * generic right rail topics filter
+ * $content_type - content type of filter
+ * $link_theme - theme function used to theme your links
+ * $link_id - id of the "See full list" button
+ */ 
+function saic_hooks_right_rail_topics_block_content($content_type, $link_theme, $link_id){
+  $lang = saic_hooks_get_language_sql();
+
+  $sql = "select td.name, td.vid, td.tid, count(n.nid) as 'count'
+            from {node} n
+            join {term_node} tn ON tn.vid = n.vid
+            join {term_data} td ON td.tid = tn.tid
+            where n.status <> 0
+            and n.type = '" . $content_type . "'
+            and n.language in(" . $lang . ")
+            and td.vid = 1
+            group by td.name, td.vid, td.tid
+            order by count(n.nid) desc;
+            ";
+  $content = saic_hooks_right_rail_block_content($sql, t('Topics'), $link_theme, $link_id, 'digitaria_uitlity_sort_by_name', 'topic');
+
+  return $content;
+}
+
+/**
+ * Any sql that needs to be filtered by language should call this function
+ * no language or english returns 'en', others return current language code
+ */
+function saic_hooks_get_language_sql(){
+  $curr_lang = i18n_get_lang();
+
+  if(empty($curr_lang) || $curr_lang == 'en'){
+    $lang = "'', 'en'";
+  }
+  else{
+    $lang = "'" . $curr_lang . "'";
+  }
+
+  return $lang;
+}
+
+function saic_hooks_generate_error_pages(){
+
+  saic_hooks_copy_error_file('400');
+  saic_hooks_copy_error_file('401');
+  saic_hooks_copy_error_file('500');
+
+}
+
+function saic_hooks_copy_error_file($code){
+  if(function_exists('_preview_popup_get_basic_authentication')){
+    $basic_auth = _preview_popup_get_basic_authentication();
+  }
+  $response = drupal_http_request('http://' . $basic_auth . saic_hooks_server() . '/customerror/' . $code);
+  $html = $response->data;
+
+  $filepath = $_SERVER['DOCUMENT_ROOT'] . base_path() . file_directory_path() . '/customerror/error' . $code . '.html';
+  $fh = fopen($filepath, 'w') or die("can't open file");
+  fwrite($fh, $html);
+  fclose($fh);
+}
+
+
+

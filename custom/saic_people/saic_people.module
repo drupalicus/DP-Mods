@@ -1,0 +1,105 @@
+<?php
+
+/**
+* Implementation of hook_context_default_contexts().
+* 
+*/
+function saic_people_default_contexts() {
+  $contexts = digitaria_utility_install_context_dir('saic_people');
+  return $contexts;
+}
+
+/**
+ * Implementation of hook_views_default_views().
+ */
+function saic_people_views_default_views() {
+  return views_install_view_dir('saic_people');
+}
+
+/**
+ * Implementation of hook_imagecache_default_presets
+ */
+function saic_people_default_presets() {
+  return digitaria_utility_install_imagecache('saic_people');
+}
+
+/**
+ * Implementation of hook_block
+ */
+function saic_people_block($op = 'list', $delta = 0, $edit = array()) {
+  switch ($op) {
+    case 'list':
+      $blocks['saic_people_making_difference'] = array(
+        'info' => t("Making a difference"),
+      );
+      $blocks['saic_people_areas_work'] = array(
+        'info' => t("SAIC Areas and My work"),
+      );
+      $blocks['saic_people_headshot'] = array(
+        'info' => t("People headshot"),
+      );
+      $blocks['saic_people_additional_resources'] = array(
+        'info' => t("Additional Resources"),
+      );
+      $blocks['saic_people_content_bottom'] = array(
+        'info' => t("People content bottom"),
+      );
+      return $blocks;
+      break;
+    case 'view':
+      switch ($delta) {
+        case 'saic_people_making_difference':
+          $block['content'] = saic_people_block_tpl('saic_people_making_difference');
+          break;
+      case 'saic_people_areas_work':
+          $block['content'] = saic_people_block_tpl('saic_people_areas_work');
+          break;
+      case 'saic_people_headshot':
+          $block['content'] = saic_people_block_tpl('saic_people_headshot');
+          break;
+      case 'saic_people_additional_resources':
+          $block['content'] = saic_people_block_tpl('saic_people_additional_resources');
+          break;
+      case 'saic_people_content_bottom':
+          $block['content'] = saic_people_block_tpl('saic_people_content_bottom');
+          break;
+      }
+      return $block;
+      break;
+  }
+}
+
+function saic_people_block_tpl($template) {
+  if ( arg(0) == 'node' && is_numeric(arg(1))) {
+    $node = node_load(arg(1));
+  }
+  return theme($template,$node);
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function saic_people_theme() {
+return array(
+    'saic_people_making_difference' => array(
+      'arguments' => array('node' => NULL),
+      'template' => 'block-people-making-difference',
+    ),
+   'saic_people_areas_work' => array(
+      'arguments' => array('node' => NULL),
+      'template' => 'block-people-areas-work',
+    ),
+   'saic_people_headshot' => array(
+      'arguments' => array('node' => NULL),
+      'template' => 'block-people-headshot',
+    ),
+   'saic_people_additional_resources' => array(
+      'arguments' => array('node' => NULL),
+      'template' => 'block-people-additional-resources',
+    ),
+   'saic_people_content_bottom' => array(
+      'arguments' => array('node' => NULL),
+      'template' => 'block-people-content-bottom',
+    ),
+  );
+ }

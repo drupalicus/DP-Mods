@@ -1,0 +1,6 @@
+; Todd Budzinski, Digitaria, 5/11/10
+name = "DDP Media"
+description = "Pull in images, videos and audio from DDP and populate their nodes"
+core = 6.x
+package = DDP
+dependencies[] = ddp

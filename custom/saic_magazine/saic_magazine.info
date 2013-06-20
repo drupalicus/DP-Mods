@@ -1,0 +1,5 @@
+name = SAIC Magazine
+description = SAIC magazine module
+core = 6.x
+package = SAIC
+dependencies[] = content

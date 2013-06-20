@@ -1,0 +1,1686 @@
+$content['type']  = array (
+  'name' => 'Product',
+  'type' => 'product',
+  'description' => '',
+  'title_label' => 'Title',
+  'body_label' => '',
+  'min_word_count' => '0',
+  'help' => '',
+  'maxlength_title' => '',
+  'maxlength_title_js' => 0,
+  'maxlength_title_text' => 'Content limited to !limit characters, remaining: <strong>!remaining</strong>',
+  'maxlength_body' => '',
+  'maxlength_body_js' => 0,
+  'maxlength_body_text' => 'Content limited to !limit characters, remaining: <strong>!remaining</strong>',
+  'node_options' => 
+  array (
+    'status' => false,
+    'promote' => false,
+    'sticky' => false,
+    'revision' => false,
+    'revision_moderation' => false,
+  ),
+  'new_revisions' => 0,
+  'revisioning_auto_publish' => 0,
+  'language_content_type' => '0',
+  'upload' => '0',
+  'old_type' => 'product',
+  'orig_type' => '',
+  'module' => 'node',
+  'custom' => '1',
+  'modified' => '1',
+  'locked' => '0',
+  'fivestar' => 0,
+  'fivestar_stars' => 5,
+  'fivestar_labels_enable' => 1,
+  'fivestar_label_0' => 'Cancel rating',
+  'fivestar_label_1' => 'Poor',
+  'fivestar_label_2' => 'Okay',
+  'fivestar_label_3' => 'Good',
+  'fivestar_label_4' => 'Great',
+  'fivestar_label_5' => 'Awesome',
+  'fivestar_label_6' => 'Give it @star/@count',
+  'fivestar_label_7' => 'Give it @star/@count',
+  'fivestar_label_8' => 'Give it @star/@count',
+  'fivestar_label_9' => 'Give it @star/@count',
+  'fivestar_label_10' => 'Give it @star/@count',
+  'fivestar_style' => 'average',
+  'fivestar_text' => 'dual',
+  'fivestar_title' => 1,
+  'fivestar_feedback' => 1,
+  'fivestar_unvote' => 0,
+  'fivestar_position_teaser' => 'hidden',
+  'fivestar_position' => 'below',
+);
+$content['groups']  = array (
+  0 => 
+  array (
+    'label' => 'Teaser Content',
+    'group_type' => 'standard',
+    'settings' => 
+    array (
+      'form' => 
+      array (
+        'style' => 'fieldset_collapsible',
+        'description' => '',
+      ),
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '-3',
+    'group_name' => 'group_product_teaser_content',
+  ),
+  1 => 
+  array (
+    'label' => 'Header',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 1,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '4',
+    'group_name' => 'group_pod_header',
+  ),
+  2 => 
+  array (
+    'label' => 'List Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '5',
+    'group_name' => 'group_pod_list_group',
+  ),
+  3 => 
+  array (
+    'label' => 'List Tags Group ',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '6',
+    'group_name' => 'group_list_group_tags',
+  ),
+  4 => 
+  array (
+    'label' => 'List Node Item',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => '',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 1,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '7',
+    'group_name' => 'group_pod_list_node_item',
+  ),
+  5 => 
+  array (
+    'label' => 'List Open Item',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'List',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 1,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '8',
+    'group_name' => 'group_pod_list_open_item',
+  ),
+  6 => 
+  array (
+    'label' => 'Spotlight',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => '',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'Spotlight',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '9',
+    'group_name' => 'group_pod_spotlight',
+  ),
+  7 => 
+  array (
+    'label' => 'Open HTML',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 1,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 1,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 1,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '10',
+    'group_name' => 'group_pod_open_html',
+  ),
+  8 => 
+  array (
+    'label' => 'Tabs Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'Tabs',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '11',
+    'group_name' => 'group_pod_tabs_wrapper',
+  ),
+  9 => 
+  array (
+    'label' => 'Tab',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'Tabs',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 1,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '12',
+    'group_name' => 'group_pod_tab',
+  ),
+  10 => 
+  array (
+    'label' => 'FAQ Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'FAQ',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '13',
+    'group_name' => 'group_pod_faq_wrapper',
+  ),
+  11 => 
+  array (
+    'label' => 'FAQ Item',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Question',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'FAQ',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 0,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 1,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '14',
+    'group_name' => 'group_pod_faq_item',
+  ),
+  12 => 
+  array (
+    'label' => 'Content Top Single Image',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => false,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => false,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => false,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => false,
+          'group_pod_sbs' => false,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '15',
+    'group_name' => 'group_pod_content_top_image',
+  ),
+  13 => 
+  array (
+    'label' => 'Content Top Text + Image',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => false,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => false,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => false,
+          'group_pod_sbs' => false,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '16',
+    'group_name' => 'group_pod_content_top_t_i',
+  ),
+  14 =>
+  array (
+    'label' => 'Feature Image with Button and Sub Navigation',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'Header Features',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 0,
+          'breadcrumb_top' => 0,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '17',
+    'group_name' => 'group_pod_ft_img_btn_subnav',
+  ),
+  15 =>
+  array (
+    'label' => 'Callouts',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 1,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '18',
+    'group_name' => 'group_pod_callout',
+  ),
+  16 =>
+  array (
+    'label' => 'Block Reference',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => '',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 1,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 1,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '19',
+    'group_name' => 'group_block_ref',
+  ),
+  17 =>
+  array (
+    'label' => 'Side by Side Wrapper',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => 0,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => 0,
+          'left_content' => 1,
+          'right_content' => 1,
+          'left' => 0,
+          'content_bottom' => 1,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '20',
+    'group_name' => 'group_pod_sbs',
+  ),
+  18 =>
+  array (
+    'label' => 'Pseudo Content Right',
+    'group_type' => 'podgroup',
+    'settings' => 
+    array (
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' => 
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => 'The title will be used as the podgroup\'s block header',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' => 
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => 0,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 0,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => 0,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => 0,
+          'group_pod_sbs' => 0,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 1,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' => 
+        array (
+          'content' => 0,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '21',
+    'group_name' => 'group_pod_pse_cont_right',
+  ),
+  19 =>
+  array (
+    'label' => 'Page Settings',
+    'group_type' => 'standard',
+    'settings' => 
+    array (
+      'form' => 
+      array (
+        'style' => 'fieldset',
+        'description' => '',
+      ),
+      'display' => 
+      array (
+        'description' => '',
+        'teaser' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'full' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        4 => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'token' => 
+        array (
+          'format' => 'fieldset',
+          'exclude' => 0,
+        ),
+        'label' => 'above',
+      ),
+    ),
+    'weight' => '22',
+    'group_name' => 'group_page_settings',
+  ),
+  20 =>
+  array (
+    'label' => 'Gold Button Form',
+    'group_type' => 'podgroup',
+    'settings' =>
+    array (
+      'display' =>
+      array (
+        'description' => '',
+        'teaser' =>
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'full' =>
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        4 =>
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'token' =>
+        array (
+          'format' => 'content_podgroup_display_wrapper',
+          'exclude' => 0,
+        ),
+        'label' => NULL,
+      ),
+      'podgroup' =>
+      array (
+        'required' => 0,
+        'title_label' => 'Title',
+        'title_description' => '',
+        'title_default' => '',
+        'category' => 'General',
+        'subpages' => 0,
+        'nesting' =>
+        array (
+          'group_parent' => 1,
+          'group_block_ref' => 0,
+          'group_list_group_tags' => false,
+          'group_pod_callout' => false,
+          'group_pod_content_top_image' => 0,
+          'group_pod_content_top_t_i' => 1,
+          'group_pod_faq_item' => 0,
+          'group_pod_faq_wrapper' => 0,
+          'group_pod_ft_img_btn_subnav' => 0,
+          'group_pod_header' => false,
+          'group_pod_list_group' => 0,
+          'group_pod_list_node_item' => 0,
+          'group_pod_list_open_item' => 0,
+          'group_pod_open_html' => 0,
+          'group_pod_pse_cont_right' => false,
+          'group_pod_sbs' => false,
+          'group_pod_spotlight' => 0,
+          'group_pod_tab' => 0,
+          'group_pod_tabs_wrapper' => 0,
+        ),
+        'regions' =>
+        array (
+          'content' => 1,
+          'header' => 0,
+          'top_nav' => 0,
+          'featured_content' => 0,
+          'content_top' => 1,
+          'breadcrumb_top' => false,
+          'left_content' => 0,
+          'right_content' => 0,
+          'left' => 0,
+          'content_bottom' => 0,
+          'footer_left' => 0,
+          'footer_right' => 0,
+        ),
+      ),
+    ),
+    'weight' => '20',
+    'group_name' => 'group_pod_gold_btn',
+  ),
+);
+$content['extra']  = array (
+  'title' => '-5',
+  'revision_information' => '-1',
+  'author' => '1',
+  'options' => '2',
+  'menu' => '-2',
+  'path' => '0',
+  'path_redirect' => '3',
+  'nodewords' => '23',
+);
+

@@ -1,0 +1,6 @@
+name = Content Type Tag
+description = Defines compound field that contains content type, a tag, and a number of items to show
+package = Custom
+core = 6.x
+version = 1.0
+dependencies[] = content
